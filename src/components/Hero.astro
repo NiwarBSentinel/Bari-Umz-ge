@@ -2,12 +2,11 @@
 import { Phone, CheckCircle2, ChevronDown } from "@lucide/astro";
 
 const phrases = [
-  "zur Arbeit.",
-  "zum Flughafen.",
-  "zum Meeting.",
-  "ins Restaurant.",
-  "nach Hause.",
-  "zum Bahnhof.",
+  "in Ihr neues Zuhause.",
+  "ins neue Büro.",
+  "ins Lager.",
+  "ans Ziel.",
+  "in den nächsten Kanton.",
 ];
 ---
 
@@ -32,30 +31,30 @@ const phrases = [
     class="stoerer-badge hidden md:flex absolute top-28 right-6 lg:right-16 z-10 bg-accent text-primary text-xs font-bold px-5 py-3 rounded-2xl shadow-lg items-center gap-2"
   >
     <CheckCircle2 size={14} strokeWidth={2.5} class="text-primary" />
-    <span>Fixpreis möglich</span>
+    <span>Festpreis möglich</span>
     <span class="opacity-50">·</span>
-    <span>24/7 verfügbar</span>
+    <span>Versichert</span>
   </div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-12 sm:pt-40 md:pb-40 lg:pb-48 w-full">
     <p class="text-accent uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold mb-6">
-      Taxi-Service · Zürich
+      Umzüge · Deutschschweiz
     </p>
     <h1
       class="text-white font-extrabold leading-[1.05] text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight max-w-5xl"
     >
-      Wir bringen Sie bequem und sicher{" "}
+      Wir bringen Ihre Möbel sicher{" "}
       <span class="block sm:inline-block min-w-[10ch]">
-        <span id="rotating-word" class="rotating-word text-accent">zur Arbeit.</span>
+        <span id="rotating-word" class="rotating-word text-accent">in Ihr neues Zuhause.</span>
       </span>
     </h1>
     <p class="mt-8 text-lg sm:text-xl text-white/80 max-w-2xl leading-relaxed">
-      Ihr persönlicher Taxi-Service für Zürich und Umgebung. 24/7 verfügbar, fair tarifiert,
-      immer pünktlich.
+      Ihr persönlicher Umzugsservice in der ganzen Deutschschweiz. Sorgfältig,
+      pünktlich, fair tarifiert. Vom Studio bis zum Firmenumzug.
     </p>
     <div class="mt-10 flex flex-col sm:flex-row gap-4">
       <a
-        href="tel:+41796466087"
+        href="tel:+41445551234"
         class="btn-shimmer inline-flex items-center justify-center gap-2 bg-accent text-primary font-bold text-base px-8 py-4 rounded-xl shadow-lg transition duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-accent/40"
       >
         <Phone size={20} strokeWidth={2.5} class="phone-shake" />

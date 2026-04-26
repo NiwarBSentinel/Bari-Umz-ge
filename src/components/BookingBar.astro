@@ -1,13 +1,19 @@
 ---
 import {
   MapPin,
-  Clock,
+  Calendar,
   ArrowLeftRight,
   ArrowRight,
   MessageCircle,
   Locate,
   Loader2,
 } from "@lucide/astro";
+
+const today = new Date();
+const defaultDate = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10);
+const minDate = today.toISOString().slice(0, 10);
 ---
 
 <div class="relative z-20 max-w-5xl mx-auto px-4 mt-6 md:-mt-16 lg:-mt-20">
@@ -27,7 +33,7 @@ import {
             <label
               for="booking-from"
               class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
-              >Von</label
+              >Von Adresse <span class="font-normal text-slate-400 normal-case tracking-normal">· Auszugsort</span></label
             >
             <input
               id="booking-from"
@@ -85,12 +91,12 @@ import {
             <label
               for="booking-to"
               class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
-              >Nach</label
+              >Nach Adresse <span class="font-normal text-slate-400 normal-case tracking-normal">· Einzugsort</span></label
             >
             <input
               id="booking-to"
               type="text"
-              placeholder="Wohin geht's?"
+              placeholder="Wohin?"
               autocomplete="off"
               class="w-full text-base font-medium border-0 outline-none bg-transparent placeholder:text-slate-400 placeholder:font-normal"
             />
@@ -103,33 +109,24 @@ import {
         ></ul>
       </div>
 
-      <!-- Wann -->
+      <!-- Wunschdatum -->
       <div
         class="flex-1 p-4 hover:bg-slate-50 transition-colors rounded-xl cursor-pointer border-t md:border-t-0 md:border-l border-slate-200"
       >
         <div class="flex items-start gap-3">
-          <Clock size={18} strokeWidth={2} class="text-primary mt-1 flex-shrink-0" />
+          <Calendar size={18} strokeWidth={2} class="text-primary mt-1 flex-shrink-0" />
           <div class="flex-1 min-w-0">
             <label
               for="booking-when"
               class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
-              >Wann</label
+              >Wunschdatum</label
             >
-            <select
-              id="booking-when"
-              class="w-full text-base font-medium appearance-none border-0 outline-none bg-transparent cursor-pointer pr-2"
-            >
-              <option value="Sofort">Sofort</option>
-              <option value="In 30 Minuten">In 30 Minuten</option>
-              <option value="In 1 Stunde">In 1 Stunde</option>
-              <option value="Heute Abend">Heute Abend</option>
-              <option value="Morgen">Morgen</option>
-              <option value="custom">Termin wählen...</option>
-            </select>
             <input
-              id="booking-when-custom"
-              type="datetime-local"
-              class="hidden w-full text-base font-medium border-0 outline-none bg-transparent mt-1"
+              id="booking-when"
+              type="date"
+              min={minDate}
+              value={defaultDate}
+              class="w-full text-base font-medium border-0 outline-none bg-transparent cursor-pointer pr-2"
             />
           </div>
         </div>
@@ -144,7 +141,7 @@ import {
           type="button"
           class="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-6 py-4 rounded-xl transition duration-300 hover:scale-[1.02] hover:shadow-lg"
         >
-          <span>Bestellen</span>
+          <span>Offerte anfragen</span>
           <ArrowRight size={20} strokeWidth={2.5} />
         </button>
       </div>
@@ -154,7 +151,7 @@ import {
   <div class="mt-6 md:mt-8 text-center px-4">
     <p class="inline-flex items-center gap-2 text-sm text-slate-500">
       <MessageCircle size={14} strokeWidth={2} class="flex-shrink-0" />
-      <span>Sofortpreis · Bestätigung via WhatsApp innert wenigen Minuten</span>
+      <span>Kostenlose Offerte · Antwort innert 1h via WhatsApp</span>
     </p>
   </div>
 </div>
@@ -358,22 +355,8 @@ import {
     const fromEl = document.getElementById("booking-from");
     const toEl = document.getElementById("booking-to");
     const whenEl = document.getElementById("booking-when");
-    const whenCustomEl = document.getElementById("booking-when-custom");
     const swapBtn = document.getElementById("booking-swap");
     const submitBtn = document.getElementById("booking-submit");
-
-    if (whenEl && whenCustomEl) {
-      whenEl.addEventListener("change", function () {
-        if (whenEl.value === "custom") {
-          whenEl.classList.add("hidden");
-          whenCustomEl.classList.remove("hidden");
-          whenCustomEl.focus();
-          if (typeof whenCustomEl.showPicker === "function") {
-            whenCustomEl.showPicker();
-          }
-        }
-      });
-    }
 
     if (swapBtn && fromEl && toEl) {
       swapBtn.addEventListener("click", function () {
@@ -498,20 +481,16 @@ import {
           return;
         }
 
-        let when = whenEl ? whenEl.value : "Sofort";
-        if (when === "custom") {
-          const custom = whenCustomEl ? whenCustomEl.value : "";
-          if (custom) {
-            try {
-              when = new Date(custom).toLocaleString("de-CH", {
-                dateStyle: "short",
-                timeStyle: "short",
-              });
-            } catch (e) {
-              when = custom;
-            }
-          } else {
-            when = "Termin folgt";
+        let when = "Datum folgt";
+        if (whenEl && whenEl.value) {
+          try {
+            when = new Date(whenEl.value).toLocaleDateString("de-CH", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            });
+          } catch (e) {
+            when = whenEl.value;
           }
         }
 

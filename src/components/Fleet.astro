@@ -1,28 +1,29 @@
 ---
 import {
-  Leaf,
-  VolumeX,
   Sparkles,
-  TreeDeciduous,
-  Zap,
+  Snowflake,
+  Wrench,
+  Truck,
+  ShieldCheck,
+  Leaf,
   ChevronDown,
 } from "@lucide/astro";
 
 const items = [
   {
-    Icon: Leaf,
-    title: "CO₂-arm unterwegs",
-    desc: "Bis zu 60% weniger Emissionen pro Fahrt.",
-  },
-  {
-    Icon: VolumeX,
-    title: "Leise & entspannt",
-    desc: "Hybrid-Antrieb läuft im Stadtverkehr nahezu lautlos.",
-  },
-  {
     Icon: Sparkles,
-    title: "Premium-Komfort",
-    desc: "Klimatisiert, geräumig, nach jeder Schicht gereinigt.",
+    title: "Sauber & gepflegt",
+    desc: "Nach jedem Umzug gereinigt. Saubere Möbel, saubere Hände.",
+  },
+  {
+    Icon: Snowflake,
+    title: "Klimatisiert",
+    desc: "Hitze und Kälte schaden Möbeln. Unsere LKW haben Klimatisierung.",
+  },
+  {
+    Icon: Wrench,
+    title: "Vollausgestattet",
+    desc: "Decken, Spanngurte, Hubwagen, Stockwerk-Hilfsmittel — alles dabei.",
   },
 ];
 ---
@@ -41,17 +42,18 @@ const items = [
           class="inline-flex items-center gap-2 text-emerald-600 text-sm font-semibold uppercase tracking-widest mb-4"
         >
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          Nachhaltigkeit
+          Unsere Flotte
         </p>
 
         <h2
           class="text-slate-900 text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-5"
         >
-          Komfort, der Sie <span class="text-primary">weiterbringt.</span>
+          Modern. Sauber. <span class="text-primary">Bereit.</span>
         </h2>
 
         <p class="text-slate-600 text-lg leading-relaxed mb-8 max-w-md">
-          73% Hybrid- und Elektrofahrzeuge. Leise, sparsam, modern.
+          Unsere Fahrzeuge sind klimatisiert, sauber und mit Ladungssicherung
+          ausgerüstet. Damit Ihre Möbel sicher ans Ziel kommen.
         </p>
 
         <ul id="fleet-accordion" class="space-y-2 mb-8">
@@ -90,20 +92,20 @@ const items = [
           <div
             class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0"
           >
-            <TreeDeciduous size={20} strokeWidth={2} class="text-white" />
+            <ShieldCheck size={20} strokeWidth={2} class="text-white" />
           </div>
           <div>
             <p class="text-sm font-bold text-emerald-900 leading-tight">
-              <span data-eco-counter data-target="2400">0</span> kg CO₂
+              <span data-eco-counter data-target="1250">0</span> Umzüge
             </p>
             <p class="text-xs text-emerald-700 leading-tight">
-              eingespart 2026
+              sicher abgewickelt
             </p>
           </div>
         </div>
       </div>
 
-      <!-- RECHTS: Bild (freigestellt) -->
+      <!-- RECHTS: LKW-Bild -->
       <div
         class="order-1 lg:order-2 relative flex items-center justify-center min-h-[280px] lg:min-h-[420px]"
       >
@@ -122,13 +124,13 @@ const items = [
         </div>
 
         <img
-          src="/images/byd-fleet-transparent%20(1).png"
-          alt="BYD Hybrid-Fahrzeug der Shiar TAXI-Flotte"
+          src="/images/fleet-truck.jpg"
+          alt="Umzugs-LKW der Bari Umzüge-Flotte"
           loading="lazy"
           decoding="async"
-          width="1920"
-          height="1080"
-          class="relative w-full max-w-lg lg:max-w-xl h-auto object-contain z-10"
+          width="1200"
+          height="800"
+          class="relative w-full max-w-lg lg:max-w-xl h-auto object-contain z-10 rounded-2xl"
         />
 
         <div data-fleet-badge="0" class="fleet-badge fleet-badge-pos-0 z-20">
@@ -136,25 +138,20 @@ const items = [
             class="bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100"
           >
             <div
-              class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0"
+              class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0"
             >
-              <Zap
-                size={20}
-                strokeWidth={2}
-                fill="currentColor"
-                class="text-emerald-600"
-              />
+              <Truck size={20} strokeWidth={2} class="text-primary" />
             </div>
             <div>
               <p
-                class="text-xs uppercase tracking-wider text-emerald-700 font-semibold leading-tight"
+                class="text-xs uppercase tracking-wider text-primary font-semibold leading-tight"
               >
-                E-Hybrid
+                Modernste Flotte
               </p>
               <p
                 class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
               >
-                73% der Flotte
+                5 LKW im Einsatz
               </p>
             </div>
           </div>
@@ -167,18 +164,18 @@ const items = [
             <div
               class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"
             >
-              <VolumeX size={20} strokeWidth={2} class="text-blue-600" />
+              <ShieldCheck size={20} strokeWidth={2} class="text-blue-600" />
             </div>
             <div>
               <p
                 class="text-xs uppercase tracking-wider text-blue-700 font-semibold leading-tight"
               >
-                Flüsterleise
+                Versichert
               </p>
               <p
                 class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
               >
-                weniger als 50 dB
+                bis CHF 5 Mio.
               </p>
             </div>
           </div>
@@ -189,20 +186,20 @@ const items = [
             class="bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100"
           >
             <div
-              class="w-10 h-10 rounded-full bg-accent-light/50 flex items-center justify-center flex-shrink-0"
+              class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0"
             >
-              <Sparkles size={20} strokeWidth={2} class="text-accent-dark" />
+              <Leaf size={20} strokeWidth={2} class="text-emerald-600" />
             </div>
             <div>
               <p
-                class="text-xs uppercase tracking-wider text-accent-dark font-semibold leading-tight"
+                class="text-xs uppercase tracking-wider text-emerald-700 font-semibold leading-tight"
               >
-                Frisch gereinigt
+                Euro 6 Standard
               </p>
               <p
                 class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
               >
-                nach jeder Schicht
+                CO₂-arm unterwegs
               </p>
             </div>
           </div>
@@ -221,7 +218,6 @@ const items = [
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    // Auto-Akkordeon
     const items = fleetSection.querySelectorAll("[data-fleet-item]");
     const badges = fleetSection.querySelectorAll("[data-fleet-badge]");
     let activeIdx = 0;
@@ -284,7 +280,6 @@ const items = [
     );
     visObs.observe(fleetSection);
 
-    // Eco-Counter
     const counterEl = fleetSection.querySelector("[data-eco-counter]");
     if (counterEl) {
       const target = parseInt(counterEl.dataset.target || "0", 10);

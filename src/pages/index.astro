@@ -8,36 +8,37 @@ import Cta from "../components/Cta.astro";
 import Fleet from "../components/Fleet.astro";
 import Contact from "../components/Contact.astro";
 
-const siteUrl = "https://taxi-maxi.vercel.app";
-const title = "Shiar TAXI · Ihr Taxi in Zürich · 24/7 · 079 646 60 87";
+const siteUrl = "https://bari-umz-ge.vercel.app";
+const title = "Bari Umzüge · Ihr Umzug in der Deutschschweiz · 044 555 12 34";
 const description =
-  "Persönlicher Taxi-Service in Zürich und Umgebung. 24/7 verfügbar. Standard-Taxi, Flughafen-Transfer, Geschäftskunden. Jetzt anrufen: 079 646 60 87.";
-const ogTitle = "Shiar TAXI · Ihr Taxi in Zürich · 24/7";
+  "Ihr persönlicher Umzugsservice in der Deutschschweiz. Privat- und Firmen-Umzüge, Lager, Reinigung, Entsorgung. Kostenlose Offerte: 044 555 12 34.";
+const ogTitle = "Bari Umzüge · Ihr Umzug in der Deutschschweiz";
 const ogDescription =
-  "Persönlicher Taxi-Service in Zürich. 24/7 verfügbar. Jetzt anrufen: 079 646 60 87.";
-const twitterDescription = "Persönlicher Taxi-Service in Zürich. 24/7 verfügbar.";
+  "Privat- und Firmen-Umzüge in der ganzen Deutschschweiz. Kostenlose Offerte: 044 555 12 34.";
+const twitterDescription =
+  "Privat- und Firmen-Umzüge in der ganzen Deutschschweiz.";
 
 const ldJson = {
   "@context": "https://schema.org",
-  "@type": "TaxiService",
-  name: "Shiar TAXI",
+  "@type": "MovingCompany",
+  name: "Bari Umzüge",
   image: `${siteUrl}/og-image.jpg`,
   url: `${siteUrl}/`,
-  telephone: "+41796466087",
-  email: "info@shiar-taxi.ch",
+  telephone: "+41445551234",
+  email: "info@bari-umzuege.ch",
   priceRange: "$$",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Bahnhofstrasse 1",
+    streetAddress: "Industriestrasse 23",
     addressLocality: "Zürich",
-    postalCode: "8001",
+    postalCode: "8045",
     addressRegion: "ZH",
     addressCountry: "CH",
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 47.3769,
-    longitude: 8.5417,
+    latitude: 47.3658,
+    longitude: 8.5132,
   },
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
@@ -48,15 +49,23 @@ const ldJson = {
       "Thursday",
       "Friday",
       "Saturday",
-      "Sunday",
     ],
-    opens: "00:00",
-    closes: "23:59",
+    opens: "07:00",
+    closes: "20:00",
   },
-  areaServed: { "@type": "City", name: "Zürich" },
-  serviceType: ["Taxi", "Flughafen-Transfer", "Geschäftskunden-Service"],
+  areaServed: [
+    { "@type": "Country", name: "Switzerland" },
+    { "@type": "AdministrativeArea", name: "Deutschschweiz" },
+  ],
+  serviceType: [
+    "Privat-Umzug",
+    "Firmen-Umzug",
+    "Möbellager",
+    "Endreinigung",
+    "Entsorgung",
+  ],
   currenciesAccepted: "CHF",
-  paymentAccepted: "Cash, Credit Card",
+  paymentAccepted: "Cash, Credit Card, Invoice",
   sameAs: [],
 };
 ---
