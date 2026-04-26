@@ -1,0 +1,126 @@
+---
+import { Phone } from "@lucide/astro";
+
+interface Props {
+  forceSolid?: boolean;
+}
+
+const { forceSolid = false } = Astro.props;
+
+const links = [
+  { href: "/#services", label: "Services" },
+  { href: "/#versprechen", label: "Versprechen" },
+  { href: "/#kontakt", label: "Kontakt" },
+];
+---
+
+<header
+  id="site-header"
+  data-force-solid={forceSolid ? "true" : "false"}
+  class={`fixed top-0 left-0 right-0 z-50 ${forceSolid ? "scrolled" : ""}`}
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a
+        href="/"
+        class="header-logo flex items-center gap-2 group"
+        aria-label="Shiar TAXI - Startseite"
+      >
+        <span
+          class="text-2xl md:text-3xl font-extrabold tracking-tight leading-none"
+        >
+          <span class="logo-shiar text-white">Shiar</span><span
+            class="logo-taxi text-accent ml-1.5">TAXI</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-10">
+        {
+          links.map((l) => (
+            <a
+              href={l.href}
+              class="header-link text-white/90 hover:text-white text-sm font-medium"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a
+          href="tel:+41796466087"
+          class="hidden sm:inline-flex items-center gap-2 bg-accent text-primary font-semibold text-sm px-5 py-2.5 rounded-xl shadow-sm transition duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-accent/30"
+        >
+          <Phone size={18} strokeWidth={2.5} />
+          <span class="hidden lg:inline">079 646 60 87</span>
+        </a>
+        <a
+          href="tel:+41796466087"
+          aria-label="Anrufen"
+          class="sm:hidden inline-flex items-center justify-center w-11 h-11 bg-accent text-primary rounded-xl shadow-sm transition duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-accent/30"
+        >
+          <Phone size={20} strokeWidth={2.5} />
+        </a>
+        <button
+          id="menu-toggle"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="md:hidden inline-flex flex-col items-center justify-center gap-1.5 w-11 h-11 rounded-xl"
+        >
+          <span class="hamburger-line block w-5 h-0.5 bg-white"></span>
+          <span class="hamburger-line block w-5 h-0.5 bg-white"></span>
+          <span class="hamburger-line block w-5 h-0.5 bg-white"></span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu md:hidden">
+      <nav class="flex flex-col gap-1 pb-5">
+        {
+          links.map((l) => (
+            <a
+              href={l.href}
+              class="header-link block px-2 py-3 text-white text-base font-medium"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (function () {
+    const header = document.getElementById("site-header");
+    if (!header) return;
+    const forceSolid = header.dataset.forceSolid === "true";
+
+    const updateHeader = () => {
+      if (forceSolid) {
+        header.classList.add("scrolled");
+        return;
+      }
+      if (window.scrollY > 24) header.classList.add("scrolled");
+      else header.classList.remove("scrolled");
+    };
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuToggle?.addEventListener("click", function () {
+      const open = mobileMenu?.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    mobileMenu?.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        mobileMenu.classList.remove("open");
+        menuToggle?.setAttribute("aria-expanded", "false");
+      });
+    });
+  })();
+</script>

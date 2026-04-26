@@ -1,0 +1,439 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  MapPin,
+  Clock,
+  Car,
+  Info,
+} from "@lucide/astro";
+
+const title = "Fahrt buchen · Shiar TAXI";
+const description = "Schritt 2 von 2: Bestellung prüfen und absenden.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  canonicalPath="/buchen"
+  solidHeader={true}
+  robots="noindex, nofollow"
+  bodyClass="bg-slate-50 text-dark antialiased"
+>
+  <div class="pt-32 pb-20 md:pt-36 md:pb-28">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 text-sm font-medium transition-colors"
+      >
+        <ArrowLeft size={16} strokeWidth={2} />
+        Zurück zur Startseite
+      </a>
+
+      <!-- Step Indicator -->
+      <div class="flex items-center gap-3 mb-8">
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-md"
+          >
+            <Check size={16} strokeWidth={3} />
+          </div>
+          <span class="text-sm font-semibold text-slate-700 hidden sm:inline"
+            >Adressen</span
+          >
+        </div>
+        <div class="flex-1 h-0.5 bg-emerald-500 max-w-[60px]"></div>
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold shadow-md"
+          >
+            2
+          </div>
+          <span class="text-sm font-semibold text-primary hidden sm:inline"
+            >Bestätigung</span
+          >
+        </div>
+        <div class="flex-1 h-0.5 bg-slate-200 max-w-[60px]"></div>
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-full border-2 border-slate-300 text-slate-400 flex items-center justify-center font-bold"
+          >
+            3
+          </div>
+          <span class="text-sm font-medium text-slate-400 hidden sm:inline"
+            >Fahrer</span
+          >
+        </div>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
+        Fahrt buchen
+      </h1>
+      <p class="text-slate-600 mb-8">
+        Schritt 2 von 2 · Prüfen Sie Ihre Bestellung und senden Sie ab.
+      </p>
+
+      <!-- Bestellungs-Card -->
+      <div
+        class="bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 overflow-hidden mb-6"
+      >
+        <div class="px-6 md:px-8 py-5 border-b border-slate-100">
+          <h2 class="text-lg font-bold text-slate-900">Deine Bestellung</h2>
+        </div>
+        <div class="p-6 md:p-8">
+          <div class="flex items-start gap-4 py-4 border-b border-slate-100">
+            <div
+              class="w-11 h-11 rounded-lg bg-accent-light/30 flex items-center justify-center flex-shrink-0"
+            >
+              <MapPin size={20} strokeWidth={2} class="text-accent-dark" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p
+                class="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-0.5"
+              >
+                Von
+              </p>
+              <p
+                id="summary-from"
+                class="text-base font-medium text-slate-900 break-words"
+              >
+                —
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 py-4 border-b border-slate-100">
+            <div
+              class="w-11 h-11 rounded-lg bg-accent-light/30 flex items-center justify-center flex-shrink-0"
+            >
+              <MapPin size={20} strokeWidth={2} class="text-accent-dark" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p
+                class="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-0.5"
+              >
+                Nach
+              </p>
+              <p
+                id="summary-to"
+                class="text-base font-medium text-slate-900 break-words"
+              >
+                —
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4 py-4">
+            <div
+              class="w-11 h-11 rounded-lg bg-accent-light/30 flex items-center justify-center flex-shrink-0"
+            >
+              <Clock size={20} strokeWidth={2} class="text-accent-dark" />
+            </div>
+            <div class="flex-1">
+              <p
+                class="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-0.5"
+              >
+                Wann
+              </p>
+              <p id="summary-when" class="text-base font-medium text-slate-900">
+                —
+              </p>
+            </div>
+          </div>
+
+          <a
+            href="/"
+            class="text-sm text-primary hover:underline mt-4 inline-block"
+          >
+            ← Bestellung ändern
+          </a>
+        </div>
+      </div>
+
+      <!-- Taxi/Preis-Card -->
+      <div
+        class="bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 overflow-hidden mb-6"
+      >
+        <div class="px-6 md:px-8 py-5 border-b border-slate-100">
+          <h2 class="text-lg font-bold text-slate-900">Dein Taxi</h2>
+        </div>
+        <div class="p-6 md:p-8">
+          <div
+            id="taxi-card"
+            class="border border-primary/30 bg-gradient-to-br from-blue-50/40 to-white rounded-2xl p-5 flex items-center gap-5 shadow-md shadow-blue-500/10 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
+          >
+            <div
+              class="w-14 h-14 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 shadow-md shadow-blue-500/30"
+            >
+              <Car size={28} strokeWidth={2} class="text-white" />
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-bold text-slate-900">Standard</h3>
+              <p id="travel-time" class="text-sm text-slate-500 mt-0.5">
+                Wird berechnet…
+              </p>
+            </div>
+
+            <div class="text-right">
+              <p
+                id="price-display"
+                class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none"
+              >
+                <span
+                  class="inline-block bg-slate-200 rounded-md animate-pulse w-24 h-8 md:h-9"
+                ></span>
+              </p>
+              <p id="distance-display" class="text-xs text-slate-500 mt-1"></p>
+            </div>
+          </div>
+
+          <p
+            id="price-disclaimer"
+            class="text-xs text-slate-500 mt-5 leading-relaxed inline-flex items-start gap-1.5"
+          >
+            <Info
+              size={14}
+              strokeWidth={2}
+              class="flex-shrink-0 mt-0.5 text-slate-400"
+            />
+            <span
+              >Richtpreis basierend auf Luftlinie × 1.3 (Strassenfaktor) ·
+              Grundtaxe CHF 6.– + CHF 5.– pro km. Endpreis kann je nach Verkehr
+              und Route abweichen.</span
+            >
+          </p>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div
+        class="bg-white rounded-3xl border border-slate-200/70 shadow-2xl shadow-slate-900/10 p-6 flex items-center justify-between gap-4 sticky bottom-4 lg:static z-20"
+      >
+        <div>
+          <p
+            class="text-xs text-slate-500 font-semibold uppercase tracking-wide"
+          >
+            Richtpreis
+          </p>
+          <p
+            id="total-price"
+            class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-none mt-1"
+          >
+            <span
+              class="inline-block bg-slate-200 rounded-md animate-pulse w-32 h-8 md:h-10"
+            ></span>
+          </p>
+        </div>
+
+        <button
+          id="confirm-btn"
+          type="button"
+          class="bg-primary hover:bg-primary-light text-white font-bold px-7 py-4 rounded-2xl flex items-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:shadow-xl hover:shadow-blue-500/40 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          disabled
+        >
+          <span class="hidden sm:inline">Per WhatsApp bestätigen</span>
+          <span class="sm:hidden">Bestätigen</span>
+          <ArrowRight size={20} strokeWidth={2.5} />
+        </button>
+      </div>
+
+      <div class="text-center mt-8">
+        <p class="text-sm text-slate-600">
+          Lieber direkt anrufen?
+          <a
+            href="tel:+41796466087"
+            class="text-primary font-semibold hover:underline ml-1"
+          >
+            079 646 60 87
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const from = (params.get("from") || "").trim();
+    const to = (params.get("to") || "").trim();
+    const when = (params.get("when") || "Sofort").trim();
+    const fromLat = params.get("fromLat");
+    const fromLon = params.get("fromLon");
+    const toLat = params.get("toLat");
+    const toLon = params.get("toLon");
+
+    if (!from || !to) {
+      window.location.href = "/";
+      return;
+    }
+
+    const summaryFrom = document.getElementById("summary-from");
+    const summaryTo = document.getElementById("summary-to");
+    const summaryWhen = document.getElementById("summary-when");
+    const priceDisplay = document.getElementById("price-display");
+    const totalPrice = document.getElementById("total-price");
+    const distanceDisplay = document.getElementById("distance-display");
+    const travelTime = document.getElementById("travel-time");
+    const disclaimer = document.getElementById("price-disclaimer");
+    const confirmBtn = document.getElementById("confirm-btn");
+
+    if (summaryFrom) summaryFrom.textContent = from;
+    if (summaryTo) summaryTo.textContent = to;
+    if (summaryWhen) summaryWhen.textContent = when;
+
+    function formatChf(value) {
+      return "CHF " + value.toFixed(2).replace(".00", ".–");
+    }
+
+    function calculatePrice(km) {
+      const BASE = 6;
+      const PER_KM = 5;
+      const raw = BASE + km * PER_KM;
+      return Math.ceil(raw * 2) / 2;
+    }
+
+    function estimateMinutes(km) {
+      const AVG_KMH = 40;
+      return Math.max(5, Math.round((km / AVG_KMH) * 60));
+    }
+
+    function haversineKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = ((lat2 - lat1) * Math.PI) / 180;
+      const dLon = ((lon2 - lon1) * Math.PI) / 180;
+      const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos((lat1 * Math.PI) / 180) *
+          Math.cos((lat2 * Math.PI) / 180) *
+          Math.sin(dLon / 2) ** 2;
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    }
+
+    async function geocode(address) {
+      const lower = address.toLowerCase();
+      const query =
+        lower.indexOf("schweiz") !== -1 || lower.indexOf("zürich") !== -1
+          ? address
+          : address + ", Zürich, Schweiz";
+      const url =
+        "https://nominatim.openstreetmap.org/search?q=" +
+        encodeURIComponent(query) +
+        "&format=json&limit=1&countrycodes=ch";
+      const response = await fetch(url, {
+        headers: { "Accept-Language": "de-CH" },
+      });
+      if (!response.ok) throw new Error("Geocoding HTTP " + response.status);
+      const data = await response.json();
+      if (!data || data.length === 0) {
+        throw new Error("Adresse nicht gefunden: " + address);
+      }
+      return {
+        lat: parseFloat(data[0].lat),
+        lon: parseFloat(data[0].lon),
+      };
+    }
+
+    async function getCoords(address, presetLat, presetLon) {
+      if (presetLat && presetLon) {
+        return {
+          lat: parseFloat(presetLat),
+          lon: parseFloat(presetLon),
+        };
+      }
+      return await geocode(address);
+    }
+
+    function buildWhatsAppUrl(extra) {
+      const phone = "41796466087";
+      let message =
+        "Hallo Shiar TAXI 👋\n\n" +
+        "Ich möchte eine Fahrt buchen:\n\n" +
+        "📍 Von: " +
+        from +
+        "\n" +
+        "📍 Nach: " +
+        to +
+        "\n" +
+        "🕐 Wann: " +
+        when +
+        "\n";
+      if (extra) message += extra;
+      message += "\nVielen Dank!";
+      return "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+    }
+
+    function enableConfirm(extra) {
+      if (!confirmBtn) return;
+      confirmBtn.disabled = false;
+      confirmBtn.addEventListener("click", function () {
+        window.open(buildWhatsAppUrl(extra), "_blank");
+      });
+    }
+
+    function setPrice(text, animate) {
+      function apply(el) {
+        if (!el) return;
+        el.textContent = text;
+        if (animate) {
+          el.classList.remove("price-loaded");
+          void el.offsetWidth;
+          el.classList.add("price-loaded");
+        }
+      }
+      apply(priceDisplay);
+      apply(totalPrice);
+    }
+
+    async function calculateAndDisplay() {
+      try {
+        const a = await getCoords(from, fromLat, fromLon);
+        if (!fromLat) {
+          await new Promise(function (r) {
+            setTimeout(r, 1100);
+          });
+        }
+        const b = await getCoords(to, toLat, toLon);
+
+        const straightKm = haversineKm(a.lat, a.lon, b.lat, b.lon);
+        const routeKm = straightKm * 1.3;
+        const price = calculatePrice(routeKm);
+        const minutes = estimateMinutes(routeKm);
+
+        setPrice(formatChf(price), true);
+        if (distanceDisplay)
+          distanceDisplay.textContent = routeKm.toFixed(1) + " km";
+        if (travelTime)
+          travelTime.textContent = "Geschätzt ca. " + minutes + " Min";
+
+        const extra =
+          "\n📏 Distanz: " +
+          routeKm.toFixed(1) +
+          " km\n⏱ Fahrzeit: ca. " +
+          minutes +
+          " Min\n💰 Richtpreis: " +
+          formatChf(price) +
+          "\n";
+        enableConfirm(extra);
+      } catch (err) {
+        console.error("Price calculation failed:", err);
+        setPrice("Auf Anfrage", true);
+        if (distanceDisplay) distanceDisplay.textContent = "";
+        if (travelTime)
+          travelTime.textContent =
+            "Adresse konnte nicht automatisch geprüft werden";
+        if (disclaimer)
+          disclaimer.textContent =
+            "Wir berechnen den Preis individuell. Senden Sie die Bestellung ab — wir bestätigen umgehend mit einem konkreten Angebot.";
+        enableConfirm("\nBitte um Preisangabe.\n");
+      }
+    }
+
+    calculateAndDisplay();
+  })();
+</script>

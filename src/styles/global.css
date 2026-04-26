@@ -1,0 +1,493 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0B2A5B;
+  --color-primary-light: #1E4A8B;
+  --color-primary-dark: #061A3D;
+  --color-accent: #FFC72C;
+  --color-accent-dark: #E0A800;
+  --color-accent-light: #FFE08A;
+  --color-dark: #0F172A;
+  --color-muted: #64748B;
+  --color-soft: #F8FAFC;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-dark);
+    background: #ffffff;
+  }
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 350ms ease;
+}
+.mobile-menu.open {
+  max-height: 24rem;
+}
+
+#site-header {
+  transition:
+    background-color 250ms ease,
+    box-shadow 250ms ease,
+    backdrop-filter 250ms ease;
+}
+#site-header .header-link,
+#site-header .header-logo,
+#site-header .logo-shiar,
+#site-header .logo-taxi,
+#site-header .hamburger-line {
+  transition: color 250ms ease, background-color 250ms ease;
+}
+
+#site-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px -8px rgba(15, 23, 42, 0.12);
+}
+#site-header.scrolled .header-link {
+  color: var(--color-dark);
+}
+#site-header.scrolled .header-link:hover {
+  color: var(--color-primary);
+}
+#site-header.scrolled .logo-shiar {
+  color: var(--color-primary);
+}
+#site-header.scrolled .logo-taxi {
+  color: var(--color-accent-dark);
+}
+#site-header.scrolled .hamburger-line {
+  background-color: var(--color-dark);
+}
+
+/* ===== Animated keyframes ===== */
+@keyframes ken-burns {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+@keyframes stoerer-float {
+  0%, 100% { transform: rotate(-6deg) translateY(-2px); }
+  50% { transform: rotate(-6deg) translateY(2px); }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(-4px); }
+  50% { transform: translateY(4px); }
+}
+
+@keyframes wake-up {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(-8deg); }
+}
+
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes heart-beat {
+  0%   { transform: scale(1); }
+  10%  { transform: scale(1.08); }
+  20%  { transform: scale(1); }
+  30%  { transform: scale(1.05); }
+  40%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@keyframes phone-shake-small {
+  0%, 100% { transform: rotate(0); }
+  25%      { transform: rotate(-3deg); }
+  75%      { transform: rotate(3deg); }
+}
+
+@keyframes phone-ring {
+  0%, 100% { transform: rotate(0); }
+  20%      { transform: rotate(-8deg); }
+  40%      { transform: rotate(8deg); }
+  60%      { transform: rotate(-4deg); }
+  80%      { transform: rotate(4deg); }
+}
+
+/* ===== Hero rotating word ===== */
+.rotating-word {
+  display: inline-block;
+  transition:
+    opacity 500ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: opacity, transform;
+}
+.rotating-word.leaving {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+.rotating-word.snap-down {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: none;
+}
+
+/* ===== Hero background depth (Ken Burns) ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .ken-burns {
+    animation: ken-burns 20s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+}
+
+/* ===== Stoerer badge: float + hover scale ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .stoerer-badge {
+    animation: stoerer-float 3s ease-in-out infinite;
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+  .hero-section:hover .stoerer-badge {
+    animation-play-state: paused;
+    transform: rotate(-6deg) translateY(0) scale(1.05);
+    box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.35);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stoerer-badge {
+    transform: rotate(-6deg);
+  }
+}
+
+/* ===== Hero scroll indicator ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-indicator-icon {
+    animation: scroll-bounce 1.5s ease-in-out infinite alternate;
+  }
+}
+.scroll-indicator {
+  transition: opacity 300ms ease;
+}
+
+/* ===== Hero CTA: shimmer + phone shake ===== */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transition: left 600ms ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.btn-shimmer:hover::after {
+  left: 100%;
+}
+.btn-shimmer > * {
+  position: relative;
+  z-index: 2;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn-shimmer:hover .phone-shake {
+    animation: phone-shake-small 400ms ease-out;
+  }
+}
+
+/* ===== Outline button: fill-from-left ===== */
+.btn-outline-fill {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-outline-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 158, 11, 0.12);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 400ms ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+.btn-outline-fill:hover::before {
+  transform: scaleX(1);
+}
+.btn-outline-fill > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Service-card hover ===== */
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+.service-card .service-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 400ms ease-out;
+}
+.service-card:hover .service-accent-bar {
+  transform: scaleX(1);
+}
+.service-icon-box {
+  transition:
+    background-color 300ms ease,
+    transform 300ms ease;
+}
+.service-card:hover .service-icon-box {
+  background-color: rgba(30, 64, 175, 0.18);
+  transform: scale(1.1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .service-card:hover .service-icon {
+    animation: wake-up 500ms ease-out;
+  }
+}
+.service-card .service-arrow {
+  display: inline-block;
+  transition: transform 300ms ease;
+}
+.service-card:hover .service-arrow {
+  transform: translateX(6px);
+}
+.service-card .service-cta {
+  transition: font-weight 200ms ease;
+}
+.service-card:hover .service-cta {
+  font-weight: 600;
+}
+
+/* ===== Promise-card hover ===== */
+.promise-card {
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+.promise-card:hover {
+  background-color: rgba(245, 158, 11, 0.05);
+  border-color: rgba(251, 146, 60, 0.6);
+  box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.2);
+}
+.promise-icon {
+  transition: color 300ms ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .promise-card:hover .promise-icon:not(.heart-beat) {
+    animation: icon-pulse 600ms ease-in-out;
+  }
+  .heart-beat {
+    animation: heart-beat 4.4s ease-in-out infinite;
+  }
+}
+
+/* ===== CTA banner: animated gradient + status indicator + ringing button ===== */
+.cta-gradient {
+  background: linear-gradient(120deg, #FFF4D1, #FFE08A, #FFF4D1);
+  background-size: 200% 200%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cta-gradient {
+    animation: gradient-shift 12s ease-in-out infinite alternate;
+  }
+  .cta-button:hover .cta-phone-icon {
+    animation: phone-ring 500ms ease-in-out;
+  }
+}
+
+/* ===== Reveal-on-scroll utilities ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 600ms ease-out,
+      transform 600ms ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+      opacity 500ms ease-out,
+      transform 500ms ease-out;
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== Legal pages typography ===== */
+.legal-content h1 {
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  color: var(--color-dark);
+}
+.legal-content h2 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+}
+.legal-content h3 {
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-dark);
+}
+.legal-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 1rem;
+}
+.legal-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 200ms ease;
+}
+.legal-content a:hover {
+  color: var(--color-primary-light);
+}
+.legal-content strong {
+  font-weight: 700;
+  color: var(--color-dark);
+}
+.legal-content em {
+  font-style: italic;
+}
+.legal-content ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #334155;
+}
+.legal-content ul li {
+  line-height: 1.65;
+  margin-bottom: 0.35rem;
+}
+.legal-content hr {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+}
+.legal-content table {
+  width: 100%;
+  font-size: 0.9rem;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+.legal-content thead {
+  background: var(--color-soft);
+}
+.legal-content th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  color: var(--color-dark);
+  border-bottom: 1px solid #e2e8f0;
+}
+.legal-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+.legal-content tr:last-child td {
+  border-bottom: 0;
+}
+.legal-content .lead-address {
+  font-style: normal;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 1.25rem;
+}
+.legal-content .footer-note {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* ===== /buchen price reveal animation ===== */
+@keyframes priceReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .price-loaded {
+    animation: priceReveal 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* ===== Reduced-motion safety net ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

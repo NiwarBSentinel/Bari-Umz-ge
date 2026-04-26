@@ -1,0 +1,531 @@
+---
+import {
+  MapPin,
+  Clock,
+  ArrowLeftRight,
+  ArrowRight,
+  MessageCircle,
+  Locate,
+  Loader2,
+} from "@lucide/astro";
+---
+
+<div class="relative z-20 max-w-5xl mx-auto px-4 mt-6 md:-mt-16 lg:-mt-20">
+  <div class="bg-white rounded-2xl shadow-2xl p-2">
+    <div class="flex flex-col md:flex-row md:items-stretch">
+      <!-- Von -->
+      <div
+        class="flex-1 p-4 hover:bg-slate-50 transition-colors rounded-xl cursor-text relative"
+      >
+        <div class="flex items-start gap-3">
+          <MapPin
+            size={18}
+            strokeWidth={2}
+            class="text-primary opacity-60 mt-1 flex-shrink-0"
+          />
+          <div class="flex-1 min-w-0">
+            <label
+              for="booking-from"
+              class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
+              >Von</label
+            >
+            <input
+              id="booking-from"
+              type="text"
+              placeholder="Adresse oder Ort"
+              autocomplete="off"
+              class="w-full text-base font-medium border-0 outline-none bg-transparent placeholder:text-slate-400 placeholder:font-normal"
+            />
+          </div>
+          <button
+            id="booking-locate"
+            type="button"
+            title="Aktuellen Standort verwenden"
+            aria-label="Aktuellen Standort verwenden"
+            class="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/5 hover:bg-primary/15 text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center mt-0.5"
+          >
+            <span class="locate-idle">
+              <Locate size={18} strokeWidth={2} />
+            </span>
+            <span class="locate-loading hidden">
+              <Loader2 size={18} strokeWidth={2} class="animate-spin" />
+            </span>
+          </button>
+        </div>
+        <ul
+          id="from-suggestions"
+          role="listbox"
+          class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-72 overflow-y-auto z-30"
+        ></ul>
+      </div>
+
+      <!-- Swap -->
+      <div class="flex items-center justify-center py-1 md:py-0 md:px-1">
+        <button
+          id="booking-swap"
+          type="button"
+          aria-label="Adressen tauschen"
+          class="group w-10 h-10 bg-slate-100 hover:bg-primary/10 rounded-full flex items-center justify-center transition-colors"
+        >
+          <ArrowLeftRight
+            size={18}
+            strokeWidth={2}
+            class="text-slate-600 group-hover:text-primary transition-colors rotate-90 md:rotate-0"
+          />
+        </button>
+      </div>
+
+      <!-- Nach -->
+      <div
+        class="flex-1 p-4 hover:bg-slate-50 transition-colors rounded-xl cursor-text border-t md:border-t-0 md:border-l border-slate-200 relative"
+      >
+        <div class="flex items-start gap-3">
+          <MapPin size={18} strokeWidth={2} class="text-primary mt-1 flex-shrink-0" />
+          <div class="flex-1 min-w-0">
+            <label
+              for="booking-to"
+              class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
+              >Nach</label
+            >
+            <input
+              id="booking-to"
+              type="text"
+              placeholder="Wohin geht's?"
+              autocomplete="off"
+              class="w-full text-base font-medium border-0 outline-none bg-transparent placeholder:text-slate-400 placeholder:font-normal"
+            />
+          </div>
+        </div>
+        <ul
+          id="to-suggestions"
+          role="listbox"
+          class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-72 overflow-y-auto z-30"
+        ></ul>
+      </div>
+
+      <!-- Wann -->
+      <div
+        class="flex-1 p-4 hover:bg-slate-50 transition-colors rounded-xl cursor-pointer border-t md:border-t-0 md:border-l border-slate-200"
+      >
+        <div class="flex items-start gap-3">
+          <Clock size={18} strokeWidth={2} class="text-primary mt-1 flex-shrink-0" />
+          <div class="flex-1 min-w-0">
+            <label
+              for="booking-when"
+              class="block text-xs text-slate-500 uppercase tracking-wide font-semibold mb-1"
+              >Wann</label
+            >
+            <select
+              id="booking-when"
+              class="w-full text-base font-medium appearance-none border-0 outline-none bg-transparent cursor-pointer pr-2"
+            >
+              <option value="Sofort">Sofort</option>
+              <option value="In 30 Minuten">In 30 Minuten</option>
+              <option value="In 1 Stunde">In 1 Stunde</option>
+              <option value="Heute Abend">Heute Abend</option>
+              <option value="Morgen">Morgen</option>
+              <option value="custom">Termin wählen...</option>
+            </select>
+            <input
+              id="booking-when-custom"
+              type="datetime-local"
+              class="hidden w-full text-base font-medium border-0 outline-none bg-transparent mt-1"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div
+        class="p-2 md:flex md:items-stretch border-t md:border-t-0 border-slate-200"
+      >
+        <button
+          id="booking-submit"
+          type="button"
+          class="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold text-base px-6 py-4 rounded-xl transition duration-300 hover:scale-[1.02] hover:shadow-lg"
+        >
+          <span>Bestellen</span>
+          <ArrowRight size={20} strokeWidth={2.5} />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 md:mt-8 text-center px-4">
+    <p class="inline-flex items-center gap-2 text-sm text-slate-500">
+      <MessageCircle size={14} strokeWidth={2} class="flex-shrink-0" />
+      <span>Sofortpreis · Bestätigung via WhatsApp innert wenigen Minuten</span>
+    </p>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (m) {
+        return (
+          {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[m] || m
+        );
+      });
+    }
+
+    function setupAutoSuggest(inputId, dropdownId) {
+      const input = document.getElementById(inputId);
+      const dropdown = document.getElementById(dropdownId);
+      if (!input || !dropdown) return;
+
+      let debounceTimer = null;
+      let activeIndex = -1;
+      let currentSuggestions = [];
+      let abortController = null;
+
+      function formatSuggestion(item) {
+        const addr = item.address || {};
+        const parts = [];
+        if (addr.road) {
+          parts.push(addr.road + (addr.house_number ? " " + addr.house_number : ""));
+        }
+        const cityPart = [
+          addr.postcode,
+          addr.city || addr.town || addr.village || addr.municipality,
+        ]
+          .filter(Boolean)
+          .join(" ");
+        if (cityPart) parts.push(cityPart);
+        const main = parts.join(", ");
+        if (!main) {
+          return (item.display_name || "")
+            .split(",")
+            .slice(0, 3)
+            .join(",")
+            .trim();
+        }
+        return main;
+      }
+
+      function formatSubtext(item) {
+        const addr = item.address || {};
+        return [addr.state, addr.country].filter(Boolean).join(", ");
+      }
+
+      function renderSuggestions(items) {
+        currentSuggestions = items;
+        activeIndex = -1;
+
+        if (items.length === 0) {
+          dropdown.innerHTML =
+            '<li class="px-4 py-3 text-sm text-slate-500">Keine Vorschläge gefunden</li>';
+          dropdown.classList.remove("hidden");
+          return;
+        }
+
+        const html = items
+          .map(function (item, i) {
+            return (
+              '<li data-index="' +
+              i +
+              '" role="option" class="suggestion-item px-4 py-3 cursor-pointer hover:bg-accent-light/30 transition-colors duration-150 border-b border-slate-100 last:border-b-0">' +
+              '<div class="flex items-start gap-3">' +
+              '<svg class="w-4 h-4 text-accent-dark mt-0.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+              '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>' +
+              '<circle cx="12" cy="10" r="3"/>' +
+              "</svg>" +
+              '<div class="flex-1 min-w-0">' +
+              '<p class="text-sm font-medium text-slate-900 truncate">' +
+              escapeHtml(formatSuggestion(item)) +
+              "</p>" +
+              '<p class="text-xs text-slate-500 truncate">' +
+              escapeHtml(formatSubtext(item)) +
+              "</p>" +
+              "</div>" +
+              "</div>" +
+              "</li>"
+            );
+          })
+          .join("");
+        dropdown.innerHTML = html;
+        dropdown.classList.remove("hidden");
+
+        dropdown.querySelectorAll(".suggestion-item").forEach(function (li) {
+          li.addEventListener("click", function () {
+            const idx = parseInt(li.dataset.index, 10);
+            selectSuggestion(idx);
+          });
+        });
+      }
+
+      function selectSuggestion(index) {
+        if (index < 0 || index >= currentSuggestions.length) return;
+        const item = currentSuggestions[index];
+        const formatted = formatSuggestion(item);
+        input.value = formatted;
+        input.dataset.lat = String(item.lat);
+        input.dataset.lon = String(item.lon);
+        input.dataset.display = formatted;
+        dropdown.classList.add("hidden");
+      }
+
+      function highlightItem(index) {
+        const items = dropdown.querySelectorAll(".suggestion-item");
+        items.forEach(function (item, i) {
+          if (i === index) {
+            item.classList.add("bg-accent-light/30");
+            item.scrollIntoView({ block: "nearest" });
+          } else {
+            item.classList.remove("bg-accent-light/30");
+          }
+        });
+      }
+
+      async function fetchSuggestions(query) {
+        if (abortController) abortController.abort();
+        abortController = new AbortController();
+        try {
+          const url =
+            "https://nominatim.openstreetmap.org/search?q=" +
+            encodeURIComponent(query) +
+            "&format=json&limit=6&countrycodes=ch&addressdetails=1&accept-language=de-CH";
+          const res = await fetch(url, {
+            signal: abortController.signal,
+            headers: { "Accept-Language": "de-CH" },
+          });
+          if (!res.ok) return;
+          const data = await res.json();
+          renderSuggestions(data);
+        } catch (err) {
+          if (err && err.name !== "AbortError") {
+            console.error("Suggest fetch failed", err);
+          }
+        }
+      }
+
+      input.addEventListener("input", function (e) {
+        const query = e.target.value.trim();
+        delete input.dataset.lat;
+        delete input.dataset.lon;
+        clearTimeout(debounceTimer);
+        if (query.length < 3) {
+          dropdown.classList.add("hidden");
+          return;
+        }
+        debounceTimer = setTimeout(function () {
+          fetchSuggestions(query);
+        }, 300);
+      });
+
+      input.addEventListener("keydown", function (e) {
+        if (dropdown.classList.contains("hidden")) return;
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          activeIndex = Math.min(activeIndex + 1, currentSuggestions.length - 1);
+          highlightItem(activeIndex);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          activeIndex = Math.max(activeIndex - 1, -1);
+          highlightItem(activeIndex);
+        } else if (e.key === "Enter") {
+          if (activeIndex >= 0) {
+            e.preventDefault();
+            selectSuggestion(activeIndex);
+          }
+        } else if (e.key === "Escape") {
+          dropdown.classList.add("hidden");
+        }
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!dropdown.contains(e.target) && e.target !== input) {
+          dropdown.classList.add("hidden");
+        }
+      });
+
+      input.addEventListener("focus", function () {
+        if (currentSuggestions.length > 0 && input.value.length >= 3) {
+          dropdown.classList.remove("hidden");
+        }
+      });
+    }
+
+    setupAutoSuggest("booking-from", "from-suggestions");
+    setupAutoSuggest("booking-to", "to-suggestions");
+
+    const fromEl = document.getElementById("booking-from");
+    const toEl = document.getElementById("booking-to");
+    const whenEl = document.getElementById("booking-when");
+    const whenCustomEl = document.getElementById("booking-when-custom");
+    const swapBtn = document.getElementById("booking-swap");
+    const submitBtn = document.getElementById("booking-submit");
+
+    if (whenEl && whenCustomEl) {
+      whenEl.addEventListener("change", function () {
+        if (whenEl.value === "custom") {
+          whenEl.classList.add("hidden");
+          whenCustomEl.classList.remove("hidden");
+          whenCustomEl.focus();
+          if (typeof whenCustomEl.showPicker === "function") {
+            whenCustomEl.showPicker();
+          }
+        }
+      });
+    }
+
+    if (swapBtn && fromEl && toEl) {
+      swapBtn.addEventListener("click", function () {
+        const tmpVal = fromEl.value;
+        const tmpLat = fromEl.dataset.lat;
+        const tmpLon = fromEl.dataset.lon;
+        fromEl.value = toEl.value;
+        toEl.value = tmpVal;
+        if (toEl.dataset.lat) {
+          fromEl.dataset.lat = toEl.dataset.lat;
+          fromEl.dataset.lon = toEl.dataset.lon;
+        } else {
+          delete fromEl.dataset.lat;
+          delete fromEl.dataset.lon;
+        }
+        if (tmpLat) {
+          toEl.dataset.lat = tmpLat;
+          toEl.dataset.lon = tmpLon;
+        } else {
+          delete toEl.dataset.lat;
+          delete toEl.dataset.lon;
+        }
+      });
+    }
+
+    const locateBtn = document.getElementById("booking-locate");
+    if (locateBtn && fromEl) {
+      const idleIcon = locateBtn.querySelector(".locate-idle");
+      const loadingIcon = locateBtn.querySelector(".locate-loading");
+
+      function setLocateLoading(loading) {
+        if (loading) {
+          if (idleIcon) idleIcon.classList.add("hidden");
+          if (loadingIcon) loadingIcon.classList.remove("hidden");
+          locateBtn.disabled = true;
+        } else {
+          if (idleIcon) idleIcon.classList.remove("hidden");
+          if (loadingIcon) loadingIcon.classList.add("hidden");
+          locateBtn.disabled = false;
+        }
+      }
+
+      function formatReverseAddress(addr, fallback) {
+        addr = addr || {};
+        const parts = [];
+        if (addr.road) {
+          parts.push(addr.road + (addr.house_number ? " " + addr.house_number : ""));
+        }
+        const cityPart = [
+          addr.postcode,
+          addr.city || addr.town || addr.village || addr.municipality,
+        ]
+          .filter(Boolean)
+          .join(" ");
+        if (cityPart) parts.push(cityPart);
+        return parts.join(", ") || fallback || "Aktueller Standort";
+      }
+
+      locateBtn.addEventListener("click", function () {
+        if (!navigator.geolocation) {
+          alert("Standortermittlung wird von Ihrem Browser nicht unterstützt.");
+          return;
+        }
+        setLocateLoading(true);
+        navigator.geolocation.getCurrentPosition(
+          async function (pos) {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            try {
+              const url =
+                "https://nominatim.openstreetmap.org/reverse?lat=" +
+                lat +
+                "&lon=" +
+                lon +
+                "&format=json&addressdetails=1&accept-language=de-CH";
+              const res = await fetch(url, {
+                headers: { "Accept-Language": "de-CH" },
+              });
+              if (!res.ok) throw new Error("Reverse geocoding " + res.status);
+              const data = await res.json();
+              fromEl.value = formatReverseAddress(
+                data.address,
+                data.display_name
+              );
+              fromEl.dataset.lat = String(lat);
+              fromEl.dataset.lon = String(lon);
+            } catch (err) {
+              console.error("Reverse geocoding failed", err);
+              fromEl.value = "Aktueller Standort";
+              fromEl.dataset.lat = String(lat);
+              fromEl.dataset.lon = String(lon);
+            } finally {
+              setLocateLoading(false);
+            }
+          },
+          function (err) {
+            setLocateLoading(false);
+            let msg = "Standort konnte nicht ermittelt werden.";
+            if (err && err.code === 1) {
+              msg =
+                "Standortzugriff wurde verweigert. Bitte in den Browser-Einstellungen erlauben.";
+            } else if (err && err.code === 2) {
+              msg =
+                "Kein GPS-Signal verfügbar. Bitte prüfen Sie Ihre Verbindung.";
+            } else if (err && err.code === 3) {
+              msg = "Standortermittlung dauerte zu lange. Bitte erneut versuchen.";
+            }
+            alert(msg);
+          },
+          { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+        );
+      });
+    }
+
+    if (submitBtn) {
+      submitBtn.addEventListener("click", function () {
+        const from = fromEl ? fromEl.value.trim() : "";
+        const to = toEl ? toEl.value.trim() : "";
+
+        if (!from || !to) {
+          alert("Bitte geben Sie Start- und Zieladresse an.");
+          return;
+        }
+
+        let when = whenEl ? whenEl.value : "Sofort";
+        if (when === "custom") {
+          const custom = whenCustomEl ? whenCustomEl.value : "";
+          if (custom) {
+            try {
+              when = new Date(custom).toLocaleString("de-CH", {
+                dateStyle: "short",
+                timeStyle: "short",
+              });
+            } catch (e) {
+              when = custom;
+            }
+          } else {
+            when = "Termin folgt";
+          }
+        }
+
+        const params = new URLSearchParams({ from: from, to: to, when: when });
+        if (fromEl && fromEl.dataset.lat && fromEl.dataset.lon) {
+          params.set("fromLat", fromEl.dataset.lat);
+          params.set("fromLon", fromEl.dataset.lon);
+        }
+        if (toEl && toEl.dataset.lat && toEl.dataset.lon) {
+          params.set("toLat", toEl.dataset.lat);
+          params.set("toLon", toEl.dataset.lon);
+        }
+        window.location.href = "/buchen?" + params.toString();
+      });
+    }
+  })();
+</script>

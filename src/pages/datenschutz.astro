@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Datenschutz · Shiar TAXI";
+const description = "Datenschutzerklärung gemäss Schweizer DSG/nDSG.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  canonicalPath="/datenschutz"
+  solidHeader={true}
+>
+  <article class="legal-content max-w-4xl mx-auto pt-32 pb-24 px-6 sm:px-8">
+    <h1>Datenschutzerklärung</h1>
+
+    <h2>1. Wer ist verantwortlich?</h2>
+    <p>
+      Verantwortlich für die Datenbearbeitung auf dieser Website ist die
+      <strong>Shiar TAXI GmbH</strong> (siehe <a href="/impressum">Impressum</a>).
+    </p>
+    <p>
+      Bei Fragen zum Datenschutz erreichen Sie uns unter
+      <a href="mailto:info@shiar-taxi.ch">info@shiar-taxi.ch</a> oder telefonisch unter
+      <a href="tel:+41796466087">+41 79 646 60 87</a>.
+    </p>
+
+    <h2>2. Welche Daten erfassen wir?</h2>
+    <p>
+      Wir erfassen ausschliesslich Daten, die Sie uns aktiv mitteilen oder die für
+      den Betrieb der Website technisch notwendig sind.
+    </p>
+
+    <h3>a) Daten aus dem Kontaktformular</h3>
+    <p>Wenn Sie unser Kontaktformular nutzen, erheben wir:</p>
+    <ul>
+      <li>Name</li>
+      <li>Telefonnummer</li>
+      <li>E-Mail-Adresse</li>
+      <li>Ihre Nachricht</li>
+    </ul>
+    <p>
+      Diese Daten verwenden wir ausschliesslich zur Bearbeitung Ihrer Anfrage.
+      Die Verarbeitung erfolgt über den Dienstleister <strong>Formspree</strong>
+      (Formspree Inc., USA). Eine Übermittlung in die USA findet statt; Formspree
+      garantiert DSG-/DSGVO-konforme Verarbeitung.
+    </p>
+
+    <h3>b) Daten aus der Buchungs-Funktion (WhatsApp)</h3>
+    <p>
+      Wenn Sie die Online-Buchung nutzen, werden die eingegebenen Adressen
+      (von/nach/wann) als WhatsApp-Nachricht an unsere Geschäftsnummer übermittelt.
+      WhatsApp ist ein Dienst von Meta Platforms Ireland Ltd. — es gelten die
+      Datenschutzbestimmungen von WhatsApp/Meta.
+    </p>
+
+    <h3>c) Server-Logfiles und Statistik</h3>
+    <p>Beim Besuch unserer Website werden automatisch technische Daten erfasst:</p>
+    <ul>
+      <li>Anonymisierte IP-Adresse</li>
+      <li>Aufgerufene Seiten</li>
+      <li>Datum und Uhrzeit des Zugriffs</li>
+      <li>Verwendeter Browser</li>
+    </ul>
+    <p>
+      Wir nutzen <strong>Vercel Analytics</strong> (Vercel Inc., USA) für aggregierte
+      Besucherstatistiken. Vercel Analytics arbeitet <strong>cookielos</strong> und
+      erstellt <strong>keine Personenprofile</strong>. Es werden keine IPs gespeichert,
+      kein Cross-Site-Tracking betrieben.
+    </p>
+
+    <h2>3. Rechtsgrundlage</h2>
+    <p>
+      Die Verarbeitung erfolgt auf Basis von Art. 31 Abs. 2 nDSG (überwiegendes
+      berechtigtes Interesse: Bearbeitung Ihrer Anfrage und Bereitstellung der
+      Website) sowie auf Basis Ihrer Einwilligung beim Absenden des Kontaktformulars.
+    </p>
+
+    <h2>4. Wie lange speichern wir Ihre Daten?</h2>
+    <ul>
+      <li>
+        <strong>Anfragen über das Kontaktformular</strong>: Bis zur abschliessenden
+        Bearbeitung Ihrer Anfrage, danach maximal 12 Monate für eventuelle Rückfragen.
+      </li>
+      <li>
+        <strong>Server-Logfiles</strong>: 30 Tage, danach automatische Löschung.
+      </li>
+      <li>
+        <strong>Buchungsdaten via WhatsApp</strong>: Gemäss
+        WhatsApp-Datenschutzbestimmungen.
+      </li>
+    </ul>
+
+    <h2>5. Ihre Rechte</h2>
+    <p>Sie haben jederzeit das Recht auf:</p>
+    <ul>
+      <li><strong>Auskunft</strong> über die zu Ihrer Person gespeicherten Daten (Art. 25 nDSG)</li>
+      <li><strong>Berichtigung</strong> unrichtiger Daten</li>
+      <li><strong>Löschung</strong> Ihrer Daten («Recht auf Vergessenwerden»)</li>
+      <li><strong>Einschränkung</strong> der Datenbearbeitung</li>
+      <li><strong>Widerspruch</strong> gegen die Verarbeitung</li>
+      <li><strong>Datenübertragbarkeit</strong> in einem strukturierten Format</li>
+    </ul>
+    <p>
+      Schreiben Sie uns einfach an
+      <a href="mailto:info@shiar-taxi.ch">info@shiar-taxi.ch</a> — wir antworten innert
+      30 Tagen.
+    </p>
+    <p>
+      Sind Sie der Meinung, dass die Bearbeitung gegen das Datenschutzrecht verstösst,
+      können Sie sich beim <strong>Eidgenössischen Datenschutz- und
+      Öffentlichkeitsbeauftragten (EDÖB)</strong> beschweren:
+      <a href="https://www.edoeb.admin.ch" target="_blank" rel="noopener noreferrer"
+        >www.edoeb.admin.ch</a
+      >
+    </p>
+
+    <h2>6. Datensicherheit</h2>
+    <p>
+      Unsere Website wird via <strong>HTTPS verschlüsselt</strong> ausgeliefert. Die
+      Datenübertragung zwischen Ihrem Browser und unserem Server erfolgt verschlüsselt
+      (TLS 1.3).
+    </p>
+
+    <h2>7. Drittanbieter-Übersicht</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Dienst</th>
+          <th>Zweck</th>
+          <th>Anbieter</th>
+          <th>Sitz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Vercel</td>
+          <td>Hosting + Analytics</td>
+          <td>Vercel Inc.</td>
+          <td>USA</td>
+        </tr>
+        <tr>
+          <td>Formspree</td>
+          <td>Formular-Verarbeitung</td>
+          <td>Formspree Inc.</td>
+          <td>USA</td>
+        </tr>
+        <tr>
+          <td>WhatsApp</td>
+          <td>Buchungsmessenger</td>
+          <td>Meta Platforms Ireland Ltd.</td>
+          <td>Irland</td>
+        </tr>
+        <tr>
+          <td>Google Fonts</td>
+          <td>Schriftarten</td>
+          <td>Google LLC</td>
+          <td>USA</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>8. Änderungen dieser Erklärung</h2>
+    <p>
+      Wir können diese Datenschutzerklärung bei Bedarf anpassen. Die jeweils aktuelle
+      Version ist auf dieser Seite einsehbar.
+    </p>
+
+    <h2 id="cookies">9. Cookies und Tracking</h2>
+    <p>
+      Diese Website verwendet <strong>keine Tracking-Cookies</strong>. Es werden keine
+      Werbe-, Marketing- oder Profiling-Cookies eingesetzt.
+    </p>
+    <p>
+      Lediglich technisch notwendige Browser-Speicher (z.B. zur Spracheinstellung)
+      können verwendet werden — diese sind für die Funktionalität der Website
+      erforderlich und benötigen keine Einwilligung.
+    </p>
+    <p>
+      Falls Sie zusätzlich keine externen Schriften (Google Fonts) laden möchten,
+      können Sie diese in Ihren Browser-Einstellungen blockieren.
+    </p>
+
+    <hr />
+
+    <p class="footer-note"><em>Stand: April 2026</em></p>
+    <p class="footer-note">
+      <em
+        >Diese Datenschutzerklärung wurde nach den Vorgaben des Schweizer
+        Datenschutzgesetzes (nDSG) erstellt und ist Showcase-konform formuliert.</em
+      >
+    </p>
+  </article>
+</BaseLayout>

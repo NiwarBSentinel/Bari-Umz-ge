@@ -1,0 +1,163 @@
+---
+import { Phone, Mail, Clock, MapPin } from "@lucide/astro";
+---
+
+<section id="kontakt" class="bg-white py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-primary uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold mb-4">
+        Kontakt
+      </p>
+      <h2 class="text-dark font-extrabold tracking-tight text-4xl sm:text-5xl leading-[1.1]">
+        Buchen oder Frage stellen
+      </h2>
+    </div>
+
+    <div class="mt-16 grid gap-8 lg:grid-cols-2">
+      <div class="bg-soft rounded-2xl p-8 sm:p-10">
+        <div class="space-y-7">
+          <a href="tel:+41796466087" class="flex items-start gap-4 group">
+            <span
+              class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+            >
+              <Phone size={24} strokeWidth={2} class="text-primary" />
+            </span>
+            <span>
+              <span class="block text-xs font-semibold uppercase tracking-widest text-muted mb-1"
+                >Telefon</span
+              >
+              <span
+                class="block text-3xl font-extrabold text-dark group-hover:text-primary transition"
+                >079 646 60 87</span
+              >
+            </span>
+          </a>
+          <a href="mailto:info@shiar-taxi.ch" class="flex items-start gap-4 group">
+            <span
+              class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+            >
+              <Mail size={24} strokeWidth={2} class="text-primary" />
+            </span>
+            <span>
+              <span class="block text-xs font-semibold uppercase tracking-widest text-muted mb-1"
+                >E-Mail</span
+              >
+              <span
+                class="block text-base font-medium text-dark group-hover:text-primary transition"
+                >info@shiar-taxi.ch</span
+              >
+            </span>
+          </a>
+          <div class="flex items-start gap-4">
+            <span
+              class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+            >
+              <Clock size={24} strokeWidth={2} class="text-primary" />
+            </span>
+            <span>
+              <span class="block text-xs font-semibold uppercase tracking-widest text-muted mb-1"
+                >Verfügbarkeit</span
+              >
+              <span class="block text-base font-medium text-dark">24/7 · 365 Tage</span>
+            </span>
+          </div>
+          <div class="flex items-start gap-4">
+            <span
+              class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center"
+            >
+              <MapPin size={24} strokeWidth={2} class="text-primary" />
+            </span>
+            <span>
+              <span class="block text-xs font-semibold uppercase tracking-widest text-muted mb-1"
+                >Region</span
+              >
+              <span class="block text-base font-medium text-dark">Zürich und Umgebung</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <form
+        id="contact-form"
+        action="https://formspree.io/f/xrerddrp"
+        method="POST"
+        class="bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 space-y-5 shadow-sm"
+      >
+        <input type="hidden" name="_subject" value="Neue Anfrage über Shiar TAXI Website" />
+        <input type="hidden" name="_next" value="https://taxi-maxi.vercel.app/?sent=true" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" />
+
+        <div>
+          <label for="name" class="block text-sm font-semibold text-dark mb-2">Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            autocomplete="name"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent-light outline-none transition"
+          />
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="phone" class="block text-sm font-semibold text-dark mb-2">Telefon</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent-light outline-none transition"
+            />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-semibold text-dark mb-2">E-Mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent-light outline-none transition"
+            />
+          </div>
+        </div>
+        <div>
+          <label for="message" class="block text-sm font-semibold text-dark mb-2">Nachricht</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            required
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-accent focus:ring-2 focus:ring-accent-light outline-none transition resize-none"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-accent hover:bg-accent-dark text-primary font-bold text-base px-8 py-4 rounded-xl shadow-sm transition duration-300 hover:shadow-md hover:scale-[1.01]"
+        >
+          Anfrage senden
+        </button>
+        <p class="text-sm text-muted text-center">
+          Wir melden uns innert 1 Stunde zurück.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    if (window.location.search.indexOf("sent=true") === -1) return;
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+    form.innerHTML =
+      '<div class="text-center py-12">' +
+      '  <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">' +
+      '    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><path d="M20 6 9 17l-5-5"/></svg>' +
+      "  </div>" +
+      '  <h3 class="text-2xl font-bold text-slate-900 mb-2">Anfrage erfolgreich gesendet!</h3>' +
+      '  <p class="text-slate-600">Wir melden uns innert 1 Stunde bei Ihnen zurück.</p>' +
+      "</div>";
+    window.history.replaceState({}, document.title, window.location.pathname);
+  })();
+</script>

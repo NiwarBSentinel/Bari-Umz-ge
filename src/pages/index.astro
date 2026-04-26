@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import BookingBar from "../components/BookingBar.astro";
+import Services from "../components/Services.astro";
+import Promise from "../components/Promise.astro";
+import Cta from "../components/Cta.astro";
+import Fleet from "../components/Fleet.astro";
+import Contact from "../components/Contact.astro";
+
+const siteUrl = "https://taxi-maxi.vercel.app";
+const title = "Shiar TAXI · Ihr Taxi in Zürich · 24/7 · 079 646 60 87";
+const description =
+  "Persönlicher Taxi-Service in Zürich und Umgebung. 24/7 verfügbar. Standard-Taxi, Flughafen-Transfer, Geschäftskunden. Jetzt anrufen: 079 646 60 87.";
+const ogTitle = "Shiar TAXI · Ihr Taxi in Zürich · 24/7";
+const ogDescription =
+  "Persönlicher Taxi-Service in Zürich. 24/7 verfügbar. Jetzt anrufen: 079 646 60 87.";
+const twitterDescription = "Persönlicher Taxi-Service in Zürich. 24/7 verfügbar.";
+
+const ldJson = {
+  "@context": "https://schema.org",
+  "@type": "TaxiService",
+  name: "Shiar TAXI",
+  image: `${siteUrl}/og-image.jpg`,
+  url: `${siteUrl}/`,
+  telephone: "+41796466087",
+  email: "info@shiar-taxi.ch",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Bahnhofstrasse 1",
+    addressLocality: "Zürich",
+    postalCode: "8001",
+    addressRegion: "ZH",
+    addressCountry: "CH",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 47.3769,
+    longitude: 8.5417,
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    opens: "00:00",
+    closes: "23:59",
+  },
+  areaServed: { "@type": "City", name: "Zürich" },
+  serviceType: ["Taxi", "Flughafen-Transfer", "Geschäftskunden-Service"],
+  currenciesAccepted: "CHF",
+  paymentAccepted: "Cash, Credit Card",
+  sameAs: [],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+  twitterDescription={twitterDescription}
+  canonicalPath="/"
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(ldJson)}
+  />
+
+  <Hero />
+  <BookingBar />
+  <Services />
+  <Promise />
+  <Cta />
+  <Fleet />
+  <Contact />
+</BaseLayout>

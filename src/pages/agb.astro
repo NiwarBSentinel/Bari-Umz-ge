@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "AGB · Shiar TAXI";
+const description = "Allgemeine Geschäftsbedingungen der Shiar TAXI GmbH.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  canonicalPath="/agb"
+  solidHeader={true}
+>
+  <article class="legal-content max-w-4xl mx-auto pt-32 pb-24 px-6 sm:px-8">
+    <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
+
+    <h2>1. Geltungsbereich</h2>
+    <p>
+      Diese AGB regeln das Vertragsverhältnis zwischen der
+      <strong>Shiar TAXI GmbH</strong> (nachfolgend «Anbieterin») und ihren Kundinnen
+      und Kunden (nachfolgend «Kunde») für sämtliche Personentransport-Leistungen.
+    </p>
+    <p>Mit der Bestellung einer Fahrt akzeptiert der Kunde diese AGB.</p>
+
+    <h2>2. Leistungsumfang</h2>
+    <p>Die Anbieterin erbringt:</p>
+    <ul>
+      <li>Standard-Taxi-Fahrten innerhalb von Zürich und Umgebung</li>
+      <li>Flughafen-Transfers (Zürich Kloten und weitere Schweizer Flughäfen)</li>
+      <li>Geschäftskunden-Beförderungen mit Vertrag</li>
+    </ul>
+    <p>
+      Sämtliche Fahrten werden gemäss dem <strong>offiziellen Taxitarif der Stadt
+      Zürich</strong> verrechnet, sofern nicht ein Festpreis vereinbart wurde.
+    </p>
+
+    <h2>3. Bestellung und Zustandekommen des Vertrags</h2>
+    <p>
+      Bestellungen erfolgen telefonisch
+      (<a href="tel:+41796466087">+41 79 646 60 87</a>), per Online-Buchung
+      (WhatsApp) oder über das Kontaktformular.
+    </p>
+    <p>Der Vertrag kommt mit der Bestätigung der Anbieterin zustande.</p>
+
+    <h2>4. Preise und Zahlung</h2>
+    <ul>
+      <li>
+        Alle Preise verstehen sich in <strong>Schweizer Franken (CHF)</strong> und
+        beinhalten die gesetzliche Mehrwertsteuer.
+      </li>
+      <li>
+        Zahlungsmittel: <strong>Bargeld, Debit- und Kreditkarten, TWINT</strong>
+        (vor Ort).
+      </li>
+      <li>
+        Bei Geschäftskunden ist eine monatliche Sammelrechnung möglich.
+      </li>
+      <li>
+        Festpreise (z.B. Flughafen-Transfer) werden vor Fahrtantritt schriftlich
+        oder telefonisch bestätigt.
+      </li>
+    </ul>
+
+    <h2>5. Stornierung</h2>
+    <ul>
+      <li>
+        Stornierungen bis <strong>30 Minuten vor der vereinbarten Fahrzeit</strong>
+        sind kostenfrei.
+      </li>
+      <li>
+        Bei Stornierungen innert 30 Minuten oder Nichterscheinen können wir eine
+        Aufwandsentschädigung von <strong>CHF 20</strong> verrechnen.
+      </li>
+      <li>
+        Vorauszahlungen werden bei rechtzeitiger Stornierung vollständig erstattet.
+      </li>
+    </ul>
+
+    <h2>6. Pflichten der Kundinnen und Kunden</h2>
+    <ul>
+      <li>Pünktliches Erscheinen am vereinbarten Treffpunkt</li>
+      <li>Korrekte Angaben zu Anzahl Personen und Gepäck</li>
+      <li>Rücksichtsvoller Umgang mit dem Fahrzeug</li>
+    </ul>
+
+    <h2>7. Haftung</h2>
+    <p>
+      Die Anbieterin haftet im Rahmen der gesetzlichen Bestimmungen
+      (Personenbeförderungsgesetz, OR). Sämtliche Fahrzeuge sind vollumfänglich
+      versichert.
+    </p>
+    <p>
+      Für Verlust persönlicher Gegenstände im Fahrzeug übernehmen wir keine
+      Haftung — bitte prüfen Sie vor dem Aussteigen Ihre Sachen. Gefundene
+      Gegenstände werden 30 Tage aufbewahrt.
+    </p>
+
+    <h2>8. Verspätungen</h2>
+    <p>
+      Wir geben uns grosse Mühe, pünktlich zu sein. Bei höherer Gewalt
+      (Verkehrsunfälle, extreme Witterung, Streiks) können Verspätungen entstehen,
+      für die wir nicht haften. Wir informieren Sie umgehend.
+    </p>
+
+    <h2>9. Datenschutz</h2>
+    <p>
+      Es gilt unsere <a href="/datenschutz">Datenschutzerklärung</a>.
+    </p>
+
+    <h2>10. Anwendbares Recht und Gerichtsstand</h2>
+    <ul>
+      <li>Es gilt <strong>Schweizer Recht</strong> unter Ausschluss des UN-Kaufrechts.</li>
+      <li>Gerichtsstand ist <strong>Zürich</strong>.</li>
+      <li>
+        Sollten einzelne Bestimmungen unwirksam sein, bleibt der übrige Vertrag
+        gültig.
+      </li>
+    </ul>
+
+    <hr />
+
+    <p class="footer-note"><em>Stand: April 2026</em></p>
+    <p class="footer-note">
+      <em
+        >Diese AGB sind Showcase-Vorlagen. Vor produktivem Einsatz bitte durch einen
+        Schweizer Anwalt prüfen lassen.</em
+      >
+    </p>
+  </article>
+</BaseLayout>

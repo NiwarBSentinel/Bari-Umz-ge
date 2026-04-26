@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://taxi-maxi.vercel.app/sitemap-index.xml

@@ -1,0 +1,42 @@
+---
+import { Phone } from "@lucide/astro";
+---
+
+<section class="cta-gradient py-20 sm:py-24 relative overflow-hidden">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2
+      class="text-dark font-extrabold tracking-tight text-3xl sm:text-4xl md:text-5xl leading-[1.15]"
+    >
+      Brauchen Sie jetzt ein Taxi?
+    </h2>
+    <p class="mt-5 text-lg text-dark/70 max-w-2xl mx-auto">
+      Rufen Sie uns an — wir sind für Sie da, rund um die Uhr.
+    </p>
+    <div class="mt-10">
+      <div class="inline-flex items-center gap-2 mb-4 text-sm font-medium text-green-700">
+        <span class="relative flex w-2.5 h-2.5">
+          <span
+            class="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping"
+          ></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+        </span>
+        <span>Jetzt verfügbar</span>
+      </div>
+      <div>
+        <a
+          href="tel:+41796466087"
+          class="cta-button inline-flex items-center gap-3 bg-primary hover:bg-primary-light text-white text-xl sm:text-2xl font-bold px-8 py-5 rounded-xl shadow-lg transition duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-blue-500/40"
+        >
+          <Phone size={22} strokeWidth={2.5} class="cta-phone-icon text-white" />
+          <span>079 646 60 87</span>
+        </a>
+      </div>
+      <p class="mt-5 text-sm text-slate-600">
+        Lieber online buchen?
+        <a href="#kontakt" class="underline hover:text-primary"
+          >Hier zum Formular ↓</a
+        >
+      </p>
+    </div>
+  </div>
+</section>

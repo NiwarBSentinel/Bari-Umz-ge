@@ -1,0 +1,77 @@
+---
+import { Heart } from "@lucide/astro";
+
+const cols = [
+  {
+    title: "Services",
+    items: [
+      { href: "/#services", label: "Standard-Taxi" },
+      { href: "/#services", label: "Flughafen-Transfer" },
+      { href: "/#services", label: "Geschäftskunden" },
+    ],
+  },
+  {
+    title: "Unternehmen",
+    items: [
+      { href: "/#versprechen", label: "Über uns" },
+      { href: "/#kontakt", label: "Karriere" },
+      { href: "/#kontakt", label: "Kontakt" },
+    ],
+  },
+  {
+    title: "Rechtliches",
+    items: [
+      { href: "/impressum", label: "Impressum" },
+      { href: "/datenschutz", label: "Datenschutz" },
+      { href: "/agb", label: "AGB" },
+    ],
+  },
+];
+---
+
+<footer class="bg-dark text-white/70">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <a
+          href="/"
+          class="flex items-center gap-2 group"
+          aria-label="Shiar TAXI - Startseite"
+        >
+          <span class="text-2xl font-extrabold tracking-tight leading-none">
+            <span class="text-white">Shiar</span><span
+              class="text-accent ml-1.5">TAXI</span>
+          </span>
+        </a>
+        <p class="mt-4 text-sm leading-relaxed">
+          Ihr persönlicher Taxi-Service in Zürich. 24/7.
+        </p>
+      </div>
+      {
+        cols.map((col) => (
+          <div>
+            <h3 class="text-sm font-semibold text-white uppercase tracking-widest mb-5">
+              {col.title}
+            </h3>
+            <ul class="space-y-3 text-sm">
+              {col.items.map((item) => (
+                <li>
+                  <a href={item.href} class="hover:text-accent transition">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <div
+      class="mt-14 pt-8 border-t border-white/10 text-xs text-white/50 text-center flex items-center justify-center flex-wrap gap-1"
+    >
+      <span>© 2026 Shiar TAXI GmbH · Konzessioniert in Zürich · Made with</span>
+      <Heart size={14} fill="currentColor" class="inline text-accent" />
+      <span>in Zürich</span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,402 @@
+---
+import {
+  Leaf,
+  VolumeX,
+  Sparkles,
+  TreeDeciduous,
+  Zap,
+  ChevronDown,
+} from "@lucide/astro";
+
+const items = [
+  {
+    Icon: Leaf,
+    title: "CO₂-arm unterwegs",
+    desc: "Bis zu 60% weniger Emissionen pro Fahrt.",
+  },
+  {
+    Icon: VolumeX,
+    title: "Leise & entspannt",
+    desc: "Hybrid-Antrieb läuft im Stadtverkehr nahezu lautlos.",
+  },
+  {
+    Icon: Sparkles,
+    title: "Premium-Komfort",
+    desc: "Klimatisiert, geräumig, nach jeder Schicht gereinigt.",
+  },
+];
+---
+
+<section id="flotte" class="relative py-24 md:py-32 bg-white overflow-hidden">
+  <div
+    class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white pointer-events-none"
+  >
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <!-- LINKS: Text -->
+      <div class="order-2 lg:order-1">
+        <p
+          class="inline-flex items-center gap-2 text-emerald-600 text-sm font-semibold uppercase tracking-widest mb-4"
+        >
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Nachhaltigkeit
+        </p>
+
+        <h2
+          class="text-slate-900 text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-5"
+        >
+          Komfort, der Sie <span class="text-primary">weiterbringt.</span>
+        </h2>
+
+        <p class="text-slate-600 text-lg leading-relaxed mb-8 max-w-md">
+          73% Hybrid- und Elektrofahrzeuge. Leise, sparsam, modern.
+        </p>
+
+        <ul id="fleet-accordion" class="space-y-2 mb-8">
+          {
+            items.map(({ Icon, title, desc }, idx) => (
+              <li
+                data-fleet-item={idx}
+                class="fleet-item rounded-xl border border-slate-200 transition-all duration-500 cursor-pointer overflow-hidden"
+              >
+                <button type="button" class="w-full flex items-center gap-4 p-4 text-left">
+                  <div class="fleet-icon-box w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0 transition-colors duration-300">
+                    <Icon size={20} strokeWidth={2} class="text-emerald-600" />
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base flex-1">{title}</h3>
+                  <ChevronDown
+                    size={20}
+                    strokeWidth={2}
+                    class="fleet-chevron text-slate-400 transition-transform duration-300"
+                  />
+                </button>
+                <div class="fleet-desc grid grid-rows-[0fr] transition-all duration-500">
+                  <div class="overflow-hidden">
+                    <p class="text-slate-600 text-sm leading-relaxed px-4 pb-4 pl-[4.5rem]">
+                      {desc}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div
+          class="inline-flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-3.5"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0"
+          >
+            <TreeDeciduous size={20} strokeWidth={2} class="text-white" />
+          </div>
+          <div>
+            <p class="text-sm font-bold text-emerald-900 leading-tight">
+              <span data-eco-counter data-target="2400">0</span> kg CO₂
+            </p>
+            <p class="text-xs text-emerald-700 leading-tight">
+              eingespart 2026
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RECHTS: Bild (freigestellt) -->
+      <div
+        class="order-1 lg:order-2 relative flex items-center justify-center min-h-[280px] lg:min-h-[420px]"
+      >
+        <div
+          class="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <div
+            class="w-[90%] h-[70%] rounded-full bg-gradient-to-br from-emerald-200/40 via-blue-200/30 to-accent-light/30 blur-3xl"
+          >
+          </div>
+        </div>
+
+        <div
+          class="absolute bottom-[15%] left-[10%] right-[10%] h-8 bg-slate-900/15 rounded-full blur-xl pointer-events-none"
+        >
+        </div>
+
+        <img
+          src="/images/byd-fleet-transparent%20(1).png"
+          alt="BYD Hybrid-Fahrzeug der Shiar TAXI-Flotte"
+          loading="lazy"
+          decoding="async"
+          width="1920"
+          height="1080"
+          class="relative w-full max-w-lg lg:max-w-xl h-auto object-contain z-10"
+        />
+
+        <div data-fleet-badge="0" class="fleet-badge fleet-badge-pos-0 z-20">
+          <div
+            class="bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0"
+            >
+              <Zap
+                size={20}
+                strokeWidth={2}
+                fill="currentColor"
+                class="text-emerald-600"
+              />
+            </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-wider text-emerald-700 font-semibold leading-tight"
+              >
+                E-Hybrid
+              </p>
+              <p
+                class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
+              >
+                73% der Flotte
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-fleet-badge="1" class="fleet-badge fleet-badge-pos-1 z-20">
+          <div
+            class="bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0"
+            >
+              <VolumeX size={20} strokeWidth={2} class="text-blue-600" />
+            </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-wider text-blue-700 font-semibold leading-tight"
+              >
+                Flüsterleise
+              </p>
+              <p
+                class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
+              >
+                weniger als 50 dB
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div data-fleet-badge="2" class="fleet-badge fleet-badge-pos-2 z-20">
+          <div
+            class="bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-accent-light/50 flex items-center justify-center flex-shrink-0"
+            >
+              <Sparkles size={20} strokeWidth={2} class="text-accent-dark" />
+            </div>
+            <div>
+              <p
+                class="text-xs uppercase tracking-wider text-accent-dark font-semibold leading-tight"
+              >
+                Frisch gereinigt
+              </p>
+              <p
+                class="text-sm font-bold text-slate-900 leading-tight mt-0.5 whitespace-nowrap"
+              >
+                nach jeder Schicht
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const fleetSection = document.getElementById("flotte");
+    if (!fleetSection) return;
+
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // Auto-Akkordeon
+    const items = fleetSection.querySelectorAll("[data-fleet-item]");
+    const badges = fleetSection.querySelectorAll("[data-fleet-badge]");
+    let activeIdx = 0;
+    let interval = null;
+    let isPaused = false;
+    const resumeTimers = new WeakMap();
+
+    function setActive(idx) {
+      activeIdx = idx;
+      items.forEach(function (item, i) {
+        if (i === idx) item.classList.add("is-active");
+        else item.classList.remove("is-active");
+      });
+      badges.forEach(function (badge, i) {
+        if (i === idx) badge.classList.add("is-visible");
+        else badge.classList.remove("is-visible");
+      });
+    }
+
+    function startAutoplay() {
+      if (interval) return;
+      interval = setInterval(function () {
+        if (isPaused) return;
+        setActive((activeIdx + 1) % items.length);
+      }, 4000);
+    }
+
+    setActive(0);
+
+    items.forEach(function (item, i) {
+      item.addEventListener("click", function () {
+        setActive(i);
+        isPaused = true;
+        const prev = resumeTimers.get(item);
+        if (prev) clearTimeout(prev);
+        const t = setTimeout(function () {
+          isPaused = false;
+        }, 8000);
+        resumeTimers.set(item, t);
+      });
+    });
+
+    const accordion = fleetSection.querySelector("#fleet-accordion");
+    if (accordion) {
+      accordion.addEventListener("mouseenter", function () {
+        isPaused = true;
+      });
+      accordion.addEventListener("mouseleave", function () {
+        isPaused = false;
+      });
+    }
+
+    const visObs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) startAutoplay();
+        });
+      },
+      { threshold: 0.3 }
+    );
+    visObs.observe(fleetSection);
+
+    // Eco-Counter
+    const counterEl = fleetSection.querySelector("[data-eco-counter]");
+    if (counterEl) {
+      const target = parseInt(counterEl.dataset.target || "0", 10);
+      const counterObs = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            if (reduced) {
+              counterEl.textContent = target.toLocaleString("de-CH");
+              counterObs.unobserve(counterEl);
+              return;
+            }
+            const startTime = performance.now();
+            const duration = 1800;
+            function update(now) {
+              const elapsed = now - startTime;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              counterEl.textContent = Math.floor(
+                target * eased
+              ).toLocaleString("de-CH");
+              if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+            counterObs.unobserve(counterEl);
+          });
+        },
+        { threshold: 0.5 }
+      );
+      counterObs.observe(counterEl);
+    }
+  })();
+</script>
+
+<style is:global>
+  #fleet-accordion .fleet-item.is-active {
+    border-color: rgb(167 243 208);
+    background: linear-gradient(
+      to bottom right,
+      rgb(236 253 245 / 0.5),
+      white
+    );
+    box-shadow: 0 4px 12px -4px rgb(16 185 129 / 0.15);
+  }
+
+  #fleet-accordion .fleet-item.is-active .fleet-desc {
+    grid-template-rows: 1fr;
+  }
+
+  #fleet-accordion .fleet-item.is-active .fleet-icon-box {
+    background-color: rgb(16 185 129);
+  }
+
+  #fleet-accordion .fleet-item.is-active .fleet-icon-box svg {
+    color: white !important;
+    stroke: white !important;
+  }
+
+  #fleet-accordion .fleet-item.is-active .fleet-chevron {
+    transform: rotate(180deg);
+    color: rgb(16 185 129);
+  }
+
+  .fleet-badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none;
+    transition:
+      opacity 500ms ease-out,
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .fleet-badge.is-visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .fleet-badge-pos-0 {
+    top: 8%;
+    left: 0%;
+  }
+
+  .fleet-badge-pos-1 {
+    top: 38%;
+    right: -3%;
+  }
+
+  .fleet-badge-pos-2 {
+    bottom: 5%;
+    right: 5%;
+  }
+
+  @media (max-width: 1024px) {
+    .fleet-badge-pos-0,
+    .fleet-badge-pos-1,
+    .fleet-badge-pos-2 {
+      top: 5%;
+      left: 5%;
+      right: auto;
+      bottom: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #fleet-accordion .fleet-item,
+    #fleet-accordion .fleet-desc,
+    #fleet-accordion .fleet-chevron,
+    .fleet-badge {
+      transition: none !important;
+    }
+  }
+</style>

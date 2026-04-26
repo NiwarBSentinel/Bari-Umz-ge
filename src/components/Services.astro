@@ -1,0 +1,66 @@
+---
+import { Car, Plane, Briefcase } from "@lucide/astro";
+
+const services = [
+  {
+    Icon: Car,
+    title: "Standard-Taxi",
+    subtitle: "Unkompliziert von A nach B",
+    description:
+      "Schnelle Fahrten innerhalb Zürichs und der Region. Verlässlich, pünktlich, fair tarifiert nach offiziellem Zürcher Taxitarif.",
+  },
+  {
+    Icon: Plane,
+    title: "Flughafen-Transfer",
+    subtitle: "Stressfrei abheben, entspannt landen",
+    description:
+      "Pünktlich am Terminal Zürich Kloten. Festpreise auf Anfrage, freundliche Fahrer, Hilfe mit dem Gepäck inklusive.",
+  },
+  {
+    Icon: Briefcase,
+    title: "Geschäftskunden",
+    subtitle: "Diskret. Professionell. Verlässlich.",
+    description:
+      "Firmenverträge mit monatlicher Sammelrechnung. Ideal für Mitarbeitende, Kunden und Geschäftspartner — auch international.",
+  },
+];
+---
+
+<section id="services" class="bg-white pt-12 pb-24 md:pt-32 md:pb-32 lg:pt-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="reveal-up max-w-3xl">
+      <p class="text-primary uppercase tracking-[0.25em] text-xs sm:text-sm font-semibold mb-4">
+        Unsere Services
+      </p>
+      <h2 class="text-dark font-extrabold tracking-tight text-4xl sm:text-5xl leading-[1.1]">
+        Für jedes Ziel das richtige Angebot
+      </h2>
+    </div>
+
+    <div class="mt-16 grid gap-8 md:grid-cols-3">
+      {
+        services.map(({ Icon, title, subtitle, description }, idx) => (
+          <article
+            class="service-card reveal-up bg-soft border border-slate-100 rounded-2xl p-8 shadow-sm transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 cursor-pointer"
+            style={`--reveal-delay: ${idx * 120}ms`}
+          >
+            <span aria-hidden="true" class="service-accent-bar" />
+            <div class="service-icon-box w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Icon size={28} strokeWidth={2} class="service-icon text-primary" />
+            </div>
+            <h3 class="text-xl font-extrabold text-dark mb-1">{title}</h3>
+            <p class="text-sm text-muted mb-4">{subtitle}</p>
+            <p class="text-base text-dark/80 leading-relaxed">{description}</p>
+            <a
+              href="#kontakt"
+              class="service-cta mt-6 inline-flex items-center gap-1 text-primary font-medium text-sm"
+            >
+              Mehr erfahren
+              <span aria-hidden="true" class="service-arrow">→</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Impressum · Shiar TAXI";
+const description = "Rechtliche Angaben zur Shiar TAXI GmbH in Zürich.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  canonicalPath="/impressum"
+  solidHeader={true}
+>
+  <article class="legal-content max-w-4xl mx-auto pt-32 pb-24 px-6 sm:px-8">
+    <h1>Impressum</h1>
+
+    <h2>Angaben gemäss Art. 322 OR / TMG</h2>
+    <p class="lead-address">
+      <strong>Shiar TAXI GmbH</strong> <em>(Musterfirma — Showcase)</em><br />
+      Bahnhofstrasse 1<br />
+      8001 Zürich<br />
+      Schweiz
+    </p>
+
+    <p>
+      <strong>Vertretungsberechtigte Person</strong><br />
+      Max Muster, Geschäftsführer
+    </p>
+
+    <p>
+      <strong>Kontakt</strong><br />
+      Telefon: <a href="tel:+41796466087">+41 79 646 60 87</a><br />
+      E-Mail: <a href="mailto:info@shiar-taxi.ch">info@shiar-taxi.ch</a><br />
+      Web: <a href="https://taxi-maxi.vercel.app/">https://taxi-maxi.vercel.app/</a>
+    </p>
+
+    <p>
+      <strong>Handelsregister</strong><br />
+      Eingetragen im Handelsregister des Kantons Zürich<br />
+      UID: CHE-123.456.789<br />
+      MWST-Nr.: CHE-123.456.789 MWST
+    </p>
+
+    <p>
+      <strong>Konzession</strong><br />
+      Konzessioniertes Taxi-Unternehmen der Stadt Zürich
+    </p>
+
+    <p>
+      <strong>Aufsichtsbehörde</strong><br />
+      Stadtpolizei Zürich, Abteilung Taxiwesen
+    </p>
+
+    <hr />
+
+    <h2>Haftungsausschluss</h2>
+    <p>
+      Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die
+      Inhalte externer Links. Für den Inhalt verlinkter Seiten sind ausschliesslich
+      deren Betreiber verantwortlich.
+    </p>
+
+    <h2>Urheberrecht</h2>
+    <p>
+      Sämtliche Inhalte dieser Website (Texte, Bilder, Grafiken, Logos) sind
+      urheberrechtlich geschützt. Eine Vervielfältigung, Verbreitung oder Nutzung
+      ausserhalb der gesetzlich erlaubten Schranken bedarf der vorherigen
+      schriftlichen Einwilligung.
+    </p>
+
+    <hr />
+
+    <p class="footer-note"><em>Stand: April 2026</em></p>
+    <p class="footer-note">
+      <em
+        >Diese Angaben sind Platzhalter für Demonstrationszwecke. Bei einer echten
+        Geschäftstätigkeit bitte durch reale Firmendaten ersetzen.</em
+      >
+    </p>
+  </article>
+</BaseLayout>
