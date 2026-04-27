@@ -74,5 +74,73 @@ const cols = [
       <Heart size={14} fill="currentColor" class="inline text-accent" />
       <span>in der Schweiz</span>
     </div>
+
+    <div class="footer-credit">
+      <a
+        href="https://www.smartbranding.ch/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="sb-credit"
+        aria-label="Webdesign by Smart Branding"
+      >
+        <span class="sb-credit__text">Made with</span>
+        <span class="sb-credit__heart" aria-hidden="true">❤️</span>
+        <span class="sb-credit__text sb-credit__by">by</span>
+        <img
+          src="/images/smartbranding-logo.svg"
+          alt="Smart Branding"
+          class="sb-credit__logo"
+          width="331"
+          height="82"
+          loading="lazy"
+        />
+      </a>
+    </div>
   </div>
 </footer>
+
+<style>
+  .footer-credit {
+    text-align: center;
+    margin-top: 0.875rem;
+    padding: 0 1rem;
+  }
+
+  .sb-credit {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .sb-credit:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .sb-credit__by {
+    margin-left: 0.1rem;
+  }
+
+  .sb-credit__heart {
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .sb-credit__logo {
+    height: 18px;
+    width: auto;
+    margin-left: 0.15rem;
+    vertical-align: middle;
+    /* Logo ist schwarz; auf dem dunklen Footer ohne Filter unsichtbar. */
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+    transition: opacity 200ms ease;
+  }
+  .sb-credit:hover .sb-credit__logo {
+    opacity: 1;
+  }
+</style>
