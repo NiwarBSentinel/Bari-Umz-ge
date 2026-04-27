@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://taxi-maxi.vercel.app/sitemap-index.xml
+Sitemap: https://bari-umz-ge.vercel.app/sitemap-index.xml

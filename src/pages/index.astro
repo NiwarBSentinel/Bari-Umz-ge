@@ -12,65 +12,63 @@ import Testimonials from "../components/Testimonials.astro";
 import Contact from "../components/Contact.astro";
 
 const siteUrl = "https://bari-umz-ge.vercel.app";
-const title = "Bari Umzüge · Ihr Umzug in der Deutschschweiz · 044 555 12 34";
+const title = "Bari Umzüge · Ihr Umzug in der Deutschschweiz";
 const description =
-  "Ihr persönlicher Umzugsservice in der Deutschschweiz. Privat- und Firmen-Umzüge, Lager, Reinigung, Entsorgung. Kostenlose Offerte: 044 555 12 34.";
+  "Ihr persönlicher Umzugsservice in der Deutschschweiz. Privat- und Firmen-Umzüge, Lager, Reinigung, Entsorgung. Kostenlose Sofort-Offerte online.";
 const ogTitle = "Bari Umzüge · Ihr Umzug in der Deutschschweiz";
 const ogDescription =
-  "Privat- und Firmen-Umzüge in der ganzen Deutschschweiz. Kostenlose Offerte: 044 555 12 34.";
+  "Privat- und Firmen-Umzüge in der ganzen Deutschschweiz. Kostenlose Sofort-Offerte online.";
 const twitterDescription =
   "Privat- und Firmen-Umzüge in der ganzen Deutschschweiz.";
 
-const ldJson = {
-  "@context": "https://schema.org",
-  "@type": "MovingCompany",
-  name: "Bari Umzüge",
-  image: `${siteUrl}/og-image.jpg`,
-  url: `${siteUrl}/`,
-  telephone: "+41445551234",
-  email: "info@bari-umzuege.ch",
-  priceRange: "$$",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Industriestrasse 23",
-    addressLocality: "Zürich",
-    postalCode: "8045",
-    addressRegion: "ZH",
-    addressCountry: "CH",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 47.3658,
-    longitude: 8.5132,
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
-    opens: "07:00",
-    closes: "20:00",
-  },
-  areaServed: [
-    { "@type": "Country", name: "Switzerland" },
-    { "@type": "AdministrativeArea", name: "Deutschschweiz" },
-  ],
-  serviceType: [
-    "Privat-Umzug",
-    "Firmen-Umzug",
-    "Möbellager",
-    "Endreinigung",
-    "Entsorgung",
-  ],
-  currenciesAccepted: "CHF",
-  paymentAccepted: "Cash, Credit Card, Invoice",
-  sameAs: [],
-};
+// TODO NIWAR: MovingCompany Schema reaktivieren, sobald echte Tel + Adresse + Geo
+// von Bari vorliegen. Bis dahin auskommentiert lassen — falsche Daten in
+// strukturiertem Markup landen sonst in Googles Knowledge Graph.
+// Reaktivierung: Konstante einkommentieren UND den `<script slot="head" ...
+// ldJson ...>`-Tag im BaseLayout-Slot weiter unten ebenfalls einkommentieren.
+// const ldJson = {
+//   "@context": "https://schema.org",
+//   "@type": "MovingCompany",
+//   name: "Bari Umzüge",
+//   image: `${siteUrl}/og-image.jpg`,
+//   url: `${siteUrl}/`,
+//   telephone: "+41XXXXXXXXX",                    // TODO: echte Bari-Nr.
+//   email: "info@bari-umzuege.ch",
+//   priceRange: "$$",
+//   address: {
+//     "@type": "PostalAddress",
+//     streetAddress: "<Strasse + Nr.>",          // TODO: echte Bari-Adresse
+//     addressLocality: "<Ort>",                  // TODO
+//     postalCode: "<PLZ>",                       // TODO
+//     addressRegion: "ZH",
+//     addressCountry: "CH",
+//   },
+//   geo: {
+//     "@type": "GeoCoordinates",
+//     latitude: 0,                                // TODO: aus Adresse ableiten
+//     longitude: 0,                               // TODO
+//   },
+//   openingHoursSpecification: {
+//     "@type": "OpeningHoursSpecification",
+//     dayOfWeek: [
+//       "Monday", "Tuesday", "Wednesday", "Thursday",
+//       "Friday", "Saturday",
+//     ],
+//     opens: "07:00",
+//     closes: "20:00",
+//   },
+//   areaServed: [
+//     { "@type": "Country", name: "Switzerland" },
+//     { "@type": "AdministrativeArea", name: "Deutschschweiz" },
+//   ],
+//   serviceType: [
+//     "Privat-Umzug", "Firmen-Umzug", "Möbellager",
+//     "Endreinigung", "Entsorgung",
+//   ],
+//   currenciesAccepted: "CHF",
+//   paymentAccepted: "Cash, Credit Card, Invoice",
+//   sameAs: [],
+// };
 
 // FAQ schema — Antworten konsistent zu <ComparisonTable> und Disclaimer
 // auf /offerte/danke. Bei Anpassungen dort: hier mitziehen.
@@ -114,11 +112,7 @@ const faqLdJson = {
   twitterDescription={twitterDescription}
   canonicalPath="/"
 >
-  <script
-    slot="head"
-    type="application/ld+json"
-    set:html={JSON.stringify(ldJson)}
-  />
+  {/* MovingCompany Schema deaktiviert bis echte Stammdaten — siehe TODO oben */}
   <script
     slot="head"
     type="application/ld+json"

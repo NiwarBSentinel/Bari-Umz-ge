@@ -66,8 +66,8 @@
 }
 #site-header .header-link,
 #site-header .header-logo,
-#site-header .logo-shiar,
-#site-header .logo-taxi,
+#site-header .logo-bari,
+#site-header .logo-umzuege,
 #site-header .hamburger-line {
   transition: color 250ms ease, background-color 250ms ease;
 }
@@ -84,10 +84,10 @@
 #site-header.scrolled .header-link:hover {
   color: var(--color-primary);
 }
-#site-header.scrolled .logo-shiar {
+#site-header.scrolled .logo-bari {
   color: var(--color-primary);
 }
-#site-header.scrolled .logo-taxi {
+#site-header.scrolled .logo-umzuege {
   color: var(--color-accent-dark);
 }
 #site-header.scrolled .hamburger-line {

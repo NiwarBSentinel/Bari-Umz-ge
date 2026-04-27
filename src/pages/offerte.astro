@@ -346,7 +346,7 @@ const minDate = minDateObj.toISOString().slice(0, 10);
               type="text"
               autocomplete="address-line1"
               class="form-input"
-              placeholder="z.B. Industriestrasse 23"
+              placeholder="z.B. Seestrasse 45"
             />
             <p class="error-msg hidden" data-error="to-street">
               Bitte Strasse und Hausnummer eingeben.
@@ -725,10 +725,10 @@ const minDate = minDateObj.toISOString().slice(0, 10);
         <p class="text-sm text-slate-600">
           Lieber direkt anrufen oder per WhatsApp schreiben?
           <a
-            href="tel:+41445551234"
+            href="tel:+41000000000"
             class="text-primary font-semibold hover:underline ml-1"
           >
-            044 555 12 34
+            +41 00 000 00 00
           </a>
         </p>
       </div>
@@ -1079,7 +1079,7 @@ const minDate = minDateObj.toISOString().slice(0, 10);
         console.error("Submit failed:", err);
         if (errorBox) {
           errorBox.textContent =
-            "Anfrage konnte nicht übermittelt werden. Bitte erneut versuchen oder uns direkt anrufen: 044 555 12 34.";
+            "Anfrage konnte nicht übermittelt werden. Bitte erneut versuchen oder uns direkt anrufen: +41 00 000 00 00.";
           errorBox.classList.remove("hidden");
           errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
         }

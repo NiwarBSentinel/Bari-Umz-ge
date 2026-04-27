@@ -83,7 +83,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
 
   const movingDateFmt = formatDateDe(data.moving_date);
   const wa =
-    "https://wa.me/41445551234?text=" +
+    "https://wa.me/41000000000?text=" +
     encodeURIComponent(
       "Hallo Bari Umzüge, ich habe Offerte " +
         result.offerteNr +
@@ -205,7 +205,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     '<a href="' +
     wa +
     '" style="display:inline-block;background:#00A88E;color:#0F4C75;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;margin-right:8px;">📱 Per WhatsApp besprechen</a>' +
-    '<a href="tel:+41445551234" style="display:inline-block;background:#0F4C75;color:#ffffff;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">📞 044 555 12 34</a>' +
+    '<a href="tel:+41000000000" style="display:inline-block;background:#0F4C75;color:#ffffff;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">📞 +41 00 000 00 00</a>' +
     "</td></tr>" +
     // Tip
     '<tr><td style="padding:0 32px 24px 32px;">' +
@@ -216,7 +216,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     // Footer
     '<tr><td style="padding:24px 32px;border-top:1px solid #e2e8f0;background:#f8fafc;border-radius:0 0 16px 16px;">' +
     '<p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.6;text-align:center;">' +
-    "Bari Umzüge GmbH · Industriestrasse 23, 8045 Zürich · " +
+    "Bari Umzüge GmbH · [BARI-ADRESSE-PLATZHALTER], [BARI-PLZ-PLATZHALTER] · " +
     '<a href="mailto:info@bari-umzuege.ch" style="color:#0F4C75;">info@bari-umzuege.ch</a>' +
     "</p></td></tr>" +
     "</table>" +
@@ -258,9 +258,9 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     besichtigungMailto + "\n\n" +
     "Tipp: Schicken Sie uns Wohnungsfotos an info@bari-umzuege.ch — damit wird die finale Offerte präziser.\n\n" +
     "Per WhatsApp besprechen: " + wa + "\n" +
-    "Telefon: 044 555 12 34\n\n" +
+    "Telefon: +41 00 000 00 00\n\n" +
     "—\n" +
-    "Bari Umzüge GmbH · Industriestrasse 23, 8045 Zürich\n" +
+    "Bari Umzüge GmbH · [BARI-ADRESSE-PLATZHALTER], [BARI-PLZ-PLATZHALTER]\n" +
     "info@bari-umzuege.ch";
 
   return { subject, html, text };
