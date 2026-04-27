@@ -1,0 +1,407 @@
+---
+import {
+  Mail,
+  ArrowRight,
+  FileDown,
+  Printer,
+  CheckCircle2,
+  ClipboardList,
+} from "@lucide/astro";
+
+// TODO NIWAR: /datenschutz-Seite muss Lead-Erfassung + Marketing-Versand
+// abdecken bevor diese Section live geht (E-Mail-Speicherung, Resend-USA-
+// Übermittlung, Abmelde-Mechanismus, Speicherdauer).
+//
+// TODO NIWAR: /public/images/cheatsheet-preview.png ergänzen (Screenshot oder
+// gestaltetes Mockup, idealerweise ~1:1.414 A4-Ratio). Bis dahin zeigt der
+// Code einen CSS-Mockup-Platzhalter — siehe <div class="preview-mockup"> unten.
+---
+
+<section
+  id="cheatsheet"
+  class="relative py-16 md:py-24 bg-slate-50"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <!-- Left: Preview -->
+      <div class="order-1 md:order-1">
+        <div
+          class="preview-frame relative rounded-3xl bg-gradient-to-br from-accent-light/40 to-accent-light/10 border-2 border-accent/20 shadow-xl shadow-accent/10 overflow-hidden mx-auto max-w-md"
+          style="aspect-ratio: 1 / 1.414;"
+        >
+          <!-- CSS-Mockup als Fallback (immer gerendert, vom <img> verdeckt sobald geladen) -->
+          <div class="preview-mockup absolute inset-0 p-6 md:p-8 flex flex-col gap-4">
+            <div class="flex items-center justify-between border-b border-accent/30 pb-3">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-accent-dark">
+                Bari Umzüge
+              </span>
+              <span class="text-[10px] font-semibold text-slate-500">
+                Cheat-Sheet
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 flex-1">
+              <div class="space-y-2">
+                <p class="text-[11px] font-bold text-primary-dark mb-2">
+                  Vorbereitung
+                </p>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[90%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[75%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[85%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[70%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[80%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[65%]"></div>
+                <div class="h-3"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[88%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[72%]"></div>
+                <div class="h-1.5 rounded-full bg-primary/20 w-[82%]"></div>
+              </div>
+              <div class="space-y-2">
+                <p class="text-[11px] font-bold text-accent-dark mb-2">
+                  Umzugstag
+                </p>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[85%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[70%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[78%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[90%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[60%]"></div>
+                <div class="h-3"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[75%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[85%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[68%]"></div>
+                <div class="h-1.5 rounded-full bg-accent/30 w-[80%]"></div>
+              </div>
+            </div>
+            <div class="flex items-center justify-center pt-2">
+              <ClipboardList
+                size={32}
+                strokeWidth={1.5}
+                class="text-accent-dark/40"
+              />
+            </div>
+          </div>
+          <!-- Echtes Preview (wird oberhalb des Mockups gerendert sobald vorhanden) -->
+          <img
+            src="/images/cheatsheet-preview.png"
+            alt="Vorschau Bari Umzugs-Cheat-Sheet"
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 w-full h-full object-cover"
+            onerror="this.remove()"
+          />
+        </div>
+      </div>
+
+      <!-- Right: Headline + Form -->
+      <div class="order-2 md:order-2">
+        <div
+          class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-widest uppercase text-accent-dark bg-accent-light/40 rounded-full"
+        >
+          Gratis-Bonus
+        </div>
+        <h2
+          class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-primary-dark leading-tight mb-4"
+        >
+          Kostenlose Umzugs-Cheat-Sheet
+        </h2>
+        <p class="text-base md:text-lg text-slate-600 leading-relaxed mb-6">
+          Vorbereitung links, Umzugstag rechts — alles, was Sie für einen
+          reibungslosen Schweizer Umzug brauchen. Direkt in Ihr Postfach.
+        </p>
+
+        <!-- Form -->
+        <form
+          id="cheatsheet-form"
+          novalidate
+          class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5 md:p-6 space-y-4"
+        >
+          <input
+            type="text"
+            name="_gotcha"
+            tabindex="-1"
+            autocomplete="off"
+            style="display:none"
+            aria-hidden="true"
+          />
+
+          <div>
+            <label
+              for="cs-vorname"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Vorname
+              <span class="font-normal text-slate-500">(optional)</span>
+            </label>
+            <input
+              id="cs-vorname"
+              name="vorname"
+              type="text"
+              autocomplete="given-name"
+              maxlength="80"
+              class="form-input"
+              placeholder="z.B. Max"
+            />
+          </div>
+
+          <div>
+            <label
+              for="cs-email"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              E-Mail <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="cs-email"
+              name="email"
+              type="email"
+              required
+              autocomplete="email"
+              class="form-input"
+              placeholder="ihre@email.ch"
+            />
+            <p
+              class="error-msg hidden mt-1.5"
+              data-error="cs-email"
+            >
+              Bitte gültige E-Mail-Adresse eingeben.
+            </p>
+          </div>
+
+          <div>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input
+                id="cs-consent"
+                name="consent"
+                type="checkbox"
+                value="ja"
+                class="form-checkbox mt-0.5"
+              />
+              <span class="text-sm text-slate-700 leading-relaxed">
+                Ich erkläre mich mit der
+                <a
+                  href="/datenschutz"
+                  target="_blank"
+                  class="text-primary hover:underline font-semibold"
+                  >Datenschutzerklärung</a
+                > einverstanden und möchte gelegentlich Umzugstipps und Angebote
+                von Bari Umzüge erhalten. <span class="text-red-500">*</span>
+              </span>
+            </label>
+            <p
+              class="error-msg hidden mt-1.5"
+              data-error="cs-consent"
+            >
+              Bitte Datenschutz akzeptieren.
+            </p>
+          </div>
+
+          <div
+            id="cheatsheet-error"
+            class="hidden px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-sm text-red-700"
+            role="alert"
+          >
+          </div>
+
+          <button
+            id="cheatsheet-submit"
+            type="submit"
+            class="w-full bg-primary hover:bg-primary-light text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.01]"
+          >
+            <Mail size={20} strokeWidth={2.5} />
+            <span id="cheatsheet-submit-label">
+              Cheat-Sheet per E-Mail erhalten
+            </span>
+            <ArrowRight size={20} strokeWidth={2.5} />
+          </button>
+        </form>
+
+        <!-- Success state -->
+        <div
+          id="cheatsheet-success"
+          class="hidden bg-white rounded-2xl border border-accent/40 shadow-md p-6 space-y-4"
+          role="status"
+          aria-live="polite"
+        >
+          <div class="flex items-start gap-3">
+            <div
+              class="flex-shrink-0 w-10 h-10 rounded-full bg-accent-light/60 flex items-center justify-center"
+            >
+              <CheckCircle2
+                size={22}
+                strokeWidth={2}
+                class="text-accent-dark"
+              />
+            </div>
+            <div class="flex-1">
+              <h3 class="font-bold text-primary-dark text-lg mb-1">
+                Vielen Dank!
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Das Cheat-Sheet ist auf dem Weg in Ihr Postfach. Schauen Sie
+                auch im Spam-Ordner falls Sie es nicht in den nächsten 2 Minuten
+                sehen.
+              </p>
+            </div>
+          </div>
+          <div class="pt-2 border-t border-slate-100">
+            <p class="text-xs text-slate-500 mb-3">
+              Direkt-Download als Fallback:
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <a
+                href="/downloads/bari-umzugscheckliste-digital.pdf"
+                download="bari-umzugscheckliste.pdf"
+                data-checklist-variant="digital"
+                class="cheatsheet-fallback-dl flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <FileDown size={16} strokeWidth={2.5} />
+                Digital (PDF)
+              </a>
+              <a
+                href="/downloads/bari-umzugscheckliste-print.pdf"
+                download="bari-umzugscheckliste-print.pdf"
+                data-checklist-variant="print"
+                class="cheatsheet-fallback-dl flex-1 inline-flex items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 font-semibold text-sm px-4 py-2.5 rounded-xl transition-colors"
+              >
+                <Printer size={16} strokeWidth={2.5} />
+                Druckversion
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    const form = document.getElementById("cheatsheet-form");
+    const successEl = document.getElementById("cheatsheet-success");
+    const errorBox = document.getElementById("cheatsheet-error");
+    const submitBtn = document.getElementById("cheatsheet-submit");
+    const submitLabel = document.getElementById("cheatsheet-submit-label");
+    if (!form || !successEl || !submitBtn) return;
+
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showError(fieldId, show) {
+      const errEl = form.querySelector('[data-error="' + fieldId + '"]');
+      const fieldEl = document.getElementById(fieldId);
+      if (errEl) errEl.classList.toggle("hidden", !show);
+      if (fieldEl) {
+        if (show) fieldEl.classList.add("input-error");
+        else fieldEl.classList.remove("input-error");
+      }
+    }
+
+    function clearErrors() {
+      showError("cs-email", false);
+      showError("cs-consent", false);
+      if (errorBox) {
+        errorBox.classList.add("hidden");
+        errorBox.textContent = "";
+      }
+    }
+
+    function setLoading(loading) {
+      if (!submitBtn || !submitLabel) return;
+      submitBtn.disabled = loading;
+      submitLabel.textContent = loading
+        ? "Wird gesendet…"
+        : "Cheat-Sheet per E-Mail erhalten";
+    }
+
+    function showInlineError(msg) {
+      if (!errorBox) return;
+      errorBox.textContent = msg;
+      errorBox.classList.remove("hidden");
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      clearErrors();
+
+      const email = (document.getElementById("cs-email").value || "").trim();
+      const vorname = (document.getElementById("cs-vorname").value || "").trim();
+      const consent = document.getElementById("cs-consent").checked;
+      const gotcha = (form.querySelector('input[name="_gotcha"]').value || "").trim();
+
+      let ok = true;
+      if (!email || !EMAIL_RE.test(email)) {
+        showError("cs-email", true);
+        ok = false;
+      }
+      if (!consent) {
+        showError("cs-consent", true);
+        ok = false;
+      }
+      if (!ok) return;
+
+      setLoading(true);
+
+      try {
+        const res = await fetch("/api/request-checklist", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email,
+            vorname: vorname,
+            consent: true,
+            _gotcha: gotcha,
+          }),
+        });
+        const json = await res.json().catch(function () {
+          return null;
+        });
+        if (!res.ok || !json || !json.ok) {
+          throw new Error(json && json.error ? json.error : "submit_failed");
+        }
+        // Erfolg
+        form.classList.add("hidden");
+        successEl.classList.remove("hidden");
+        successEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        // Tracking
+        try {
+          const evt = { event: "checklist_lead_submit", source: "homepage" };
+          console.log("[track]", evt);
+          if (window.dataLayer && typeof window.dataLayer.push === "function") {
+            window.dataLayer.push(evt);
+          }
+        } catch (err) {
+          /* ignore */
+        }
+      } catch (err) {
+        console.error("Checklist submit failed:", err);
+        showInlineError(
+          "Anfrage konnte nicht übermittelt werden. Bitte erneut versuchen oder direkt eine E-Mail an info@bari-umzuege.ch schicken."
+        );
+        setLoading(false);
+      }
+    });
+
+    // Fallback-Download Tracking-Hook
+    document
+      .querySelectorAll(".cheatsheet-fallback-dl")
+      .forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          const variant =
+            e.currentTarget.getAttribute("data-checklist-variant") || "unknown";
+          const evt = {
+            event: "checklist_download_homepage_fallback",
+            variant: variant,
+          };
+          try {
+            console.log("[track]", evt);
+            if (
+              window.dataLayer &&
+              typeof window.dataLayer.push === "function"
+            ) {
+              window.dataLayer.push(evt);
+            }
+          } catch (err) {
+            /* ignore */
+          }
+        });
+      });
+  })();
+</script>

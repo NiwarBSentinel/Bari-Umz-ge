@@ -7,6 +7,9 @@ import {
   MessageCircle,
   Calendar,
   Info,
+  FileDown,
+  Printer,
+  ClipboardList,
 } from "@lucide/astro";
 
 const title = "Ihre Offerte · Bari Umzüge";
@@ -111,6 +114,57 @@ const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
         </div>
       </div>
 
+      <!-- Cheat-Sheet Download (Gratis-Bonus) -->
+      <div
+        id="checklist-card"
+        class="hidden bg-accent-light/30 border border-accent/30 rounded-2xl p-5 md:p-6 mb-6"
+      >
+        <div class="flex items-start gap-3 mb-4">
+          <div
+            class="flex-shrink-0 w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm"
+          >
+            <ClipboardList
+              size={20}
+              strokeWidth={2}
+              class="text-accent-dark"
+            />
+          </div>
+          <div class="flex-1 min-w-0">
+            <p
+              class="text-xs font-semibold uppercase tracking-widest text-accent-dark mb-1"
+            >
+              Gratis-Bonus für Sie
+            </p>
+            <h3 class="text-lg font-bold text-primary-dark mb-1">
+              Bari Umzugs-Cheat-Sheet
+            </h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Vorbereitung links, Umzugstag rechts — alles auf einer Seite.
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href="/downloads/bari-umzugscheckliste-digital.pdf"
+            download="bari-umzugscheckliste.pdf"
+            data-checklist-variant="digital"
+            class="checklist-dl flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold px-5 py-3 rounded-xl shadow-md shadow-primary/20 transition-all hover:shadow-lg hover:shadow-primary/30 hover:scale-[1.02]"
+          >
+            <FileDown size={18} strokeWidth={2.5} />
+            Digital (PDF)
+          </a>
+          <a
+            href="/downloads/bari-umzugscheckliste-print.pdf"
+            download="bari-umzugscheckliste-print.pdf"
+            data-checklist-variant="print"
+            class="checklist-dl flex-1 inline-flex items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 font-bold px-5 py-3 rounded-xl transition-all"
+          >
+            <Printer size={18} strokeWidth={2.5} />
+            Druckversion
+          </a>
+        </div>
+      </div>
+
       <!-- Tipp -->
       <div
         id="tipp-box"
@@ -202,10 +256,14 @@ const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
     const rangeCard = document.getElementById("range-card");
     const breakdownCard = document.getElementById("breakdown-card");
     const disclaimer = document.getElementById("disclaimer-box");
+    const checklistCard = document.getElementById("checklist-card");
     const tipp = document.getElementById("tipp-box");
     const emailConfirm = document.getElementById("email-confirm");
     const headline = document.getElementById("offerte-headline");
     const offerteNr = document.getElementById("offerte-nr");
+
+    // Checklist-Bonus immer sichtbar (auch beim Direkt-Besuch ohne Result)
+    if (checklistCard) checklistCard.classList.remove("hidden");
 
     if (!payload || !payload.result) {
       if (fallbackEl) fallbackEl.classList.remove("hidden");
@@ -309,5 +367,23 @@ const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
     } catch (e) {
       /* ignore */
     }
+  })();
+
+  // Tracking-Hook für Cheat-Sheet Downloads
+  (function () {
+    document.querySelectorAll(".checklist-dl").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        const variant = e.currentTarget.getAttribute("data-checklist-variant") || "unknown";
+        const evt = { event: "checklist_download_danke", variant: variant };
+        try {
+          console.log("[track]", evt);
+          if (window.dataLayer && typeof window.dataLayer.push === "function") {
+            window.dataLayer.push(evt);
+          }
+        } catch (err) {
+          /* ignore */
+        }
+      });
+    });
   })();
 </script>

@@ -1,5 +1,19 @@
 import type { OfferteResult } from "./pricing-engine";
 
+const SITE_URL =
+  (import.meta.env.SITE as string | undefined) ||
+  "https://bari-umz-ge.vercel.app";
+
+export const CHECKLIST_URLS = {
+  digital: SITE_URL + "/downloads/bari-umzugscheckliste-digital.pdf",
+  print: SITE_URL + "/downloads/bari-umzugscheckliste-print.pdf",
+};
+
+export interface ChecklistLeadData {
+  email: string;
+  vorname?: string;
+}
+
 export interface FormData {
   from_street: string;
   from_plz: string;
@@ -397,6 +411,136 @@ export function adminEmail(data: FormData, result: OfferteResult) {
     (data.bemerkungen || "—") + "\n\n" +
     "AUFSCHLÜSSELUNG\n" +
     buildBreakdownText(result);
+
+  return { subject, html, text };
+}
+
+// =============================================================================
+// CHECKLIST LEAD-MAGNET EMAILS
+// =============================================================================
+
+export function checklistCustomerEmail(data: ChecklistLeadData) {
+  const subject = "Ihre Bari-Umzugs-Cheat-Sheet ist da!";
+  const greeting = data.vorname
+    ? "Guten Tag " + safe(data.vorname)
+    : "Guten Tag";
+
+  const abmeldenMailto =
+    "mailto:info@bari-umzuege.ch?subject=" +
+    encodeURIComponent("Abmelden vom Bari-Newsletter");
+
+  const offerteUrl = SITE_URL + "/offerte";
+
+  const html =
+    '<!doctype html><html lang="de-CH"><head><meta charset="utf-8"></head>' +
+    '<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,Segoe UI,Roboto,sans-serif;color:#0f172a;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:32px 16px;">' +
+    "<tr><td>" +
+    '<table role="presentation" align="center" cellpadding="0" cellspacing="0" width="600" style="background:#ffffff;border-radius:16px;max-width:600px;width:100%;">' +
+    // Header
+    '<tr><td style="padding:32px 32px 16px 32px;border-bottom:1px solid #e2e8f0;">' +
+    '<p style="margin:0;font-size:14px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Bari Umzüge</p>' +
+    '<h1 style="margin:8px 0 0 0;font-size:24px;color:#0F4C75;">Ihre Cheat-Sheet ist da!</h1>' +
+    "</td></tr>" +
+    // Greeting
+    '<tr><td style="padding:24px 32px 8px 32px;">' +
+    '<p style="margin:0;font-size:16px;line-height:1.6;">' +
+    greeting +
+    "</p>" +
+    '<p style="margin:16px 0 0 0;font-size:15px;line-height:1.6;color:#334155;">' +
+    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über die folgenden Links — links die Vorbereitung, rechts alles für den Umzugstag selbst." +
+    "</p></td></tr>" +
+    // Download buttons
+    '<tr><td style="padding:24px 32px 8px 32px;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">' +
+    '<tr><td style="padding:0 6px 12px 0;">' +
+    '<a href="' +
+    CHECKLIST_URLS.digital +
+    '" style="display:inline-block;background:#0F4C75;color:#ffffff;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">↓ Digital (PDF)</a>' +
+    "</td>" +
+    '<td style="padding:0 0 12px 6px;">' +
+    '<a href="' +
+    CHECKLIST_URLS.print +
+    '" style="display:inline-block;background:#ffffff;color:#0F4C75;padding:13px 22px;border:2px solid #0F4C75;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">🖨 Druckversion</a>' +
+    "</td></tr></table></td></tr>" +
+    // PS / Offerte CTA
+    '<tr><td style="padding:16px 32px 8px 32px;">' +
+    '<div style="background:#B8E8DD;border-radius:12px;padding:20px;">' +
+    '<p style="margin:0;font-size:13px;color:#008772;font-weight:700;text-transform:uppercase;letter-spacing:1px;">PS</p>' +
+    '<p style="margin:6px 0 12px 0;font-size:15px;line-height:1.5;color:#0f172a;">' +
+    "Wenn Sie für Ihren Umzug Unterstützung wünschen, holen Sie sich hier eine kostenlose Sofort-Offerte:" +
+    "</p>" +
+    '<a href="' +
+    offerteUrl +
+    '" style="display:inline-block;background:#00A88E;color:#0F4C75;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;">Sofort-Offerte berechnen →</a>' +
+    "</div></td></tr>" +
+    // Footer with abmelden
+    '<tr><td style="padding:24px 32px;border-top:1px solid #e2e8f0;background:#f8fafc;border-radius:0 0 16px 16px;">' +
+    '<p style="margin:0 0 6px 0;font-size:12px;color:#94a3b8;line-height:1.6;text-align:center;">' +
+    "Bari Umzüge GmbH · " +
+    '<a href="mailto:info@bari-umzuege.ch" style="color:#0F4C75;">info@bari-umzuege.ch</a>' +
+    "</p>" +
+    '<p style="margin:0;font-size:11px;color:#94a3b8;line-height:1.6;text-align:center;">' +
+    "Keine weiteren Mails gewünscht? " +
+    '<a href="' +
+    abmeldenMailto +
+    '" style="color:#94a3b8;text-decoration:underline;">Hier abmelden</a>' +
+    "</p></td></tr>" +
+    "</table>" +
+    "</td></tr></table></body></html>";
+
+  const text =
+    "Ihre Bari-Umzugs-Cheat-Sheet ist da!\n" +
+    "===\n\n" +
+    greeting +
+    "\n\n" +
+    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über die folgenden Links — links die Vorbereitung, rechts alles für den Umzugstag selbst.\n\n" +
+    "Digital (PDF):  " + CHECKLIST_URLS.digital + "\n" +
+    "Druckversion:   " + CHECKLIST_URLS.print + "\n\n" +
+    "PS: Wenn Sie für Ihren Umzug Unterstützung wünschen, holen Sie sich hier eine kostenlose Sofort-Offerte:\n" +
+    offerteUrl + "\n\n" +
+    "—\n" +
+    "Bari Umzüge GmbH · info@bari-umzuege.ch\n" +
+    "Keine weiteren Mails gewünscht? Schreiben Sie an info@bari-umzuege.ch mit Betreff 'Abmelden'.";
+
+  return { subject, html, text };
+}
+
+export function checklistAdminEmail(data: ChecklistLeadData) {
+  const subject = "Neuer Lead: Cheat-Sheet angefragt";
+  const timestamp = new Date().toLocaleString("de-CH", {
+    timeZone: "Europe/Zurich",
+  });
+
+  const html =
+    '<!doctype html><html><head><meta charset="utf-8"></head>' +
+    '<body style="font-family:Inter,Arial,sans-serif;color:#0f172a;background:#f8fafc;padding:24px;">' +
+    '<div style="max-width:560px;margin:0 auto;background:#fff;border-radius:12px;padding:28px;border:1px solid #e2e8f0;">' +
+    '<h1 style="margin:0 0 8px 0;font-size:20px;color:#0F4C75;">Neuer Cheat-Sheet-Lead</h1>' +
+    '<p style="margin:0;color:#64748b;font-size:13px;">Eingegangen via bari-umzuege.ch/#cheatsheet</p>' +
+    '<table cellpadding="6" style="font-size:14px;width:100%;margin-top:20px;">' +
+    '<tr><td style="color:#64748b;width:30%;">E-Mail</td><td><a href="mailto:' +
+    safe(data.email) +
+    '">' +
+    safe(data.email) +
+    "</a></td></tr>" +
+    '<tr><td style="color:#64748b;">Vorname</td><td>' +
+    safe(data.vorname || "—") +
+    "</td></tr>" +
+    '<tr><td style="color:#64748b;">Zeitpunkt</td><td>' +
+    safe(timestamp) +
+    "</td></tr>" +
+    "</table>" +
+    '<p style="margin:20px 0 0 0;padding:12px;background:#fef3c7;border-radius:8px;font-size:13px;color:#92400e;">' +
+    "<strong>Hinweis:</strong> Hat Consent für Marketing-Mails erteilt." +
+    "</p></div></body></html>";
+
+  const text =
+    "NEUER CHEAT-SHEET-LEAD\n===\n\n" +
+    "E-Mail:    " + data.email + "\n" +
+    "Vorname:   " + (data.vorname || "—") + "\n" +
+    "Zeitpunkt: " + timestamp + "\n\n" +
+    "Hinweis: Hat Consent für Marketing-Mails erteilt.\n";
 
   return { subject, html, text };
 }
