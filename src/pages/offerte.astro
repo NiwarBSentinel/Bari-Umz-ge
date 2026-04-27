@@ -10,8 +10,6 @@ const description =
 const today = new Date();
 const minDateObj = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
 const minDate = minDateObj.toISOString().slice(0, 10);
-
-const FORMSPREE_OFFERTE_ID = "FORMSPREE_OFFERTE_ID";
 ---
 
 <BaseLayout
@@ -63,22 +61,7 @@ const FORMSPREE_OFFERTE_ID = "FORMSPREE_OFFERTE_ID";
         </p>
       </div>
 
-      <form
-        id="offerte-form"
-        action={`https://formspree.io/f/${FORMSPREE_OFFERTE_ID}`}
-        method="POST"
-        novalidate
-      >
-        <input
-          type="hidden"
-          name="_subject"
-          value="Neue Offerten-Anfrage über bari-umzuege.ch"
-        />
-        <input
-          type="hidden"
-          name="_next"
-          value="https://bari-umz-ge.vercel.app/offerte/danke"
-        />
+      <form id="offerte-form" novalidate>
         <input
           type="text"
           name="_gotcha"
@@ -87,6 +70,11 @@ const FORMSPREE_OFFERTE_ID = "FORMSPREE_OFFERTE_ID";
           style="display:none"
           aria-hidden="true"
         />
+        <div
+          id="submit-error"
+          class="hidden mb-4 px-4 py-3 rounded-xl border border-red-200 bg-red-50 text-sm text-red-700"
+        >
+        </div>
 
         <!-- STEP 1: Umzug von -->
         <div
@@ -1007,13 +995,72 @@ const FORMSPREE_OFFERTE_ID = "FORMSPREE_OFFERTE_ID";
       });
     });
 
-    form.addEventListener("submit", function (e) {
-      if (!validateStep(3)) {
-        e.preventDefault();
-        return;
+    function collectFormData() {
+      const data = {};
+      const inputs = form.querySelectorAll("input, select, textarea");
+      const services = [];
+      inputs.forEach(function (el) {
+        const name = el.name;
+        if (!name) return;
+        if (el.type === "checkbox") {
+          if (name === "services" && el.checked) services.push(el.value);
+          else if (el.checked) data[name] = el.value;
+        } else if (el.type === "radio") {
+          if (el.checked) data[name] = el.value;
+        } else {
+          data[name] = el.value;
+        }
+      });
+      data.services = services;
+      return data;
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (!validateStep(3)) return;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const errorBox = document.getElementById("submit-error");
+      const originalLabel = submitBtn ? submitBtn.innerHTML : "";
+
+      if (errorBox) errorBox.classList.add("hidden");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML =
+          '<span class="inline-block w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>' +
+          "<span>Wird berechnet…</span>";
       }
-      // Mark as submitted so danke page can clear sessionStorage
-      sessionStorage.setItem(STORAGE_PREFIX + "submitted", "1");
+
+      try {
+        const data = collectFormData();
+        const res = await fetch("/api/submit-offerte", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (!res.ok || !json.ok) {
+          throw new Error(json.error || "Submit failed");
+        }
+        sessionStorage.setItem(
+          STORAGE_PREFIX + "result",
+          JSON.stringify({ result: json.result, formData: data })
+        );
+        sessionStorage.setItem(STORAGE_PREFIX + "submitted", "1");
+        window.location.href = "/offerte/danke";
+      } catch (err) {
+        console.error("Submit failed:", err);
+        if (errorBox) {
+          errorBox.textContent =
+            "Anfrage konnte nicht übermittelt werden. Bitte erneut versuchen oder uns direkt anrufen: 044 555 12 34.";
+          errorBox.classList.remove("hidden");
+          errorBox.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalLabel;
+        }
+      }
     });
 
     form

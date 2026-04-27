@@ -1,9 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { Check, Phone, ArrowLeft, MessageCircle } from "@lucide/astro";
+import {
+  Check,
+  Phone,
+  ArrowLeft,
+  MessageCircle,
+  Calendar,
+  Info,
+} from "@lucide/astro";
 
-const title = "Anfrage erhalten · Bari Umzüge";
-const description = "Vielen Dank für Ihre Offerten-Anfrage.";
+const title = "Ihre Offerte · Bari Umzüge";
+const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
 ---
 
 <BaseLayout
@@ -14,89 +21,155 @@ const description = "Vielen Dank für Ihre Offerten-Anfrage.";
   robots="noindex, nofollow"
   bodyClass="bg-slate-50 text-dark antialiased"
 >
-  <div class="pt-32 pb-20 md:pt-40 md:pb-28">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
-      <div
-        class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100 mb-6"
-      >
-        <Check size={40} strokeWidth={3} class="text-emerald-600" />
+  <div class="pt-32 pb-20 md:pt-36 md:pb-28">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <!-- Hero / Confirm -->
+      <div class="text-center mb-8">
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 mb-4"
+        >
+          <Check size={32} strokeWidth={3} class="text-emerald-600" />
+        </div>
+        <p
+          class="text-xs font-semibold uppercase tracking-widest text-accent-dark mb-2"
+        >
+          Anfrage erhalten
+        </p>
+        <h1
+          id="offerte-headline"
+          class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-3"
+        >
+          Ihre kostenlose Sofort-Offerte
+        </h1>
+        <p
+          id="offerte-nr"
+          class="text-sm font-mono uppercase tracking-widest text-slate-500"
+        >
+        </p>
       </div>
 
-      <h1
-        class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4 leading-tight"
+      <!-- Range -->
+      <div
+        id="range-card"
+        class="hidden bg-gradient-to-br from-accent-light/40 to-accent-light/10 border border-accent/30 rounded-3xl p-6 md:p-8 text-center mb-6"
       >
-        Anfrage erfolgreich gesendet!
-      </h1>
+        <p
+          class="text-xs font-semibold uppercase tracking-widest text-accent-dark mb-2"
+        >
+          Richtpreis
+        </p>
+        <p
+          id="range-value"
+          class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight"
+        >
+        </p>
+        <p id="range-vat" class="text-sm text-slate-600 mt-2"></p>
+      </div>
 
-      <p class="text-lg text-slate-600 mb-8 leading-relaxed">
-        Vielen Dank für Ihr Vertrauen. Wir prüfen Ihre Angaben und melden uns
-        <strong class="text-slate-900">innerhalb von 24h werktags</strong> bei Ihnen
-        mit einer detaillierten Offerte.
+      <!-- Breakdown -->
+      <div
+        id="breakdown-card"
+        class="hidden bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 overflow-hidden mb-6"
+      >
+        <div class="px-6 md:px-8 py-5 border-b border-slate-100">
+          <h2 class="text-lg font-bold text-slate-900">Aufschlüsselung</h2>
+        </div>
+        <div class="p-6 md:p-8">
+          <table id="breakdown-table" class="w-full text-sm">
+            <tbody></tbody>
+          </table>
+          <div
+            class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between"
+          >
+            <span class="text-sm font-semibold text-slate-900">Subtotal</span>
+            <span
+              id="breakdown-total"
+              class="text-lg font-extrabold text-slate-900"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div
+        id="disclaimer-box"
+        class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-5 mb-6 flex items-start gap-3"
+      >
+        <Info
+          size={18}
+          strokeWidth={2}
+          class="flex-shrink-0 mt-0.5 text-slate-500"
+        />
+        <p class="text-sm text-slate-700 leading-relaxed">
+          <strong>Dies ist ein Richtpreis.</strong> Der finale Preis wird nach einer
+          kostenlosen Besichtigung verbindlich offeriert. Mit unserer Tiefpreisgarantie
+          zahlen Sie nie zu viel.
+        </p>
+      </div>
+
+      <!-- Tipp -->
+      <div
+        id="tipp-box"
+        class="hidden bg-accent-light/30 border border-accent/30 rounded-2xl p-5 mb-8 flex items-start gap-3"
+      >
+        <Info size={18} strokeWidth={2} class="flex-shrink-0 mt-0.5 text-accent-dark" />
+        <p class="text-sm text-slate-700 leading-relaxed">
+          <strong>Tipp:</strong> Schicken Sie uns Wohnungsfotos an
+          <a
+            href="mailto:info@bari-umzuege.ch"
+            class="text-primary hover:underline font-semibold"
+            >info@bari-umzuege.ch</a
+          > — damit wird die finale Offerte bei der Besichtigung noch präziser.
+        </p>
+      </div>
+
+      <!-- CTAs -->
+      <div id="ctas" class="hidden flex flex-col sm:flex-row gap-3 justify-center mb-8">
+        <a
+          id="cta-besichtigung"
+          href="mailto:info@bari-umzuege.ch?subject=Besichtigungstermin"
+          class="flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold px-7 py-4 rounded-2xl shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]"
+        >
+          <Calendar size={20} strokeWidth={2.5} />
+          Termin für Besichtigung vereinbaren
+        </a>
+        <a
+          id="cta-whatsapp"
+          href="https://wa.me/41445551234"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="sm:flex-shrink-0 inline-flex items-center justify-center gap-2 border-2 border-primary text-primary hover:bg-primary/5 font-bold px-7 py-4 rounded-2xl transition-all"
+        >
+          <MessageCircle size={20} strokeWidth={2.5} />
+          Per WhatsApp besprechen
+        </a>
+      </div>
+
+      <!-- Email confirmation -->
+      <p
+        id="email-confirm"
+        class="hidden text-sm text-slate-500 text-center mb-8"
+      >
       </p>
 
-      <div
-        class="bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 mb-8 text-left"
-      >
-        <h2 class="text-base font-bold text-slate-900 mb-4">Was passiert jetzt?</h2>
-        <ol class="space-y-3 text-sm text-slate-700">
-          <li class="flex items-start gap-3">
-            <span
-              class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-light/40 text-accent-dark font-bold text-xs flex items-center justify-center"
-              >1</span
-            >
-            <span>Wir prüfen Ihre Angaben und kalkulieren die Offerte.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span
-              class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-light/40 text-accent-dark font-bold text-xs flex items-center justify-center"
-              >2</span
-            >
-            <span>Sie erhalten innerhalb von 24h werktags eine schriftliche Offerte per E-Mail.</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <span
-              class="flex-shrink-0 w-6 h-6 rounded-full bg-accent-light/40 text-accent-dark font-bold text-xs flex items-center justify-center"
-              >3</span
-            >
-            <span>Bei Fragen rufen wir Sie an oder Sie erreichen uns jederzeit unter
-              <a
-                href="tel:+41445551234"
-                class="text-primary font-semibold hover:underline"
-                >044 555 12 34</a
-              >.</span>
-          </li>
-        </ol>
+      <!-- Fallback (when no result data, e.g., direct visit) -->
+      <div id="fallback-card" class="hidden bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 mb-8">
+        <p class="text-slate-700 leading-relaxed">
+          Vielen Dank für Ihr Vertrauen. Wir prüfen Ihre Angaben und melden uns
+          <strong>innerhalb von 24h werktags</strong> bei Ihnen.
+        </p>
       </div>
 
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <!-- Back -->
+      <div class="text-center">
         <a
           href="/"
-          class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold px-7 py-4 rounded-2xl shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]"
+          class="inline-flex items-center gap-2 text-slate-600 hover:text-primary text-sm font-medium transition-colors"
         >
-          <ArrowLeft size={20} strokeWidth={2.5} />
+          <ArrowLeft size={16} strokeWidth={2} />
           Zurück zur Startseite
         </a>
-        <a
-          href="tel:+41445551234"
-          class="inline-flex items-center justify-center gap-2 bg-accent text-primary font-bold px-7 py-4 rounded-2xl shadow-md transition-all hover:scale-[1.02]"
-        >
-          <Phone size={20} strokeWidth={2.5} />
-          044 555 12 34
-        </a>
       </div>
-
-      <p class="text-sm text-slate-500 mt-8 inline-flex items-center gap-2">
-        <MessageCircle size={14} strokeWidth={2} />
-        <span
-          >Schneller? Schreiben Sie uns auf
-          <a
-            href="https://wa.me/41445551234"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-primary font-semibold hover:underline">WhatsApp</a
-          >.</span
-        >
-      </p>
     </div>
   </div>
 </BaseLayout>
@@ -104,6 +177,124 @@ const description = "Vielen Dank für Ihre Offerten-Anfrage.";
 <script is:inline>
   (function () {
     const STORAGE_PREFIX = "bari_offerte_v1_";
+
+    function chf(n) {
+      return "CHF " + Math.round(n).toLocaleString("de-CH");
+    }
+
+    let payload = null;
+    try {
+      const raw = sessionStorage.getItem(STORAGE_PREFIX + "result");
+      if (raw) payload = JSON.parse(raw);
+    } catch (e) {
+      payload = null;
+    }
+
+    const fallbackEl = document.getElementById("fallback-card");
+    const ctasEl = document.getElementById("ctas");
+    const rangeCard = document.getElementById("range-card");
+    const breakdownCard = document.getElementById("breakdown-card");
+    const disclaimer = document.getElementById("disclaimer-box");
+    const tipp = document.getElementById("tipp-box");
+    const emailConfirm = document.getElementById("email-confirm");
+    const headline = document.getElementById("offerte-headline");
+    const offerteNr = document.getElementById("offerte-nr");
+
+    if (!payload || !payload.result) {
+      if (fallbackEl) fallbackEl.classList.remove("hidden");
+      if (ctasEl) ctasEl.classList.remove("hidden");
+      if (headline) headline.textContent = "Anfrage erfolgreich gesendet!";
+      return;
+    }
+
+    const result = payload.result;
+    const formData = payload.formData || {};
+
+    // Headline + Nr
+    if (offerteNr) offerteNr.textContent = result.offerteNr;
+
+    // Range
+    if (rangeCard) {
+      rangeCard.classList.remove("hidden");
+      const rangeValue = document.getElementById("range-value");
+      if (rangeValue)
+        rangeValue.textContent = chf(result.rangeMin) + " – " + chf(result.rangeMax);
+      const rangeVat = document.getElementById("range-vat");
+      if (rangeVat) rangeVat.textContent = result.vatNote || "";
+    }
+
+    // Breakdown
+    if (breakdownCard) {
+      breakdownCard.classList.remove("hidden");
+      const tbody = document.querySelector("#breakdown-table tbody");
+      if (tbody && Array.isArray(result.lines)) {
+        tbody.innerHTML = "";
+        result.lines.forEach(function (l) {
+          const tr = document.createElement("tr");
+          tr.className = "border-b border-slate-100 last:border-0";
+          const tdLabel = document.createElement("td");
+          tdLabel.className = "py-3 pr-4 text-slate-600";
+          tdLabel.textContent = l.label;
+          const tdAmount = document.createElement("td");
+          tdAmount.className =
+            "py-3 text-right font-semibold text-slate-900 whitespace-nowrap";
+          const sign = l.amount < 0 ? "−" : "";
+          tdAmount.textContent = sign + chf(Math.abs(l.amount));
+          tr.appendChild(tdLabel);
+          tr.appendChild(tdAmount);
+          tbody.appendChild(tr);
+        });
+      }
+      const totalEl = document.getElementById("breakdown-total");
+      if (totalEl) totalEl.textContent = chf(result.rangeCenter);
+    }
+
+    if (disclaimer) disclaimer.classList.remove("hidden");
+    if (tipp) tipp.classList.remove("hidden");
+
+    // CTAs with offerte-context
+    if (ctasEl) ctasEl.classList.remove("hidden");
+
+    const besichtigungBtn = document.getElementById("cta-besichtigung");
+    if (besichtigungBtn) {
+      const subject =
+        "Besichtigungstermin für Offerte " + result.offerteNr;
+      const body =
+        "Guten Tag\n\nIch möchte einen Besichtigungstermin für Offerte " +
+        result.offerteNr +
+        " vereinbaren.\n\nFreundliche Grüsse\n" +
+        (formData.vorname || "") +
+        " " +
+        (formData.nachname || "");
+      besichtigungBtn.setAttribute(
+        "href",
+        "mailto:info@bari-umzuege.ch?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(body)
+      );
+    }
+
+    const waBtn = document.getElementById("cta-whatsapp");
+    if (waBtn) {
+      const waMsg =
+        "Hallo Bari Umzüge, ich habe Offerte " +
+        result.offerteNr +
+        " erhalten und hätte noch Fragen…";
+      waBtn.setAttribute(
+        "href",
+        "https://wa.me/41445551234?text=" + encodeURIComponent(waMsg)
+      );
+    }
+
+    // Email confirm
+    if (emailConfirm && formData.email) {
+      emailConfirm.textContent =
+        "Eine Bestätigung wurde an " + formData.email + " gesendet.";
+      emailConfirm.classList.remove("hidden");
+    }
+
+    // Cleanup form sessionStorage (keep result for refresh-resistance)
     try {
       sessionStorage.removeItem(STORAGE_PREFIX + "data");
       sessionStorage.removeItem(STORAGE_PREFIX + "step");
