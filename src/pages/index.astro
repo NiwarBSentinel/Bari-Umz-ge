@@ -5,6 +5,7 @@ import BookingBar from "../components/BookingBar.astro";
 import Services from "../components/Services.astro";
 import Promise from "../components/Promise.astro";
 import Guarantees from "../components/Guarantees.astro";
+import ComparisonTable from "../components/ComparisonTable.astro";
 import Cta from "../components/Cta.astro";
 import Fleet from "../components/Fleet.astro";
 import Testimonials from "../components/Testimonials.astro";
@@ -70,6 +71,48 @@ const ldJson = {
   paymentAccepted: "Cash, Credit Card, Invoice",
   sameAs: [],
 };
+
+// FAQ schema — Antworten leiten sich aus der Vergleichstabelle ab.
+// TODO NIWAR: Antworten konsistent zu den Marketing-Aussagen halten,
+// die auch in <ComparisonTable> stehen — sonst Widerspruch im Markup.
+const faqLdJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Wie schnell bekomme ich eine Offerte?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Sie erhalten Ihre kostenlose Sofort-Offerte in unter 2 Minuten direkt online. Andere Anbieter brauchen typischerweise 24–72 Stunden.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Ist der Preis verbindlich?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Die Sofort-Offerte ist ein Richtpreis. Nach einer kostenlosen Besichtigung erhalten Sie einen verbindlichen Festpreis ohne versteckte Zusatzkosten.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Was kostet ein Umzug am Wochenende?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Wochenend-Umzüge haben einen Zuschlag von 20%. Andere Anbieter verlangen typischerweise 30–50% Aufpreis.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Sind die Umzugshelfer festangestellt?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Ja. Bari Umzüge arbeitet ausschliesslich mit festangestellten, geschulten Umzugshelfern — keine Subunternehmer.",
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
@@ -85,12 +128,18 @@ const ldJson = {
     type="application/ld+json"
     set:html={JSON.stringify(ldJson)}
   />
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(faqLdJson)}
+  />
 
   <Hero />
   <BookingBar />
   <Services />
   <Promise />
   <Guarantees />
+  <ComparisonTable />
   <Fleet />
   <Testimonials />
   <Cta />
