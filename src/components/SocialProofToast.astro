@@ -1,0 +1,203 @@
+---
+import { socialProofPool, formatProofText } from "../data/social-proof";
+import { X } from "@lucide/astro";
+
+const proofTexts = socialProofPool.map((e) => formatProofText(e));
+---
+
+<div
+  id="social-proof-toast"
+  role="status"
+  aria-live="polite"
+  aria-atomic="true"
+  class="social-proof-toast fixed bottom-6 left-6 z-40 w-[280px] bg-white rounded-2xl shadow-2xl border border-slate-200/70 px-3.5 py-3 flex items-start gap-3"
+>
+  <span class="live-dot mt-1.5" aria-hidden="true"></span>
+  <div class="flex-1 min-w-0">
+    <p
+      id="social-proof-text"
+      class="text-sm font-medium text-slate-900 leading-snug truncate"
+    >
+    </p>
+    <p class="text-[11px] text-slate-400 mt-0.5">Beispiel · Bari Umzüge</p>
+  </div>
+  <button
+    id="social-proof-close"
+    type="button"
+    aria-label="Schliessen"
+    class="flex-shrink-0 -mr-1 -mt-1 p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+  >
+    <X size={14} strokeWidth={2.5} />
+  </button>
+</div>
+
+<style is:global>
+  .social-proof-toast {
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 350ms ease,
+      opacity 350ms ease;
+  }
+  .social-proof-toast.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+    animation: live-pulse 2s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes live-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot {
+      animation: none;
+    }
+    .social-proof-toast {
+      transition: opacity 250ms ease;
+      transform: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ proofTexts }}>
+  (function () {
+    if (window.location.pathname.startsWith("/offerte")) return;
+
+    const STORAGE_PREFIX = "bari_proof_v1_";
+    const MAX_PER_SESSION = 4;
+    const DISMISS_LIMIT = 2;
+    const FIRST_DELAY_MS = 35000;
+    const MIN_GAP_MS = 30000;
+    const MAX_GAP_MS = 50000;
+    const isMobile = window.matchMedia("(max-width: 640px)").matches;
+    const DISPLAY_MS = isMobile ? 5000 : 7000;
+
+    function getInt(key, fallback) {
+      const v = parseInt(sessionStorage.getItem(STORAGE_PREFIX + key) || "", 10);
+      return isNaN(v) ? fallback : v;
+    }
+
+    if (getInt("dismissed", 0) >= DISMISS_LIMIT) return;
+    if (getInt("shown", 0) >= MAX_PER_SESSION) return;
+
+    if (!Array.isArray(proofTexts) || proofTexts.length === 0) return;
+
+    // Fisher-Yates shuffle (per Page-Load)
+    const queue = proofTexts.slice();
+    for (let i = queue.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = queue[i];
+      queue[i] = queue[j];
+      queue[j] = tmp;
+    }
+
+    function init() {
+      const toast = document.getElementById("social-proof-toast");
+      const textEl = document.getElementById("social-proof-text");
+      const closeBtn = document.getElementById("social-proof-close");
+      if (!toast || !textEl || !closeBtn) return;
+
+      let cursor = 0;
+      let nextTimer = null;
+      let hideTimer = null;
+      let visible = false;
+      let stopped = false;
+
+      function clearTimers() {
+        if (nextTimer) {
+          clearTimeout(nextTimer);
+          nextTimer = null;
+        }
+        if (hideTimer) {
+          clearTimeout(hideTimer);
+          hideTimer = null;
+        }
+      }
+
+      function hideToast() {
+        visible = false;
+        toast.classList.remove("visible");
+      }
+
+      function showToast() {
+        if (stopped) return;
+        if (document.hidden) {
+          // Tab inaktiv: später erneut versuchen
+          scheduleNext();
+          return;
+        }
+        const shown = getInt("shown", 0);
+        if (shown >= MAX_PER_SESSION) return;
+
+        const text = queue[cursor % queue.length];
+        cursor++;
+        textEl.textContent = text;
+        toast.classList.add("visible");
+        visible = true;
+
+        sessionStorage.setItem(STORAGE_PREFIX + "shown", String(shown + 1));
+
+        hideTimer = setTimeout(function () {
+          hideToast();
+          scheduleNext();
+        }, DISPLAY_MS);
+      }
+
+      function scheduleNext() {
+        if (stopped) return;
+        if (getInt("shown", 0) >= MAX_PER_SESSION) return;
+        if (nextTimer) clearTimeout(nextTimer);
+        const delay = MIN_GAP_MS + Math.random() * (MAX_GAP_MS - MIN_GAP_MS);
+        nextTimer = setTimeout(showToast, delay);
+      }
+
+      closeBtn.addEventListener("click", function () {
+        const next = getInt("dismissed", 0) + 1;
+        sessionStorage.setItem(STORAGE_PREFIX + "dismissed", String(next));
+        hideToast();
+        clearTimers();
+        if (next >= DISMISS_LIMIT) stopped = true;
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (stopped) return;
+        if (document.hidden) {
+          clearTimers();
+          if (visible) hideToast();
+        } else {
+          if (getInt("shown", 0) < MAX_PER_SESSION) scheduleNext();
+        }
+      });
+
+      // Erste Einblendung
+      nextTimer = setTimeout(showToast, FIRST_DELAY_MS);
+    }
+
+    // client:idle-Äquivalent für reine Astro-Components
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(init, { timeout: 2000 });
+    } else {
+      setTimeout(init, 200);
+    }
+  })();
+</script>
