@@ -6,7 +6,6 @@ const SITE_URL =
 
 export const CHECKLIST_URLS = {
   digital: SITE_URL + "/downloads/bari-umzugscheckliste-digital.pdf",
-  print: SITE_URL + "/downloads/bari-umzugscheckliste-print.pdf",
 };
 
 export interface ChecklistLeadData {
@@ -448,21 +447,14 @@ export function checklistCustomerEmail(data: ChecklistLeadData) {
     greeting +
     "</p>" +
     '<p style="margin:16px 0 0 0;font-size:15px;line-height:1.6;color:#334155;">' +
-    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über die folgenden Links — links die Vorbereitung, rechts alles für den Umzugstag selbst." +
+    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über den folgenden Link — links die Vorbereitung, rechts alles für den Umzugstag selbst." +
     "</p></td></tr>" +
-    // Download buttons
-    '<tr><td style="padding:24px 32px 8px 32px;">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">' +
-    '<tr><td style="padding:0 6px 12px 0;">' +
+    // Download button
+    '<tr><td style="padding:24px 32px 8px 32px;text-align:center;">' +
     '<a href="' +
     CHECKLIST_URLS.digital +
-    '" style="display:inline-block;background:#0F4C75;color:#ffffff;padding:14px 22px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">↓ Digital (PDF)</a>' +
-    "</td>" +
-    '<td style="padding:0 0 12px 6px;">' +
-    '<a href="' +
-    CHECKLIST_URLS.print +
-    '" style="display:inline-block;background:#ffffff;color:#0F4C75;padding:13px 22px;border:2px solid #0F4C75;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;">🖨 Druckversion</a>' +
-    "</td></tr></table></td></tr>" +
+    '" style="display:inline-block;background:#0F4C75;color:#ffffff;padding:14px 28px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">↓ Cheat-Sheet herunterladen</a>' +
+    "</td></tr>" +
     // PS / Offerte CTA
     '<tr><td style="padding:16px 32px 8px 32px;">' +
     '<div style="background:#B8E8DD;border-radius:12px;padding:20px;">' +
@@ -494,9 +486,8 @@ export function checklistCustomerEmail(data: ChecklistLeadData) {
     "===\n\n" +
     greeting +
     "\n\n" +
-    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über die folgenden Links — links die Vorbereitung, rechts alles für den Umzugstag selbst.\n\n" +
-    "Digital (PDF):  " + CHECKLIST_URLS.digital + "\n" +
-    "Druckversion:   " + CHECKLIST_URLS.print + "\n\n" +
+    "Vielen Dank für Ihr Interesse. Das Cheat-Sheet finden Sie über den folgenden Link — links die Vorbereitung, rechts alles für den Umzugstag selbst.\n\n" +
+    "Cheat-Sheet herunterladen:\n" + CHECKLIST_URLS.digital + "\n\n" +
     "PS: Wenn Sie für Ihren Umzug Unterstützung wünschen, holen Sie sich hier eine kostenlose Sofort-Offerte:\n" +
     offerteUrl + "\n\n" +
     "—\n" +
