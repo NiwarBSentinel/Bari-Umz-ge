@@ -197,6 +197,70 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
         </div>
       </div>
 
+      <!-- Endreinigung Add-On -->
+      <div class="bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 mb-6">
+        <div class="flex items-start gap-4 mb-5">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              <h2 class="text-lg font-bold text-slate-900">Endreinigung dazubuchen?</h2>
+              <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent-dark bg-accent-light/40 rounded-full">
+                Optional
+              </span>
+            </div>
+            <p class="text-sm text-slate-600">
+              Wir übernehmen die Endreinigung — mit optionaler Abnahmegarantie.
+            </p>
+          </div>
+
+          <label class="relative inline-flex items-center cursor-pointer flex-shrink-0 mt-1">
+            <input type="checkbox" id="cleaning-toggle" class="sr-only peer" />
+            <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-accent-light rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent">
+            </div>
+          </label>
+        </div>
+
+        <div id="cleaning-options" class="hidden">
+          <div class="border-t border-slate-200 pt-5 space-y-4">
+            <div class="flex items-start justify-between gap-3 p-4 rounded-xl bg-slate-50">
+              <div>
+                <div class="text-sm font-semibold text-slate-900 mb-0.5">
+                  Endreinigung · <span id="cleaning-size-label">2-Zimmer</span>
+                </div>
+                <div class="text-xs text-slate-600">
+                  Komplette Endreinigung inkl. Küche, Bad, Boden
+                </div>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <div class="text-base font-bold text-primary-dark">
+                  CHF <span id="cleaning-base-price">500</span>
+                </div>
+                <div class="text-[11px] text-slate-500">Pauschal</div>
+              </div>
+            </div>
+
+            <label class="flex items-start gap-3 p-4 rounded-xl border-2 border-slate-200 hover:border-accent/40 cursor-pointer transition-all">
+              <input type="checkbox" id="guarantee-toggle"
+                class="mt-1 w-5 h-5 rounded text-accent focus:ring-accent" />
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-3 mb-1 flex-wrap">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-semibold text-slate-900">Abnahmegarantie</span>
+                    <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white bg-accent rounded-full">Empfohlen</span>
+                  </div>
+                  <div class="text-sm font-bold text-primary-dark">
+                    + CHF <span id="guarantee-price">200</span>
+                  </div>
+                </div>
+                <div class="text-xs text-slate-600 leading-relaxed">
+                  Verwaltung lehnt die Reinigung ab? Wir reinigen kostenlos nach —
+                  so oft wie nötig, bis die Wohnung abgenommen ist.
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
       <!-- Offerte-Card -->
       <div
         class="bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 overflow-hidden mb-6"
@@ -232,6 +296,21 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
                 ></span>
               </p>
               <p id="distance-display" class="text-xs text-slate-500 mt-1"></p>
+            </div>
+          </div>
+
+          <div id="price-breakdown" class="hidden mt-4 pt-4 border-t border-slate-200 space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-slate-600">Umzug</span>
+              <span class="font-semibold text-slate-900">CHF <span id="bd-move">0</span></span>
+            </div>
+            <div class="flex justify-between" id="bd-cleaning-row">
+              <span class="text-slate-600">Endreinigung</span>
+              <span class="font-semibold text-slate-900">CHF <span id="bd-cleaning">0</span></span>
+            </div>
+            <div class="flex justify-between hidden" id="bd-guarantee-row">
+              <span class="text-slate-600">Abnahmegarantie</span>
+              <span class="font-semibold text-slate-900">CHF <span id="bd-guarantee">0</span></span>
             </div>
           </div>
 
@@ -327,17 +406,45 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
     const confirmBtn = document.getElementById("confirm-btn");
     const sizeSelect = document.getElementById("apartment-size");
     const stockwerkInput = document.getElementById("stockwerke-no-lift");
+    const cleaningToggle = document.getElementById("cleaning-toggle");
+    const cleaningOptions = document.getElementById("cleaning-options");
+    const guaranteeToggle = document.getElementById("guarantee-toggle");
+    const cleaningSizeLabel = document.getElementById("cleaning-size-label");
+    const cleaningBasePriceEl = document.getElementById("cleaning-base-price");
+    const guaranteePriceEl = document.getElementById("guarantee-price");
+    const breakdownEl = document.getElementById("price-breakdown");
+    const bdMove = document.getElementById("bd-move");
+    const bdCleaning = document.getElementById("bd-cleaning");
+    const bdGuarantee = document.getElementById("bd-guarantee");
+    const bdCleaningRow = document.getElementById("bd-cleaning-row");
+    const bdGuaranteeRow = document.getElementById("bd-guarantee-row");
 
     if (summaryFrom) summaryFrom.textContent = from;
     if (summaryTo) summaryTo.textContent = to;
     if (summaryWhen) summaryWhen.textContent = when || "Datum folgt";
 
     const sizeMeta = {
-      600: { mann: 3, h: 4, m3: 15, label: "1-Zi · max 15 m³" },
-      950: { mann: 3, h: 6, m3: 30, label: "2-Zi · max 30 m³" },
-      1400: { mann: 4, h: 8, m3: 45, label: "3-Zi · max 45 m³" },
-      1900: { mann: 4, h: 10, m3: 60, label: "4-Zi · max 60 m³" },
-      2500: { mann: 5, h: 12, m3: 80, label: "5+ Zi · max 80 m³" },
+      600: { mann: 3, h: 4, m3: 15, label: "1-Zimmer" },
+      950: { mann: 3, h: 6, m3: 30, label: "2-Zimmer" },
+      1400: { mann: 4, h: 8, m3: 45, label: "3-Zimmer" },
+      1900: { mann: 4, h: 10, m3: 60, label: "4-Zimmer" },
+      2500: { mann: 5, h: 12, m3: 80, label: "5+ Zimmer" },
+    };
+
+    const cleaningPrices = {
+      600: 350,
+      950: 500,
+      1400: 700,
+      1900: 950,
+      2500: 1200,
+    };
+
+    const guaranteePrices = {
+      600: 150,
+      950: 200,
+      1400: 250,
+      1900: 300,
+      2500: 350,
     };
 
     let currentDistanceKm = 0;
@@ -347,13 +454,51 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
       return "CHF " + value.toLocaleString("de-CH") + ".–";
     }
 
-    function calculatePrice(km) {
-      const basePrice = parseInt(sizeSelect.value, 10);
+    function calculateBreakdown(km) {
+      const size = parseInt(sizeSelect.value, 10);
       const stockwerke = parseInt(stockwerkInput.value || "0", 10);
       const distanceCharge = Math.max(0, km - 30) * 3;
       const stockwerkCharge = stockwerke * 50;
-      const raw = basePrice + stockwerkCharge + distanceCharge;
-      return Math.ceil(raw / 50) * 50;
+      const moveBase = size + stockwerkCharge + distanceCharge;
+
+      let cleaning = 0;
+      let guarantee = 0;
+      if (cleaningToggle && cleaningToggle.checked) {
+        cleaning = cleaningPrices[size];
+        if (guaranteeToggle && guaranteeToggle.checked) {
+          guarantee = guaranteePrices[size];
+        }
+      }
+
+      const total = Math.ceil((moveBase + cleaning + guarantee) / 50) * 50;
+      return { moveBase: moveBase, cleaning: cleaning, guarantee: guarantee, total: total };
+    }
+
+    function updateBreakdownDisplay(breakdown) {
+      if (!breakdownEl) return;
+      if (cleaningToggle && cleaningToggle.checked) {
+        breakdownEl.classList.remove("hidden");
+        if (bdMove) bdMove.textContent = breakdown.moveBase.toLocaleString("de-CH");
+        if (bdCleaning) bdCleaning.textContent = breakdown.cleaning.toLocaleString("de-CH");
+        if (bdCleaningRow) bdCleaningRow.classList.remove("hidden");
+        if (guaranteeToggle && guaranteeToggle.checked) {
+          if (bdGuarantee) bdGuarantee.textContent = breakdown.guarantee.toLocaleString("de-CH");
+          if (bdGuaranteeRow) bdGuaranteeRow.classList.remove("hidden");
+        } else {
+          if (bdGuaranteeRow) bdGuaranteeRow.classList.add("hidden");
+        }
+      } else {
+        breakdownEl.classList.add("hidden");
+      }
+    }
+
+    function updateCleaningLabels() {
+      const size = parseInt(sizeSelect.value, 10);
+      if (cleaningSizeLabel) cleaningSizeLabel.textContent = sizeMeta[size].label;
+      if (cleaningBasePriceEl)
+        cleaningBasePriceEl.textContent = cleaningPrices[size].toLocaleString("de-CH");
+      if (guaranteePriceEl)
+        guaranteePriceEl.textContent = guaranteePrices[size].toLocaleString("de-CH");
     }
 
     function haversineKm(lat1, lon1, lat2, lon2) {
@@ -421,60 +566,71 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
       const meta = sizeMeta[parseInt(sizeSelect.value, 10)];
       const stockwerke = parseInt(stockwerkInput.value || "0", 10);
 
-      let extra = "";
+      let msg =
+        "Hallo Bari Umzüge 👋\n\n" +
+        "Ich möchte eine Umzugsofferte:\n\n" +
+        "📍 Auszug: " +
+        from +
+        "\n📍 Einzug: " +
+        to +
+        "\n📅 Datum: " +
+        (when || "noch offen") +
+        "\n🏠 Grösse: " +
+        meta.label +
+        "\n🪜 Stockwerke ohne Lift: " +
+        stockwerke +
+        "\n";
+
       if (geocodingFailed) {
-        extra =
+        msg +=
           "\nBitte um konkrete Offerte basierend auf den oben genannten Angaben.\n";
       } else {
-        const price = calculatePrice(currentDistanceKm);
-        extra =
-          "\n📏 Distanz: " +
+        const breakdown = calculateBreakdown(currentDistanceKm);
+        msg +=
+          "📏 Distanz: " +
           currentDistanceKm.toFixed(1) +
           " km\n👥 Aufwand: " +
           meta.mann +
           " Mann · " +
           meta.h +
-          " Std.\n💰 Richtpreis: " +
-          formatChf(price) +
+          " Std.\n🚚 Umzugs-Pauschale: CHF " +
+          breakdown.moveBase.toLocaleString("de-CH") +
           "\n";
+        if (cleaningToggle && cleaningToggle.checked) {
+          msg +=
+            "🧹 Endreinigung: CHF " +
+            breakdown.cleaning.toLocaleString("de-CH") +
+            "\n";
+          if (guaranteeToggle && guaranteeToggle.checked) {
+            msg +=
+              "✅ Abnahmegarantie: CHF " +
+              breakdown.guarantee.toLocaleString("de-CH") +
+              "\n";
+          }
+        }
+        msg +=
+          "\n💰 Gesamt-Richtpreis: " + formatChf(breakdown.total) + "\n";
       }
 
-      const message =
-        "Hallo Bari Umzüge 👋\n\n" +
-        "Ich möchte eine Umzugsofferte:\n\n" +
-        "📍 Auszug: " +
-        from +
-        "\n" +
-        "📍 Einzug: " +
-        to +
-        "\n" +
-        "📅 Datum: " +
-        (when || "noch offen") +
-        "\n" +
-        "🏠 Grösse: " +
-        meta.label +
-        "\n" +
-        "🪜 Stockwerke ohne Lift: " +
-        stockwerke +
-        extra +
-        "\nVielen Dank!";
-
-      return "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+      msg += "\nVielen Dank!";
+      return "https://wa.me/" + phone + "?text=" + encodeURIComponent(msg);
     }
 
     function updateDisplay() {
       if (geocodingFailed) {
         setPrice("Auf Anfrage", false);
+        if (breakdownEl) breakdownEl.classList.add("hidden");
         return;
       }
       const meta = sizeMeta[parseInt(sizeSelect.value, 10)];
-      const price = calculatePrice(currentDistanceKm);
+      const breakdown = calculateBreakdown(currentDistanceKm);
 
-      setPrice(formatChf(price), true);
+      setPrice(formatChf(breakdown.total), true);
       if (distanceDisplay)
         distanceDisplay.textContent = currentDistanceKm.toFixed(1) + " km";
       if (travelTime)
         travelTime.textContent = meta.mann + " Mann · " + meta.h + " Std.";
+      updateBreakdownDisplay(breakdown);
     }
 
     async function calculateAndDisplay() {
@@ -506,8 +662,29 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
       }
     }
 
-    if (sizeSelect) sizeSelect.addEventListener("change", updateDisplay);
+    if (sizeSelect) {
+      sizeSelect.addEventListener("change", function () {
+        updateCleaningLabels();
+        updateDisplay();
+      });
+    }
     if (stockwerkInput) stockwerkInput.addEventListener("input", updateDisplay);
+
+    if (cleaningToggle) {
+      cleaningToggle.addEventListener("change", function () {
+        if (cleaningToggle.checked) {
+          if (cleaningOptions) cleaningOptions.classList.remove("hidden");
+        } else {
+          if (cleaningOptions) cleaningOptions.classList.add("hidden");
+          if (guaranteeToggle) guaranteeToggle.checked = false;
+        }
+        updateDisplay();
+      });
+    }
+    if (guaranteeToggle) guaranteeToggle.addEventListener("change", updateDisplay);
+
+    updateCleaningLabels();
+
     if (confirmBtn) {
       confirmBtn.addEventListener("click", function () {
         window.open(buildWhatsAppUrl(), "_blank");
