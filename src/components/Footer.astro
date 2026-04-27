@@ -1,6 +1,4 @@
 ---
-import { Heart } from "@lucide/astro";
-
 const cols = [
   {
     title: "Services",
@@ -67,15 +65,8 @@ const cols = [
         ))
       }
     </div>
-    <div
-      class="mt-14 pt-8 border-t border-white/10 text-xs text-white/50 text-center flex items-center justify-center flex-wrap gap-1"
-    >
-      <span>© 2026 Bari Umzüge GmbH · Mitglied SMV · Made with</span>
-      <Heart size={14} fill="currentColor" class="inline text-accent" />
-      <span>in der Schweiz</span>
-    </div>
-
-    <div class="footer-credit">
+    <div class="footer-bottom mt-14 pt-8 border-t border-white/10">
+      <p class="footer-copyright">© 2026 Bari Umzüge GmbH</p>
       <a
         href="https://www.smartbranding.ch/"
         target="_blank"
@@ -85,7 +76,7 @@ const cols = [
       >
         <span class="sb-credit__text">Made with</span>
         <span class="sb-credit__heart" aria-hidden="true">❤️</span>
-        <span class="sb-credit__text sb-credit__by">by</span>
+        <span class="sb-credit__text">by</span>
         <img
           src="/images/smartbranding-logo.svg"
           alt="Smart Branding"
@@ -100,17 +91,24 @@ const cols = [
 </footer>
 
 <style>
-  .footer-credit {
-    text-align: center;
-    margin-top: 0.875rem;
-    padding: 0 1rem;
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copyright {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: rgba(255, 255, 255, 0.55);
   }
 
   .sb-credit {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 0.4rem;
     font-size: 0.8125rem;
     color: rgba(255, 255, 255, 0.55);
@@ -119,10 +117,6 @@ const cols = [
   }
   .sb-credit:hover {
     color: rgba(255, 255, 255, 0.9);
-  }
-
-  .sb-credit__by {
-    margin-left: 0.1rem;
   }
 
   .sb-credit__heart {
@@ -142,5 +136,17 @@ const cols = [
   }
   .sb-credit:hover .sb-credit__logo {
     opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .footer-bottom {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    .sb-credit {
+      justify-content: center;
+    }
   }
 </style>
