@@ -100,11 +100,15 @@ const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
           strokeWidth={2}
           class="flex-shrink-0 mt-0.5 text-slate-500"
         />
-        <p class="text-sm text-slate-700 leading-relaxed">
-          <strong>Dies ist ein Richtpreis.</strong> Der finale Preis wird nach einer
-          kostenlosen Besichtigung verbindlich offeriert. Mit unserer Tiefpreisgarantie
-          zahlen Sie nie zu viel.
-        </p>
+        <div class="text-sm text-slate-700 leading-relaxed space-y-3">
+          <p>
+            <strong class="text-slate-900">Wichtig zu wissen.</strong> Diese Offerte basiert auf Ihren Angaben und ist eine
+            <strong>Richt-Offerte mit ±15% Spielraum</strong>. Der finale Preis wird am Umzugstag bestätigt. Aufpreise können entstehen, wenn vor Ort zusätzlicher Aufwand nötig ist (z.B. enge Treppenhäuser, längere Tragwege, mehr Volumen als angegeben). Wir kommunizieren jeden Aufpreis transparent — keine versteckten Kosten.
+          </p>
+          <p>
+            Möchten Sie absolute Preissicherheit? <strong>Vereinbaren Sie eine kostenlose Besichtigung</strong> — danach garantieren wir Ihnen einen verbindlichen Festpreis.
+          </p>
+        </div>
       </div>
 
       <!-- Tipp -->
@@ -128,10 +132,13 @@ const description = "Sofort-Berechnung Ihrer Umzugs-Offerte.";
         <a
           id="cta-besichtigung"
           href="mailto:info@bari-umzuege.ch?subject=Besichtigungstermin"
-          class="flex-1 inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-white font-bold px-7 py-4 rounded-2xl shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]"
+          class="flex-1 inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary-light text-white font-bold px-7 py-4 rounded-2xl shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02]"
         >
-          <Calendar size={20} strokeWidth={2.5} />
-          Termin für Besichtigung vereinbaren
+          <Calendar size={20} strokeWidth={2.5} class="flex-shrink-0" />
+          <span class="flex flex-col items-start leading-tight text-left">
+            <span>Termin für Besichtigung vereinbaren</span>
+            <span class="text-xs font-medium text-white/80">Für verbindlichen Festpreis</span>
+          </span>
         </a>
         <a
           id="cta-whatsapp"

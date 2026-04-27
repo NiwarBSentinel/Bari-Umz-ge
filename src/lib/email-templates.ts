@@ -79,7 +79,7 @@ function buildBreakdownText(result: OfferteResult): string {
 
 export function customerEmail(data: FormData, result: OfferteResult) {
   const subject =
-    "Ihre Bari-Umzüge-Offerte " + result.offerteNr;
+    "Ihre Richt-Offerte " + result.offerteNr + " – Bari Umzüge";
 
   const movingDateFmt = formatDateDe(data.moving_date);
   const wa =
@@ -88,6 +88,21 @@ export function customerEmail(data: FormData, result: OfferteResult) {
       "Hallo Bari Umzüge, ich habe Offerte " +
         result.offerteNr +
         " erhalten und hätte noch Fragen..."
+    );
+
+  const besichtigungMailto =
+    "mailto:info@bari-umzuege.ch?subject=" +
+    encodeURIComponent(
+      "Besichtigungstermin für Offerte " + result.offerteNr
+    ) +
+    "&body=" +
+    encodeURIComponent(
+      "Guten Tag\n\nIch möchte einen Besichtigungstermin für Offerte " +
+        result.offerteNr +
+        " vereinbaren, um einen verbindlichen Festpreis zu erhalten.\n\nFreundliche Grüsse\n" +
+        (data.vorname || "") +
+        " " +
+        (data.nachname || "")
     );
 
   const html =
@@ -99,7 +114,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     // Header
     '<tr><td style="padding:32px 32px 16px 32px;border-bottom:1px solid #e2e8f0;">' +
     '<p style="margin:0;font-size:14px;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Bari Umzüge</p>' +
-    '<h1 style="margin:8px 0 0 0;font-size:24px;color:#0F4C75;">Ihre Offerte ' +
+    '<h1 style="margin:8px 0 0 0;font-size:24px;color:#0F4C75;">Ihre Richt-Offerte ' +
     safe(result.offerteNr) +
     "</h1>" +
     "</td></tr>" +
@@ -114,7 +129,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     safe(data.nachname) +
     "</p>" +
     '<p style="margin:16px 0 0 0;font-size:15px;line-height:1.6;color:#334155;">' +
-    "Vielen Dank für Ihre Anfrage. Hier Ihre kostenlose Sofort-Offerte basierend auf den von Ihnen übermittelten Angaben:" +
+    "Vielen Dank für Ihre Anfrage. Hier Ihre kostenlose Richt-Offerte basierend auf Ihren Angaben — Aufpreise möglich bei zusätzlichem Aufwand vor Ort:" +
     "</p>" +
     "</td></tr>" +
     // Range
@@ -174,10 +189,19 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     // Disclaimer
     '<tr><td style="padding:24px 32px;">' +
     '<div style="background:#f8fafc;border-radius:12px;padding:16px;font-size:13px;line-height:1.6;color:#475569;">' +
-    '<strong style="color:#0f172a;">Dies ist ein Richtpreis.</strong> Der finale Preis wird nach einer kostenlosen Besichtigung verbindlich offeriert. Mit unserer Tiefpreisgarantie zahlen Sie nie zu viel.' +
+    '<strong style="color:#0f172a;">Wichtig zu wissen.</strong> Diese Offerte ist eine <strong>Richt-Offerte mit ±15% Spielraum</strong>. Der finale Preis wird am Umzugstag bestätigt. Aufpreise können entstehen, wenn vor Ort zusätzlicher Aufwand nötig ist (z.B. enge Treppenhäuser, längere Tragwege, mehr Volumen als angegeben). Wir kommunizieren jeden Aufpreis transparent — keine versteckten Kosten.' +
     "</div></td></tr>" +
-    // CTAs
-    '<tr><td style="padding:8px 32px 32px 32px;">' +
+    // Festpreis CTA (Premium-Pfad: Besichtigung)
+    '<tr><td style="padding:8px 32px;">' +
+    '<div style="background:#0F4C75;border-radius:12px;padding:20px;text-align:center;">' +
+    '<p style="margin:0 0 12px 0;color:#ffffff;font-weight:700;font-size:15px;line-height:1.4;">Möchten Sie absolute Preissicherheit?</p>' +
+    '<p style="margin:0 0 14px 0;color:#cbd5e1;font-size:13px;line-height:1.5;">Vereinbaren Sie eine kostenlose Besichtigung — danach garantieren wir Ihnen einen verbindlichen Festpreis.</p>' +
+    '<a href="' +
+    besichtigungMailto +
+    '" style="display:inline-block;background:#00A88E;color:#0F4C75;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;">Termin für Besichtigung vereinbaren →</a>' +
+    "</div></td></tr>" +
+    // Sekundär-CTAs
+    '<tr><td style="padding:16px 32px 32px 32px;">' +
     '<a href="' +
     wa +
     '" style="display:inline-block;background:#00A88E;color:#0F4C75;padding:14px 24px;border-radius:12px;text-decoration:none;font-weight:700;font-size:14px;margin-right:8px;">📱 Per WhatsApp besprechen</a>' +
@@ -199,9 +223,9 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     "</td></tr></table></body></html>";
 
   const text =
-    "Ihre Bari-Umzüge-Offerte " +
+    "Ihre Richt-Offerte " +
     result.offerteNr +
-    "\n" +
+    " – Bari Umzüge\n" +
     "===\n\n" +
     "Guten Tag " +
     data.anrede +
@@ -210,7 +234,7 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     " " +
     data.nachname +
     "\n\n" +
-    "Vielen Dank für Ihre Anfrage. Hier Ihre kostenlose Sofort-Offerte:\n\n" +
+    "Vielen Dank für Ihre Anfrage. Hier Ihre kostenlose Richt-Offerte basierend auf Ihren Angaben — Aufpreise möglich bei zusätzlichem Aufwand vor Ort:\n\n" +
     "RICHTPREIS-RANGE: " +
     chf(result.rangeMin) +
     " – " +
@@ -227,7 +251,11 @@ export function customerEmail(data: FormData, result: OfferteResult) {
     "AUFSCHLÜSSELUNG\n" +
     buildBreakdownText(result) +
     "\n\n" +
-    "Dies ist ein Richtpreis. Der finale Preis wird nach einer kostenlosen Besichtigung verbindlich offeriert.\n\n" +
+    "WICHTIG ZU WISSEN\n" +
+    "Diese Offerte ist eine Richt-Offerte mit ±15% Spielraum. Der finale Preis wird am Umzugstag bestätigt. Aufpreise können entstehen, wenn vor Ort zusätzlicher Aufwand nötig ist (z.B. enge Treppenhäuser, längere Tragwege, mehr Volumen als angegeben). Wir kommunizieren jeden Aufpreis transparent — keine versteckten Kosten.\n\n" +
+    "FESTPREIS GEWÜNSCHT?\n" +
+    "Vereinbaren Sie eine kostenlose Besichtigung — danach garantieren wir Ihnen einen verbindlichen Festpreis:\n" +
+    besichtigungMailto + "\n\n" +
     "Tipp: Schicken Sie uns Wohnungsfotos an info@bari-umzuege.ch — damit wird die finale Offerte präziser.\n\n" +
     "Per WhatsApp besprechen: " + wa + "\n" +
     "Telefon: 044 555 12 34\n\n" +

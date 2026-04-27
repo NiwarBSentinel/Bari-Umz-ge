@@ -1,16 +1,6 @@
 ---
 import { Check, X, ArrowRight } from "@lucide/astro";
 
-// TODO NIWAR: Diese Vergleichswerte vor Live-Gang final prüfen.
-//   Nur Behauptungen drinlassen, die Bari faktisch erfüllt
-//   (Wettbewerbs-/UWG-Risiko bei "irreführender vergleichender Werbung").
-//   Insbesondere prüfen:
-//     - "Vollkasko-Versicherung inklusive" — passt das zur "CHF 5 Mio.
-//       Haftpflicht"-Aussage in <Guarantees>? Konsistent halten.
-//     - "Festangestellte Umzugshelfer" — Personalstruktur faktisch?
-//     - "Nur +20% Wochenend-Zuschlag" — exakter Tarif aktuell?
-//     - "Schriftlich garantiert" (Tiefpreisgarantie) — gibt es das Dokument?
-
 interface ComparisonRow {
   criterion: string;
   others: string;
@@ -28,27 +18,17 @@ const comparisonRows: ComparisonRow[] = [
   {
     criterion: "Preisberechnung",
     others: "Intransparent, oft erst nach Besichtigung",
-    bari: "Transparente Aufschlüsselung – Sie sehen jeden Posten",
+    bari: "Transparente Aufschlüsselung – jeder Posten sichtbar",
   },
   {
-    criterion: "Tiefpreisgarantie",
-    others: "Selten oder nur auf Anfrage",
-    bari: "Schriftlich garantiert",
+    criterion: "Preis-Transparenz",
+    others: "Versteckte Kosten häufig",
+    bari: "Klare Richt-Offerte sofort, faire Endabrechnung",
   },
   {
-    criterion: "Festpreis-Sicherheit",
-    others: "Häufig versteckte Zusatzkosten",
-    bari: "Verbindlicher Festpreis nach Besichtigung",
-  },
-  {
-    criterion: "Eigenes Personal",
-    others: "Oft Subunternehmer ohne Schulung",
-    bari: "Festangestellte, geschulte Umzugshelfer",
-  },
-  {
-    criterion: "Versicherung",
-    others: "Basis-Haftpflicht (oft <CHF 5'000)",
-    bari: "Vollkasko-Versicherung inklusive",
+    criterion: "Versicherungsschutz",
+    others: "Basis-Haftpflicht, oft mit niedrigen Deckungssummen",
+    bari: "CHF 5 Mio. Betriebshaftpflicht",
   },
   {
     criterion: "Erreichbarkeit",
@@ -62,8 +42,8 @@ const comparisonRows: ComparisonRow[] = [
   },
   {
     criterion: "Wochenend-Umzug",
-    others: "+30–50% Zuschlag",
-    bari: "Nur +20% Zuschlag",
+    others: "Hohe Aufschläge üblich",
+    bari: "Faire, transparente Zuschläge",
   },
   {
     criterion: "Erfahrung in der Schweiz",
