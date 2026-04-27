@@ -1,0 +1,1032 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { ArrowLeft, ArrowRight, Send, Info } from "@lucide/astro";
+
+const title = "Offerte anfragen · Bari Umzüge";
+const description =
+  "Detaillierte Umzugs-Anfrage in 3 Schritten. Antwort innert 24h werktags.";
+
+// Min-Date wird client-side neu berechnet, damit es nicht stale wird
+const today = new Date();
+const minDateObj = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+const minDate = minDateObj.toISOString().slice(0, 10);
+
+const FORMSPREE_OFFERTE_ID = "FORMSPREE_OFFERTE_ID";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={title}
+  ogDescription={description}
+  canonicalPath="/offerte"
+  solidHeader={true}
+  robots="noindex, nofollow"
+  bodyClass="bg-slate-50 text-dark antialiased"
+>
+  <div class="pt-32 pb-20 md:pt-36 md:pb-28">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 text-sm font-medium transition-colors"
+      >
+        <ArrowLeft size={16} strokeWidth={2} />
+        Zurück zur Startseite
+      </a>
+
+      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
+        Offerte anfragen
+      </h1>
+      <p class="text-slate-600 mb-8">
+        In 3 Schritten zur kostenlosen Offerte. Antwort innert 24h werktags.
+      </p>
+
+      <!-- Progress -->
+      <div class="mb-8">
+        <div
+          class="flex items-center justify-between mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500"
+        >
+          <span data-step-label="1">Umzug von</span>
+          <span data-step-label="2">Umzug nach</span>
+          <span data-step-label="3">Personalien</span>
+        </div>
+        <div class="h-2 bg-slate-200 rounded-full overflow-hidden">
+          <div
+            id="progress-fill"
+            class="h-full bg-accent transition-all duration-500 ease-out"
+            style="width: 33.33%"
+          >
+          </div>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">
+          Schritt <span id="current-step">1</span> von 3
+        </p>
+      </div>
+
+      <form
+        id="offerte-form"
+        action={`https://formspree.io/f/${FORMSPREE_OFFERTE_ID}`}
+        method="POST"
+        novalidate
+      >
+        <input
+          type="hidden"
+          name="_subject"
+          value="Neue Offerten-Anfrage über bari-umzuege.ch"
+        />
+        <input
+          type="hidden"
+          name="_next"
+          value="https://bari-umz-ge.vercel.app/offerte/danke"
+        />
+        <input
+          type="text"
+          name="_gotcha"
+          tabindex="-1"
+          autocomplete="off"
+          style="display:none"
+          aria-hidden="true"
+        />
+
+        <!-- STEP 1: Umzug von -->
+        <div
+          data-step="1"
+          class="step-panel bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 space-y-5"
+        >
+          <h2 class="text-xl font-bold text-slate-900">
+            Schritt 1 von 3 · Umzug von
+          </h2>
+
+          <div>
+            <label
+              for="from-street"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Strasse und Hausnummer <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="from-street"
+              name="from_street"
+              type="text"
+              autocomplete="address-line1"
+              class="form-input"
+              placeholder="z.B. Bahnhofstrasse 12"
+            />
+            <p class="error-msg hidden" data-error="from-street">
+              Bitte Strasse und Hausnummer eingeben.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-1">
+              <label
+                for="from-plz"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                PLZ <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="from-plz"
+                name="from_plz"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                maxlength="4"
+                autocomplete="postal-code"
+                class="form-input"
+                placeholder="8001"
+              />
+              <p class="error-msg hidden" data-error="from-plz">
+                4-stellige PLZ (1000–9999).
+              </p>
+            </div>
+            <div class="col-span-2">
+              <label
+                for="from-city"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Ort <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="from-city"
+                name="from_city"
+                type="text"
+                autocomplete="address-level2"
+                class="form-input"
+                placeholder="Zürich"
+              />
+              <p class="error-msg hidden" data-error="from-city">
+                Bitte Ort eingeben.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <fieldset>
+              <legend
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Lift vorhanden?
+              </legend>
+              <div class="flex gap-5">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="from_lift"
+                    value="ja"
+                    class="form-radio"
+                    checked
+                  />
+                  <span class="text-sm text-slate-700">Ja</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="from_lift"
+                    value="nein"
+                    class="form-radio"
+                  />
+                  <span class="text-sm text-slate-700">Nein</span>
+                </label>
+              </div>
+            </fieldset>
+            <div>
+              <label
+                for="from-etage"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Etage <span class="text-red-500">*</span>
+              </label>
+              <select id="from-etage" name="from_etage" class="form-input">
+                <option value="">Bitte wählen…</option>
+                <option value="UG">UG</option>
+                <option value="EG">EG</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8+">8+</option>
+              </select>
+              <p class="error-msg hidden" data-error="from-etage">
+                Bitte Etage wählen.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label
+                for="from-zimmer"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Zimmer <span class="text-red-500">*</span>
+              </label>
+              <select id="from-zimmer" name="from_zimmer" class="form-input">
+                <option value="">Bitte wählen…</option>
+                <option value="1">1</option>
+                <option value="1.5">1.5</option>
+                <option value="2">2</option>
+                <option value="2.5">2.5</option>
+                <option value="3">3</option>
+                <option value="3.5">3.5</option>
+                <option value="4">4</option>
+                <option value="4.5">4.5</option>
+                <option value="5">5</option>
+                <option value="5.5">5.5</option>
+                <option value="6+">6+</option>
+              </select>
+              <p class="error-msg hidden" data-error="from-zimmer">
+                Bitte Zimmerzahl wählen.
+              </p>
+            </div>
+            <div>
+              <label
+                for="from-flaeche"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Wohnfläche (m²) <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="from-flaeche"
+                name="from_flaeche"
+                type="number"
+                min="10"
+                max="500"
+                step="1"
+                inputmode="numeric"
+                class="form-input"
+                placeholder="z.B. 75"
+              />
+              <p class="error-msg hidden" data-error="from-flaeche">
+                Bitte Wohnfläche in m² eingeben (10–500).
+              </p>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend
+              class="block text-sm font-semibold text-slate-700 mb-3"
+            >
+              Zusatzleistungen <span class="font-normal text-slate-500">(optional)</span>
+            </legend>
+            <div class="space-y-3">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Kartons ein- und auspacken"
+                  class="form-checkbox mt-0.5"
+                />
+                <span class="text-sm text-slate-700">Kartons ein- und auspacken</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Möbel Ab- und Aufbau"
+                  class="form-checkbox mt-0.5"
+                />
+                <span class="text-sm text-slate-700">Möbel Ab- und Aufbau</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Lagerung"
+                  class="form-checkbox mt-0.5"
+                />
+                <span class="text-sm text-slate-700">Lagerung</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Inkl. Entsorgung"
+                  class="form-checkbox mt-0.5"
+                />
+                <span class="text-sm text-slate-700">Inkl. Entsorgung</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="services"
+                  value="Inkl. Umzugsreinigung"
+                  class="form-checkbox mt-0.5"
+                />
+                <span class="text-sm text-slate-700">
+                  Inkl. Umzugsreinigung
+                  <span class="text-accent-dark font-semibold">(10% Rabatt)</span>
+                </span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="pt-4">
+            <button
+              type="button"
+              data-next-step
+              class="w-full bg-primary hover:bg-primary-light text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.01]"
+            >
+              Weiter zu Schritt 2
+              <ArrowRight size={20} strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Umzug nach -->
+        <div
+          data-step="2"
+          class="step-panel hidden bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 space-y-5"
+        >
+          <h2 class="text-xl font-bold text-slate-900">
+            Schritt 2 von 3 · Umzug nach
+          </h2>
+
+          <div>
+            <label
+              for="to-street"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Strasse und Hausnummer <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="to-street"
+              name="to_street"
+              type="text"
+              autocomplete="address-line1"
+              class="form-input"
+              placeholder="z.B. Industriestrasse 23"
+            />
+            <p class="error-msg hidden" data-error="to-street">
+              Bitte Strasse und Hausnummer eingeben.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-4">
+            <div class="col-span-1">
+              <label
+                for="to-plz"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                PLZ <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="to-plz"
+                name="to_plz"
+                type="text"
+                inputmode="numeric"
+                pattern="[0-9]{4}"
+                maxlength="4"
+                autocomplete="postal-code"
+                class="form-input"
+                placeholder="8045"
+              />
+              <p class="error-msg hidden" data-error="to-plz">
+                4-stellige PLZ (1000–9999).
+              </p>
+            </div>
+            <div class="col-span-2">
+              <label
+                for="to-city"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Ort <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="to-city"
+                name="to_city"
+                type="text"
+                autocomplete="address-level2"
+                class="form-input"
+                placeholder="Zürich"
+              />
+              <p class="error-msg hidden" data-error="to-city">
+                Bitte Ort eingeben.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <fieldset>
+              <legend
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Lift vorhanden?
+              </legend>
+              <div class="flex gap-5">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="to_lift"
+                    value="ja"
+                    class="form-radio"
+                    checked
+                  />
+                  <span class="text-sm text-slate-700">Ja</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="to_lift"
+                    value="nein"
+                    class="form-radio"
+                  />
+                  <span class="text-sm text-slate-700">Nein</span>
+                </label>
+              </div>
+            </fieldset>
+            <div>
+              <label
+                for="to-etage"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Etage <span class="text-red-500">*</span>
+              </label>
+              <select id="to-etage" name="to_etage" class="form-input">
+                <option value="">Bitte wählen…</option>
+                <option value="UG">UG</option>
+                <option value="EG">EG</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8+">8+</option>
+              </select>
+              <p class="error-msg hidden" data-error="to-etage">
+                Bitte Etage wählen.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="to-zimmer"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Anzahl Zimmer <span class="font-normal text-slate-500">(optional)</span>
+            </label>
+            <select id="to-zimmer" name="to_zimmer" class="form-input">
+              <option value="">Bitte wählen…</option>
+              <option value="1">1</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2</option>
+              <option value="2.5">2.5</option>
+              <option value="3">3</option>
+              <option value="3.5">3.5</option>
+              <option value="4">4</option>
+              <option value="4.5">4.5</option>
+              <option value="5">5</option>
+              <option value="5.5">5.5</option>
+              <option value="6+">6+</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              for="bemerkungen"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Bemerkungen <span class="font-normal text-slate-500">(optional)</span>
+            </label>
+            <textarea
+              id="bemerkungen"
+              name="bemerkungen"
+              rows="4"
+              class="form-input resize-none"
+              placeholder="z.B. Klavier, schwere Möbel, schmaler Eingang..."
+            ></textarea>
+          </div>
+
+          <div>
+            <label
+              for="moving-date"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Umzugsdatum <span class="text-red-500">*</span>
+              <span class="font-normal text-slate-500 text-xs block mt-0.5">
+                Mindestens 3 Werktage Vorlaufzeit
+              </span>
+            </label>
+            <input
+              id="moving-date"
+              name="moving_date"
+              type="date"
+              min={minDate}
+              class="form-input"
+            />
+            <p class="error-msg hidden" data-error="moving-date">
+              Bitte ein Datum mit mindestens 3 Tagen Vorlaufzeit wählen.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
+            <button
+              type="button"
+              data-prev-step
+              class="sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-6 py-4 rounded-2xl transition-colors"
+            >
+              <ArrowLeft size={18} strokeWidth={2.5} />
+              Zurück
+            </button>
+            <button
+              type="button"
+              data-next-step
+              class="flex-1 bg-primary hover:bg-primary-light text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.01]"
+            >
+              Weiter zu Schritt 3
+              <ArrowRight size={20} strokeWidth={2.5} />
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Personalien -->
+        <div
+          data-step="3"
+          class="step-panel hidden bg-white rounded-3xl border border-slate-200/70 shadow-lg shadow-slate-200/40 p-6 md:p-8 space-y-5"
+        >
+          <h2 class="text-xl font-bold text-slate-900">
+            Schritt 3 von 3 · Personalien
+          </h2>
+
+          <div>
+            <label
+              for="firma"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Firma <span class="font-normal text-slate-500">(optional)</span>
+            </label>
+            <input
+              id="firma"
+              name="firma"
+              type="text"
+              autocomplete="organization"
+              class="form-input"
+              placeholder="Firmenname"
+            />
+          </div>
+
+          <div>
+            <label
+              for="anrede"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Anrede <span class="text-red-500">*</span>
+            </label>
+            <select id="anrede" name="anrede" class="form-input">
+              <option value="">Bitte wählen…</option>
+              <option value="Herr">Herr</option>
+              <option value="Frau">Frau</option>
+              <option value="Divers">Divers</option>
+            </select>
+            <p class="error-msg hidden" data-error="anrede">
+              Bitte Anrede wählen.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label
+                for="vorname"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Vorname <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="vorname"
+                name="vorname"
+                type="text"
+                autocomplete="given-name"
+                class="form-input"
+              />
+              <p class="error-msg hidden" data-error="vorname">
+                Bitte Vorname eingeben.
+              </p>
+            </div>
+            <div>
+              <label
+                for="nachname"
+                class="block text-sm font-semibold text-slate-700 mb-2"
+              >
+                Nachname <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="nachname"
+                name="nachname"
+                type="text"
+                autocomplete="family-name"
+                class="form-input"
+              />
+              <p class="error-msg hidden" data-error="nachname">
+                Bitte Nachname eingeben.
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              E-Mail <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              class="form-input"
+              placeholder="ihre@email.ch"
+            />
+            <p class="error-msg hidden" data-error="email">
+              Bitte gültige E-Mail-Adresse eingeben.
+            </p>
+          </div>
+
+          <div>
+            <label
+              for="telefon"
+              class="block text-sm font-semibold text-slate-700 mb-2"
+            >
+              Telefon <span class="text-red-500">*</span>
+            </label>
+            <input
+              id="telefon"
+              name="telefon"
+              type="tel"
+              autocomplete="tel"
+              class="form-input"
+              placeholder="079 123 45 67"
+            />
+            <p class="error-msg hidden" data-error="telefon">
+              Bitte Telefonnummer eingeben.
+            </p>
+          </div>
+
+          <div
+            class="bg-accent-light/30 border border-accent/30 rounded-xl p-4 flex items-start gap-3"
+          >
+            <Info size={18} strokeWidth={2} class="text-accent-dark flex-shrink-0 mt-0.5" />
+            <p class="text-xs text-slate-700 leading-relaxed">
+              <strong>Fotos der Räumlichkeiten</strong> gerne per E-Mail an
+              <a
+                href="mailto:info@bari-umzuege.ch"
+                class="text-primary hover:underline font-semibold"
+                >info@bari-umzuege.ch</a
+              > nachreichen — das hilft uns für eine genauere Offerte.
+            </p>
+          </div>
+
+          <div>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input
+                id="dsgvo"
+                name="dsgvo"
+                type="checkbox"
+                value="ja"
+                class="form-checkbox mt-0.5"
+              />
+              <span class="text-sm text-slate-700 leading-relaxed">
+                Ich erkläre mich damit einverstanden, dass meine Daten zur
+                Bearbeitung meines Anliegens verwendet werden und stimme hiermit
+                den
+                <a
+                  href="/agb"
+                  target="_blank"
+                  class="text-primary hover:underline font-semibold">AGB</a
+                > und der
+                <a
+                  href="/datenschutz"
+                  target="_blank"
+                  class="text-primary hover:underline font-semibold"
+                  >Datenschutzerklärung</a
+                > zu. <span class="text-red-500">*</span>
+              </span>
+            </label>
+            <p class="error-msg hidden" data-error="dsgvo">
+              Bitte AGB und Datenschutz akzeptieren.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-4">
+            <button
+              type="button"
+              data-prev-step
+              class="sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-6 py-4 rounded-2xl transition-colors"
+            >
+              <ArrowLeft size={18} strokeWidth={2.5} />
+              Zurück
+            </button>
+            <button
+              type="submit"
+              class="flex-1 bg-primary hover:bg-primary-light text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30 transition-all hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.01]"
+            >
+              <Send size={20} strokeWidth={2.5} />
+              Anfrage senden
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center mt-8">
+        <p class="text-sm text-slate-600">
+          Lieber direkt anrufen oder per WhatsApp schreiben?
+          <a
+            href="tel:+41445551234"
+            class="text-primary font-semibold hover:underline ml-1"
+          >
+            044 555 12 34
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (function () {
+    const STORAGE_PREFIX = "bari_offerte_v1_";
+    const form = document.getElementById("offerte-form");
+    if (!form) return;
+
+    const panels = form.querySelectorAll(".step-panel");
+    const progressFill = document.getElementById("progress-fill");
+    const currentStepEl = document.getElementById("current-step");
+    let currentStep =
+      parseInt(sessionStorage.getItem(STORAGE_PREFIX + "step") || "1", 10) || 1;
+    if (currentStep < 1 || currentStep > 3) currentStep = 1;
+
+    // === sessionStorage save/restore ===
+    function fieldKey(el) {
+      if (el.type === "radio" || el.type === "checkbox") return el.name;
+      return el.id || el.name;
+    }
+
+    function saveState() {
+      sessionStorage.setItem(STORAGE_PREFIX + "step", String(currentStep));
+      const inputs = form.querySelectorAll("input, select, textarea");
+      const state = {};
+      inputs.forEach(function (el) {
+        if (el.name === "_gotcha" || el.type === "hidden") return;
+        const key = fieldKey(el);
+        if (el.type === "checkbox") {
+          if (!state[key]) state[key] = [];
+          if (el.checked) state[key].push(el.value);
+        } else if (el.type === "radio") {
+          if (el.checked) state[key] = el.value;
+        } else {
+          state[key] = el.value;
+        }
+      });
+      sessionStorage.setItem(STORAGE_PREFIX + "data", JSON.stringify(state));
+    }
+
+    function restoreState() {
+      const raw = sessionStorage.getItem(STORAGE_PREFIX + "data");
+      if (!raw) return;
+      let state;
+      try {
+        state = JSON.parse(raw);
+      } catch (e) {
+        return;
+      }
+      const inputs = form.querySelectorAll("input, select, textarea");
+      inputs.forEach(function (el) {
+        if (el.name === "_gotcha" || el.type === "hidden") return;
+        const key = fieldKey(el);
+        const val = state[key];
+        if (val === undefined) return;
+        if (el.type === "checkbox") {
+          if (Array.isArray(val) && val.indexOf(el.value) !== -1) {
+            el.checked = true;
+          }
+        } else if (el.type === "radio") {
+          if (el.value === val) el.checked = true;
+        } else {
+          el.value = val;
+        }
+      });
+    }
+
+    // === Address parsing from URL ===
+    function parseAddress(addr) {
+      if (!addr) return { street: "", plz: "", city: "" };
+      const parts = addr.split(",").map(function (s) {
+        return s.trim();
+      });
+      const street = parts[0] || "";
+      const cityPart = parts.slice(1).join(", ");
+      const m = cityPart.match(/^(\d{4})\s+(.+)$/);
+      if (m) return { street: street, plz: m[1], city: m[2] };
+      return { street: street, plz: "", city: cityPart };
+    }
+
+    function prefillFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const fromRaw = (params.get("from") || "").trim();
+      const toRaw = (params.get("to") || "").trim();
+      const whenRaw = (params.get("when") || "").trim();
+
+      // Only prefill if there's no existing sessionStorage state for that field
+      const existing = JSON.parse(
+        sessionStorage.getItem(STORAGE_PREFIX + "data") || "{}"
+      );
+
+      if (fromRaw) {
+        const a = parseAddress(fromRaw);
+        if (!existing["from-street"]) {
+          const el = document.getElementById("from-street");
+          if (el) el.value = a.street;
+        }
+        if (!existing["from-plz"]) {
+          const el = document.getElementById("from-plz");
+          if (el && a.plz) el.value = a.plz;
+        }
+        if (!existing["from-city"]) {
+          const el = document.getElementById("from-city");
+          if (el) el.value = a.city;
+        }
+      }
+      if (toRaw) {
+        const b = parseAddress(toRaw);
+        if (!existing["to-street"]) {
+          const el = document.getElementById("to-street");
+          if (el) el.value = b.street;
+        }
+        if (!existing["to-plz"]) {
+          const el = document.getElementById("to-plz");
+          if (el && b.plz) el.value = b.plz;
+        }
+        if (!existing["to-city"]) {
+          const el = document.getElementById("to-city");
+          if (el) el.value = b.city;
+        }
+      }
+      if (whenRaw && /^\d{4}-\d{2}-\d{2}$/.test(whenRaw)) {
+        if (!existing["moving-date"]) {
+          const el = document.getElementById("moving-date");
+          if (el) el.value = whenRaw;
+        }
+      }
+    }
+
+    // === Step navigation ===
+    function showStep(step) {
+      panels.forEach(function (p) {
+        if (parseInt(p.dataset.step, 10) === step) {
+          p.classList.remove("hidden");
+        } else {
+          p.classList.add("hidden");
+        }
+      });
+      currentStep = step;
+      if (currentStepEl) currentStepEl.textContent = String(step);
+      if (progressFill) {
+        progressFill.style.width = (step / 3) * 100 + "%";
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      saveState();
+    }
+
+    // === Validation ===
+    function showError(fieldId, show) {
+      const errEl = form.querySelector('[data-error="' + fieldId + '"]');
+      const fieldEl = document.getElementById(fieldId);
+      if (errEl) {
+        if (show) errEl.classList.remove("hidden");
+        else errEl.classList.add("hidden");
+      }
+      if (fieldEl) {
+        if (show) fieldEl.classList.add("input-error");
+        else fieldEl.classList.remove("input-error");
+      }
+    }
+
+    function clearStepErrors(stepNum) {
+      const panel = form.querySelector('[data-step="' + stepNum + '"]');
+      if (!panel) return;
+      panel.querySelectorAll(".error-msg").forEach(function (e) {
+        e.classList.add("hidden");
+      });
+      panel.querySelectorAll(".input-error").forEach(function (e) {
+        e.classList.remove("input-error");
+      });
+    }
+
+    function isValidPlz(value) {
+      const v = (value || "").trim();
+      if (!/^\d{4}$/.test(v)) return false;
+      const n = parseInt(v, 10);
+      return n >= 1000 && n <= 9999;
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
+    }
+
+    function isValidDate(value) {
+      if (!value) return false;
+      const d = new Date(value);
+      if (isNaN(d.getTime())) return false;
+      const min = new Date();
+      min.setHours(0, 0, 0, 0);
+      min.setDate(min.getDate() + 3);
+      return d >= min;
+    }
+
+    function validateStep(step) {
+      clearStepErrors(step);
+      let ok = true;
+      function req(id, predicate) {
+        const el = document.getElementById(id);
+        const val = el ? el.value : "";
+        const valid = predicate ? predicate(val) : val && val.trim().length > 0;
+        if (!valid) {
+          showError(id, true);
+          ok = false;
+        }
+      }
+
+      if (step === 1) {
+        req("from-street");
+        req("from-plz", isValidPlz);
+        req("from-city");
+        req("from-etage");
+        req("from-zimmer");
+        req("from-flaeche", function (v) {
+          const n = parseInt(v, 10);
+          return !isNaN(n) && n >= 10 && n <= 500;
+        });
+      } else if (step === 2) {
+        req("to-street");
+        req("to-plz", isValidPlz);
+        req("to-city");
+        req("to-etage");
+        req("moving-date", isValidDate);
+      } else if (step === 3) {
+        req("anrede");
+        req("vorname");
+        req("nachname");
+        req("email", isValidEmail);
+        req("telefon");
+        const dsgvo = document.getElementById("dsgvo");
+        if (!dsgvo || !dsgvo.checked) {
+          showError("dsgvo", true);
+          ok = false;
+        }
+      }
+
+      return ok;
+    }
+
+    // === Min-Date refresh (in case page open across day boundary) ===
+    function refreshMinDate() {
+      const dateEl = document.getElementById("moving-date");
+      if (!dateEl) return;
+      const today = new Date();
+      const min = new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000);
+      const minStr = min.toISOString().slice(0, 10);
+      dateEl.min = minStr;
+    }
+
+    // === Wire up ===
+    form.querySelectorAll("[data-next-step]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!validateStep(currentStep)) return;
+        if (currentStep < 3) showStep(currentStep + 1);
+      });
+    });
+    form.querySelectorAll("[data-prev-step]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (currentStep > 1) showStep(currentStep - 1);
+      });
+    });
+
+    form.addEventListener("submit", function (e) {
+      if (!validateStep(3)) {
+        e.preventDefault();
+        return;
+      }
+      // Mark as submitted so danke page can clear sessionStorage
+      sessionStorage.setItem(STORAGE_PREFIX + "submitted", "1");
+    });
+
+    form
+      .querySelectorAll("input, select, textarea")
+      .forEach(function (el) {
+        const event = el.tagName === "SELECT" || el.type === "checkbox" || el.type === "radio" ? "change" : "input";
+        el.addEventListener(event, saveState);
+      });
+
+    // === Init ===
+    refreshMinDate();
+    restoreState();
+    prefillFromUrl();
+    showStep(currentStep);
+  })();
+</script>

@@ -384,7 +384,19 @@ const description = "Schritt 2 von 2: Offerte prüfen und absenden.";
     const params = new URLSearchParams(window.location.search);
     const from = (params.get("from") || "").trim();
     const to = (params.get("to") || "").trim();
-    const when = (params.get("when") || "").trim();
+    const whenRaw = (params.get("when") || "").trim();
+    let when = whenRaw;
+    if (whenRaw && /^\d{4}-\d{2}-\d{2}$/.test(whenRaw)) {
+      try {
+        when = new Date(whenRaw).toLocaleDateString("de-CH", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        });
+      } catch (e) {
+        when = whenRaw;
+      }
+    }
     const fromLat = params.get("fromLat");
     const fromLon = params.get("fromLon");
     const toLat = params.get("toLat");

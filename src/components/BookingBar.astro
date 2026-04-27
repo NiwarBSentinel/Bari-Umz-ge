@@ -481,18 +481,7 @@ const minDate = today.toISOString().slice(0, 10);
           return;
         }
 
-        let when = "Datum folgt";
-        if (whenEl && whenEl.value) {
-          try {
-            when = new Date(whenEl.value).toLocaleDateString("de-CH", {
-              day: "2-digit",
-              month: "long",
-              year: "numeric",
-            });
-          } catch (e) {
-            when = whenEl.value;
-          }
-        }
+        const when = whenEl ? whenEl.value : "";
 
         const params = new URLSearchParams({ from: from, to: to, when: when });
         if (fromEl && fromEl.dataset.lat && fromEl.dataset.lon) {
@@ -503,7 +492,7 @@ const minDate = today.toISOString().slice(0, 10);
           params.set("toLat", toEl.dataset.lat);
           params.set("toLon", toEl.dataset.lon);
         }
-        window.location.href = "/buchen?" + params.toString();
+        window.location.href = "/offerte?" + params.toString();
       });
     }
   })();
