@@ -738,7 +738,7 @@ const minDate = minDateObj.toISOString().slice(0, 10);
 
 <script is:inline>
   (function () {
-    const STORAGE_PREFIX = "bari_offerte_v1_";
+    const STORAGE_PREFIX = "bari_offerte_v2_";
     const form = document.getElementById("offerte-form");
     if (!form) return;
 
@@ -802,16 +802,43 @@ const minDate = minDateObj.toISOString().slice(0, 10);
     }
 
     // === Address parsing from URL ===
-    function parseAddress(addr) {
+    // Heuristic: BookingBar has one free-form field per address.
+    // Map it correctly to street / PLZ / city instead of dumping everything
+    // into "street" (which broke for inputs like "Zürich" or "8404 Winterthur").
+    function parseAddressInput(addr) {
       if (!addr) return { street: "", plz: "", city: "" };
-      const parts = addr.split(",").map(function (s) {
-        return s.trim();
-      });
-      const street = parts[0] || "";
-      const cityPart = parts.slice(1).join(", ");
-      const m = cityPart.match(/^(\d{4})\s+(.+)$/);
-      if (m) return { street: street, plz: m[1], city: m[2] };
-      return { street: street, plz: "", city: cityPart };
+      const trimmed = String(addr).trim();
+      if (!trimmed) return { street: "", plz: "", city: "" };
+
+      // "Strasse 12, 8001 Zürich" or "Strasse 12, Zürich"
+      if (trimmed.indexOf(",") !== -1) {
+        const parts = trimmed.split(",").map(function (s) {
+          return s.trim();
+        });
+        const street = parts[0] || "";
+        const cityPart = parts.slice(1).join(", ").trim();
+        const m = cityPart.match(/^(\d{4})\s+(.+)$/);
+        if (m) return { street: street, plz: m[1], city: m[2] };
+        return { street: street, plz: "", city: cityPart };
+      }
+
+      // "8001 Zürich" or just "8001"
+      const plzMatch = trimmed.match(/\b(\d{4})\b/);
+      if (plzMatch) {
+        const plz = plzMatch[1];
+        const rest = trimmed.replace(plzMatch[0], "").trim();
+        return { street: "", plz: plz, city: rest };
+      }
+
+      // "Bahnhofstrasse 12" — no PLZ but has a house number
+      const hasHouseNumber =
+        /\d+[a-zA-Z]?\s*$/.test(trimmed) || /\s\d+[a-zA-Z]?\b/.test(trimmed);
+      if (hasHouseNumber) {
+        return { street: trimmed, plz: "", city: "" };
+      }
+
+      // Just a place/city name like "Zürich"
+      return { street: "", plz: "", city: trimmed };
     }
 
     function prefillFromUrl() {
@@ -826,7 +853,7 @@ const minDate = minDateObj.toISOString().slice(0, 10);
       );
 
       if (fromRaw) {
-        const a = parseAddress(fromRaw);
+        const a = parseAddressInput(fromRaw);
         if (!existing["from-street"]) {
           const el = document.getElementById("from-street");
           if (el) el.value = a.street;
@@ -841,7 +868,7 @@ const minDate = minDateObj.toISOString().slice(0, 10);
         }
       }
       if (toRaw) {
-        const b = parseAddress(toRaw);
+        const b = parseAddressInput(toRaw);
         if (!existing["to-street"]) {
           const el = document.getElementById("to-street");
           if (el) el.value = b.street;
